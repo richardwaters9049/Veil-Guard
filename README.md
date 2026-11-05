@@ -2,7 +2,7 @@
 
 ## Explainable, offline credential triage for staged Git changes
 
-**Status: Phase Three development — 5 November 2026.** The staged scanner and repository hardening are implemented, with independent Rust/Python eight-feature extractors and golden parity checks. The synthetic corpus and frozen connected-group splits are now implemented; the unified acceptance command and per-commit CI verify this scope. No trained model, ranking or measured detection-accuracy results exist yet. Veil Guard is a working project name; naming clearance is pending.
+**Status: Phase Four research evaluated — 5 November 2026.** The staged scanner and repository hardening are implemented, with independent Rust/Python eight-feature extractors and golden parity checks. The synthetic corpus and frozen connected-group splits are now implemented; the unified acceptance command and per-commit CI verify this scope. A frozen research model and sealed synthetic evaluation exist; the KNN benefit gate failed and the model remains experimental. Native inference is pending. Veil Guard is a working project name; naming clearance is pending.
 
 Veil Guard will be a native command-line developer security tool. It will read the Git index, identify possible hard-coded credentials, and use an eight-dimensional k-nearest neighbours model to rank ambiguous candidates for review. It will explain decisions using redacted locations, numerical feature differences and curated example IDs. It will have no web server, browser UI, dashboard or cloud inference.
 
@@ -22,7 +22,7 @@ Rust for the shipped CLI and inference; Python, NumPy and scikit-learn for offli
 
 ### Evidence and academic foundation
 
-Nearest-neighbour classification and distance-based learning are established methods ([R03](docs/13-sources.md#r03), [R04](docs/13-sources.md#r04)); vector/matrix notation follows standard linear algebra ([R05](docs/13-sources.md#r05)). Exactly eight features, offline operation and ranking-only policy are project choices. A narrow rule-only scanner now exists; independent eight-feature extraction and fixture parity are implemented. An authored synthetic corpus and frozen splits now exist; model fitting and benchmark results remain pending.
+Nearest-neighbour classification and distance-based learning are established methods ([R03](docs/13-sources.md#r03), [R04](docs/13-sources.md#r04)); vector/matrix notation follows standard linear algebra ([R05](docs/13-sources.md#r05)). Exactly eight features, offline operation and ranking-only policy are project choices. A narrow rule-only scanner now exists; independent eight-feature extraction and fixture parity are implemented. An authored synthetic corpus and frozen splits now exist; the [sealed evaluation](docs/21-phase-four-results.md) records a failed KNN benefit gate.
 
 Start with the [annotated sources and professor profiles](docs/13-sources.md), including the RIT master's thesis and Weinberger's doctoral dissertation, then the [claims and evidence register](docs/14-claims-and-evidence.md). Each entry records its relevance, review scope and limits. University links are attribution, not endorsement.
 
@@ -49,7 +49,7 @@ Start with the [annotated sources and professor profiles](docs/13-sources.md), i
 | [Repository formats and automation](docs/17-repository-and-automation.md) | Supported layouts, refusal reasons and local/CI acceptance |
 | [Phase Two feature parity](docs/18-phase-two-feature-parity.md) | Independent extractors, golden fixtures, distance contributions and reproduction |
 | [Phase Three corpus](docs/19-phase-three-corpus.md) | Synthetic recipes, frozen splits, assisted reviews and staged fixture repositories |
-| [Model card template](models/MODEL_CARD.md) | Intended use, evidence and limitations |
+| [Research model card](models/MODEL_CARD.md) | Intended use, evidence and limitations |
 | [Data card](data/DATA_CARD.md) | Provenance, consent and split accounting |
 
 ### Project contents
@@ -58,7 +58,7 @@ Start with the [annotated sources and professor profiles](docs/13-sources.md), i
 `examples/illustrative-vectors.json` contains fabricated vectors to explain the mathematics, not training data.
 `examples/finding.example.json` is an authored example of the current report-v2 contract; `schemas/report-v2.json` defines its JSON shape.
 `scripts/check_plan.py` validates planning links, source citations and illustrative mathematics using Python's standard library. `docs/references.json` holds the structured source register. These checks do not verify source entailment, external link uptime or model performance.
-`src/` contains the first Rust scanner; `tests/staged_scan.rs` exercises it. `research/` contains the independent Python reference, authored parity fixtures, the synthetic corpus generator/auditor and locked environment; model training remains future work.
+`src/` contains the first Rust scanner; `tests/staged_scan.rs` exercises it. `research/` contains the independent Python reference, authored parity fixtures, the synthetic corpus generator/auditor and locked environment; frozen training and sealed evaluation artifacts are included.
 
 ### Build and run
 
@@ -74,7 +74,7 @@ cargo run --locked -- scan --staged --repo /absolute/path/to/owned-repository --
 
 Replace the example repository path with a directory you own or have permission to inspect. The current scanner detects two narrow patterns and reports quoted/unquoted lexical candidates for review; it is not a comprehensive scanner or language parser. Exit 0 can include review findings and does not establish safety. See [current scope and limits](docs/15-phase-one.md).
 
-Phase Two's [parity record](docs/18-phase-two-feature-parity.md) describes the implemented scope, locked environment and reproduction commands. The [Phase Three record](docs/19-phase-three-corpus.md) describes 6,200 synthetic examples, frozen splits and assisted review limits. Next is Phase Four model research/evaluation under the [delivery plan](docs/09-delivery-plan.md).
+Phase Two's [parity record](docs/18-phase-two-feature-parity.md) describes the implemented scope, locked environment and reproduction commands. The [Phase Three record](docs/19-phase-three-corpus.md) describes 6,200 synthetic examples, frozen splits and assisted review limits. The [Phase Four results](docs/21-phase-four-results.md) record the negative research outcome. Next is optional experimental native inference under the [delivery plan](docs/09-delivery-plan.md).
 
 ### Run the current planning check
 

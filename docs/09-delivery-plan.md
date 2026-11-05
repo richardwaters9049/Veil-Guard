@@ -12,7 +12,7 @@ The goal is a native offline credential-review CLI with an evaluated eight-dimen
 | 1: staged rule-only scanner | Implemented; per-commit acceptance gate | phase-one/staged-scanner | Feat/PhaseOne: Add staged scanner and programme roadmap |
 | 2: eight-dimensional feature parity | Implemented; per-commit parity/acceptance gate | phase-two/eight-dimensional-features | Feat/PhaseTwo: Add eight-dimensional feature parity |
 | 3: safe training corpus | Prototype implemented; release review items recorded | phase-three/safe-training-corpus | Feat/PhaseThree: Add safe corpus and grouped splits |
-| 4: KNN research and evaluation | Not started; depends on Phase 3 | phase-four/knn-evaluation | Feat/PhaseFour: Add reproducible KNN evaluation |
+| 4: KNN research and evaluation | Evaluated; benefit gate failed, experimental only | phase-four/knn-evaluation | Feat/PhaseFour: Add reproducible KNN evaluation |
 | 5: native model inference | Not started; depends on Phase 4 decision | phase-five/native-inference | Feat/PhaseFive: Add native KNN inference |
 | 6: hardening and packaging | Not started; depends on Phase 5 | phase-six/hardening-and-packaging | Feat/PhaseSix: Harden and package offline scanner |
 | 7: portfolio release | Not started; depends on Phase 6 | phase-seven/portfolio-release | Feat/PhaseSeven: Publish evaluated portfolio release |

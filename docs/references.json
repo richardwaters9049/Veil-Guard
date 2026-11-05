@@ -325,6 +325,17 @@
       "supports": "Controls used to initialise isolated authored fixture repositories and verify their staged blob identities.",
       "limits": "These documented mechanisms do not prove an operating-system sandbox, validate corpus labels or measure scanner recall.",
       "checked_on": "2026-11-05"
+    },
+    {
+      "id": "R30",
+      "citation": "scikit-learn developers. LogisticRegression and precision/recall metric API documentation, 1.9.1.",
+      "type": "Official technical documentation",
+      "url": "https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html",
+      "additional_url": "https://scikit-learn.org/stable/modules/generated/sklearn.metrics.average_precision_score.html",
+      "reviewed": "LogisticRegression parameters and score outputs; AP threshold weighting and distinction from trapezoidal PR area",
+      "supports": "API choices for the prespecified logistic baseline and correctly named average precision metric.",
+      "limits": "Library documentation does not validate this corpus, prescribe the grids or establish project performance.",
+      "checked_on": "2026-11-05"
     }
   ]
 }
