@@ -18,7 +18,7 @@ Record fixture ID, authoring recipe version, provenance, family/template group, 
 
 ## Corpus design
 
-Target an initial 5,000–10,000 candidates across at least 50 independent fixture/template families and 20 fixture repositories. This is a collection goal, not available data. Include common config/source contexts plus hard negatives, low-entropy credential-shaped fixtures, high-entropy checksums, placeholders in sensitive assignments and unfamiliar naming styles. Add a prevalence-skewed evaluation set resembling a normal repository; a balanced training set alone is misleading.
+Target an initial 5,000–10,000 candidates across at least 50 independent fixture/template families and 20 fixture repositories. This collection goal is now met by the [Phase Three prototype](19-phase-three-corpus.md): 6,200 canonical examples, 130 authored families, 70 fixture repositories and 50 connected core split groups. Family counts do not guarantee statistical independence. Include common config/source contexts plus hard negatives, low-entropy credential-shaped fixtures, high-entropy checksums, placeholders in sensitive assignments and unfamiliar naming styles. Add a prevalence-skewed evaluation set resembling a normal repository; a balanced training set alone is misleading.
 
 Review a stratified sample manually and maintain a correction log. Do not add templates until the generator passes safety and determinism checks. Do not promise a real-world benchmark from synthetic-only evidence.
 
@@ -27,6 +27,10 @@ Review a stratified sample manually and maintain a correction log. Do not add te
 Build connected groups so candidates sharing a template family, fixture repository, copied value or derivation seed never cross splits. If grouping collapses into too few independent groups, revise the corpus rather than relax isolation. Approximate 60/20/20 group allocation is a target; report actual sizes and class balance.
 
 Lock the test group list before fitting anything. On training groups use grouped cross-validation for k, weighting and any feature variants. Use validation groups to select abstention thresholds and final ranking configuration. Means/scales are fitted only on the relevant training fold via a pipeline, following guidance against preprocessing leakage ([R11](13-sources.md#r11)). No seed variants of a test template in training; deduplicate before splitting. Keep an unseen-format challenge set.
+
+## Implemented corpus status
+
+[synthetic-v1](../data/DATA_CARD.md) freezes 3,500/1,100/1,400 labelled train/validation/test rows and 200 isolated uncertain challenges. Its 32 assisted sample reviews are recorded; independent human review and the corpus redistribution licence remain release decisions. The synthetic skewed test subset is prespecified; production prevalence and real-world usefulness remain unmeasured. No model has been fitted.
 
 ## Training procedure
 

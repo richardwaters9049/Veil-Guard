@@ -1,0 +1,605 @@
+{
+  "aliases": [
+    {
+      "canonical_id": "vg-d47b43b4056d8433e80db9c4",
+      "duplicate_id": "vg-055071b8b7c1b119c04ce87e",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-25337382a7f16d580d010b2a",
+      "duplicate_id": "vg-05703797df8bfef19b07ddc3",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-f86e2b8aa757c1e42277d6b0",
+      "duplicate_id": "vg-073fe3dbe87c94285df24cfc",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-1bab445d89ad74ce62dc6d2e",
+      "duplicate_id": "vg-0dc0e10c82e0e1ddf821bd88",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-97d39e1e2a8d5cd3e7091a18",
+      "duplicate_id": "vg-0ee32c82c103adb3fc3f1cee",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-63e484d08431aefc706078bc",
+      "duplicate_id": "vg-1056879bca44e095d0bd09f0",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-832f49c865e4fbd847fc905e",
+      "duplicate_id": "vg-11d17102b1fc7c92cc286a62",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-fac51c1644bf8975c85f850b",
+      "duplicate_id": "vg-1215102aafb3d0202afc6c3d",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-c9555a4877626da3d7199af1",
+      "duplicate_id": "vg-12bf9c6da28a59057feab8ef",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-165b286dd43313a66e625b7f",
+      "duplicate_id": "vg-131d72f802b7023cc6594208",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-abe3ba928e38f64769fc5a96",
+      "duplicate_id": "vg-157325aa41ba81be4b031f86",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-b6edb62c557ddbd7cf97453f",
+      "duplicate_id": "vg-2123866df8cdd4b612da10e4",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-c51a64a2f3cf5667f35c9bd8",
+      "duplicate_id": "vg-21be262ceb5e9e9bba8876b4",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-bd764955c2f35397552ce0d2",
+      "duplicate_id": "vg-24faf7a3a165ce87c8ef6318",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-6203570fe6d173cd019a395d",
+      "duplicate_id": "vg-25654eeb183aefa7d5cfd745",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-4872b4ab103de2e199e93b40",
+      "duplicate_id": "vg-2750d4c91e5fc25d39777f9a",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-a8ac08c497bf610d765df645",
+      "duplicate_id": "vg-27a8bc195c0053efd5070d87",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-91e438591cd99e6729077fd8",
+      "duplicate_id": "vg-2ae981f40672e79f8a824072",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-18e46dd882dae24ec5bb301a",
+      "duplicate_id": "vg-2e07bbf8ddc3563864298b0a",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-c526f7cbc15e15f58401faca",
+      "duplicate_id": "vg-2e5734c74c5f64adaf212c0c",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-38f04d90157e958622791773",
+      "duplicate_id": "vg-2ec9b193b2c5704245c8f8a7",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-03fdb6f0cb6b997c2d867274",
+      "duplicate_id": "vg-2ee6430594c10d0deefcfad1",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-ab6706b7aca56a25193cca8e",
+      "duplicate_id": "vg-2f4f8fb9ce34ed0ee584374f",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-80a4c197ef5dc7c89d4a923e",
+      "duplicate_id": "vg-2f8abbaa6fbd8f942f9edcf9",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-aaa897494b2774c67e53a449",
+      "duplicate_id": "vg-2fc573240c4041f45acdd58f",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-4258619c8fc2f581646298a2",
+      "duplicate_id": "vg-301c6a9c903746893be43a6c",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-0ac64fa14f3db84d3a14fbbf",
+      "duplicate_id": "vg-30bbf2e715c6ed0ddcbed684",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-eea847f9ccd1c55edc90ff78",
+      "duplicate_id": "vg-328f1e87306e83d9174472b0",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-a7df7d4dabf495a0311b56a8",
+      "duplicate_id": "vg-32942560dc903520db73b1cf",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-64de9a14f819a48a3e7f0fcf",
+      "duplicate_id": "vg-3659bb8caae10c5e94f5ba6d",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-6826eadede75cfc8b558c642",
+      "duplicate_id": "vg-36d3b6d96183daf0aa387d15",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-c78e63d67accfc385209091e",
+      "duplicate_id": "vg-3a345b7b470150654d8ae245",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-e68732f31d3936bac3b6a110",
+      "duplicate_id": "vg-3c1551900ce6cfb3020af362",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-d85e7ae6c3a0cea50889efd9",
+      "duplicate_id": "vg-3e708f0d378a27dafb75e464",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-e2d19cf70ccf03815275413d",
+      "duplicate_id": "vg-3e7dd589cd0e7ca956179845",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-9fccba383b2c949c2b223c5b",
+      "duplicate_id": "vg-408aa419e8233c801ce09de6",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-f1b65199b20a2927183e9713",
+      "duplicate_id": "vg-414bb688e752ee575511e7bc",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-06c411836560509857e1b4a6",
+      "duplicate_id": "vg-42d8292c6cda06aa5fa776a2",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-232bbbfceee00572d7aadd79",
+      "duplicate_id": "vg-451699854a79a1037ca492d3",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-3f16df21f4296c8e481a8b21",
+      "duplicate_id": "vg-45b1d871f3f845013165a2b7",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-1646606736699ae22425208b",
+      "duplicate_id": "vg-489a5b52224c23ae3f97febd",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-31605428289d00488167e8ed",
+      "duplicate_id": "vg-4b776b444d8054f9a45b6479",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-97bbb7cf73cd3ee8d557368b",
+      "duplicate_id": "vg-4d15ce3a29674b03f5bdc0c7",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-0c1f4031e1f7a9d434e6f5d5",
+      "duplicate_id": "vg-50feb62e26bdc790e97bb9ff",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-80ed5ea4ed4db445bc036e52",
+      "duplicate_id": "vg-52a3864c9e9a7d1581ff4196",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-d27a0145c3a84916e6e12362",
+      "duplicate_id": "vg-5703b3d981de9f874f12159f",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-769fa5d4c48a71efe842e961",
+      "duplicate_id": "vg-58c797c262d74c2270418f83",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-12cd501493416e2fc0dacdc7",
+      "duplicate_id": "vg-5ccb24a3a9fded0f04a40080",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-c0ff77f30113e140618be7d8",
+      "duplicate_id": "vg-5d8299fe40737215bd8ebead",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-6aced2cfa1353c61817debaa",
+      "duplicate_id": "vg-5e6e63492285de275d903ddd",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-54ad519b4445cc311b3a8981",
+      "duplicate_id": "vg-603c82d4e9de18edd8977db0",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-f9a8ec35617d2d6e34269cb2",
+      "duplicate_id": "vg-607a64477406e3c3abfa5d3f",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-0b573e3eb692ead101d0d318",
+      "duplicate_id": "vg-6100697b6b09b044bbf2ec38",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-9d2e279391ac00d1a3a04ef1",
+      "duplicate_id": "vg-67391e108f3a628e79e4d939",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-3e6194cdda4d7b3589aeae5f",
+      "duplicate_id": "vg-688a4b895b78a6eb259dcadb",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-b07b58b21ec4505b05384b9d",
+      "duplicate_id": "vg-6908eb4dba2ed2887db2cf9b",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-8fa5e2c5dbbe1348ab853856",
+      "duplicate_id": "vg-697225f75d9f6fc5c3906298",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-bf1ca5e2dd3a26796de3c8fe",
+      "duplicate_id": "vg-6b5bb7af740672a81313d519",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-336014d22eab25218bbdf150",
+      "duplicate_id": "vg-6b7fade79d2495cb1aae0c62",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-592c25dc73c259c3aebc51f9",
+      "duplicate_id": "vg-6f5f40d79a82f45c20827fd8",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-9fc59dfad9c9a744569dbd85",
+      "duplicate_id": "vg-7173e990ff089b96bd893d3a",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-fbaa44a7b62c28c3747af36a",
+      "duplicate_id": "vg-71d561eb0404b41586b35df2",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-60f218c8010cf87d2df796e3",
+      "duplicate_id": "vg-71e36fe9c3259cf3156a00a1",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-7191e687d1f930adf0767696",
+      "duplicate_id": "vg-751775e408d0db5a40b00dcf",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-d14aef4b050291e8ae7f3daf",
+      "duplicate_id": "vg-7a9773c5941fbee3c891425e",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-c867a3419fce709cd9c4fbb0",
+      "duplicate_id": "vg-7acc56699fa8f755a4afdb69",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-66982c8897496899d7ceb16a",
+      "duplicate_id": "vg-7cdec07a16a00403a4db9608",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-7e7e7128b05c02fdfb295351",
+      "duplicate_id": "vg-7d8d373968e32cbc66ed44b4",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-3473183401733799e340b2b7",
+      "duplicate_id": "vg-7e643e43d8ff27e23e26a372",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-09da854aaffd94faf8512a23",
+      "duplicate_id": "vg-7f7d022b8110817e1e53f233",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-eee8967897d606e24baac76c",
+      "duplicate_id": "vg-80b837ff0ddd2dab1617e91b",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-e3f78bd19e882afccd34db6c",
+      "duplicate_id": "vg-812af0121d4daff37c863eb9",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-1366132ddfe4734a565a1114",
+      "duplicate_id": "vg-84fb28dccdcd576d02bb7d7b",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-e303c833e8e80583c5d20fd7",
+      "duplicate_id": "vg-85f29cb3e37dce00d67c4dd6",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-7c4ec66a62133aab3996ecc1",
+      "duplicate_id": "vg-8745b8fd92c5c593190c815a",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-c9e43a049b48a719b7597156",
+      "duplicate_id": "vg-89ea6f86e589f77d3fb90049",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-d8d4afc48d89adb0bac6bfb6",
+      "duplicate_id": "vg-8ce55acb5ff829dd2cb1eb23",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-35bf6994b16aadfe054d4c3a",
+      "duplicate_id": "vg-8dfc1df7294218af9c73cd45",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-ba3dc567912444b4bc1794ea",
+      "duplicate_id": "vg-8ffed9a0cf918c03c8f14880",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-efe18c6bf287bb96d9a1aed5",
+      "duplicate_id": "vg-90b29d87260038fcc7eff3d0",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-a8ed3ac54c1061031d47211c",
+      "duplicate_id": "vg-90c04fbd1033a09a3da82771",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-914d59cee3b9ec0ab240adbc",
+      "duplicate_id": "vg-92f6eaefccb17c4feae6503d",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-ef848fdeee53c9bf9ace6159",
+      "duplicate_id": "vg-933029dc495b5ae7b9f9d774",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-82891d524fe78fca743c6427",
+      "duplicate_id": "vg-94e95781c37b6c59bc1a6159",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-21963203577ce4c533faac32",
+      "duplicate_id": "vg-97a2cea8a920e581fdb733f8",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-989e0da0daf050afe818bdb8",
+      "duplicate_id": "vg-9908738bd5dfc5641c26f5b5",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-991a4829552a736a9f5d8580",
+      "duplicate_id": "vg-9c9647f94e49c5144a323470",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-08a8c3874da94fe0a6b26c20",
+      "duplicate_id": "vg-9d8c22e60790ec06ca426564",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-cb2604d7aac8c83cf12f118f",
+      "duplicate_id": "vg-9e562e493f9cb5603d78d450",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-27ac1cbd76495ac1408e7d46",
+      "duplicate_id": "vg-9f41c131d76e8e523b9d0ee3",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-a5d1203ded5f22055f3b15b3",
+      "duplicate_id": "vg-a3aa192921f05bde352f5c30",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-b0625c2ad7916630ba5869de",
+      "duplicate_id": "vg-a524d2db971ea46152cdaae9",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-f739c8a8d834a4812609927b",
+      "duplicate_id": "vg-afd94b8f1234567b2bd3096a",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-ee18055f496f44e0511381d7",
+      "duplicate_id": "vg-b1744848e8ad50dd038ef4e0",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-eb23641a14656d3ef20372bf",
+      "duplicate_id": "vg-b22fbfb9c66c87286a569a75",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-599452726ade7c7eb5f3ae5b",
+      "duplicate_id": "vg-b30c7f7b2f4b51235793b029",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-369f7250d179af35a45207dc",
+      "duplicate_id": "vg-b63741baefdfaad7022a0a46",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-963a97d1d32b3ef1e44656fe",
+      "duplicate_id": "vg-b72431fb60f9607a0ce5ef7d",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-f05e48aeb9f02e1fe274d10a",
+      "duplicate_id": "vg-b75bbb8b7eefa8299d063c41",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-e39b321dedfd327265910429",
+      "duplicate_id": "vg-b8c2d9329a05059c1f85e324",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-ebe8b150a5386ee2fdf349ff",
+      "duplicate_id": "vg-bc706b116c9f131e429f260a",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-d9431dd9ae38cd97b5e8c25d",
+      "duplicate_id": "vg-bf1a6002637ea263860e5da7",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-80c08b72cc470e9105df7b10",
+      "duplicate_id": "vg-bf983d9eec7cd89272b049e0",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-887d71cdf5418cc295bffd1f",
+      "duplicate_id": "vg-c3508be3fb96cf8753563444",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-f242e3e5c2ba98af98b32ca1",
+      "duplicate_id": "vg-c8077aab30a111f274e69e59",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-b5cf3a281edab7b5bf5cb637",
+      "duplicate_id": "vg-d21b3a731e7e39aa10c9d9cb",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-1cd58b6ca37ca2109bc61658",
+      "duplicate_id": "vg-d81a862f797ec348e00a60ba",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-2fe65104440ca745b89c57e8",
+      "duplicate_id": "vg-dff8055fe0fd5c558af3484c",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-539b4ab08fd6b55bc676ec05",
+      "duplicate_id": "vg-ea500aba11b79defdc7736b8",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-b324593861d39c9654d28e18",
+      "duplicate_id": "vg-ebd7078d90945473cd1db97c",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-c3009e2c26d476af4880b49b",
+      "duplicate_id": "vg-ee49140430753ad1cbe8850b",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-eb9abc7f0a420808d9f9d9b1",
+      "duplicate_id": "vg-eea2a4b325de603143fcbb5c",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-d8893c853dd078d36e7bc7bc",
+      "duplicate_id": "vg-f1d87940c682e986bfe1772b",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-ee7f735fb1ad6ff4b6c6e07f",
+      "duplicate_id": "vg-f33733d2d7f70e87cbbecbdd",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-950296ea790d6db4a3949685",
+      "duplicate_id": "vg-f7324671ae4fd875448f9f7d",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-8aa3210486b149efb5916416",
+      "duplicate_id": "vg-f7e90dd8714c7cf5487d1c3f",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-18a40231e3b301e6a44b1de7",
+      "duplicate_id": "vg-fa5405f29606949a80ad566e",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-926da3328b5239a85cdee701",
+      "duplicate_id": "vg-ff971f4bd03fa9e1c5ffe111",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-7f9c0d519e8b37a966bffd43",
+      "duplicate_id": "vg-ffcbea99b40639bacd52d7d8",
+      "reason": "exact_source_span_intent_and_provenance"
+    },
+    {
+      "canonical_id": "vg-f097ea5f27f012bc9162c5b3",
+      "duplicate_id": "vg-ffda55fca5b7e1ccc36def4d",
+      "reason": "exact_source_span_intent_and_provenance"
+    }
+  ],
+  "schema": "veilguard.deduplication.v1"
+}

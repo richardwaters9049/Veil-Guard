@@ -2,6 +2,8 @@
 
 Updated: 5 November 2026. Branch: phase-two/eight-dimensional-features. Development version: 0.1.0-dev.4.
 
+This historical record describes Phase Two. [Phase Three](19-phase-three-corpus.md) now adds the synthetic corpus after the merge.
+
 This phase implements the [eight-coordinate contract](04-eight-dimensional-features.md) independently in Rust and Python. Entropy follows [R06](13-sources.md#r06), edit distance follows [R07](13-sources.md#r07), and the distance decomposition follows the squared Euclidean norm ([R05](13-sources.md#r05)). Feature selection, dictionaries, lexical context and tolerances are project choices. These references do not validate detection quality.
 
 ## Implementation boundary

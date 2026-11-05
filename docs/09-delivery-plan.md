@@ -11,13 +11,13 @@ The goal is a native offline credential-review CLI with an evaluated eight-dimen
 | 0: evidence-backed planning | Complete baseline | main | Feat/Docs: Sources added |
 | 1: staged rule-only scanner | Implemented; per-commit acceptance gate | phase-one/staged-scanner | Feat/PhaseOne: Add staged scanner and programme roadmap |
 | 2: eight-dimensional feature parity | Implemented; per-commit parity/acceptance gate | phase-two/eight-dimensional-features | Feat/PhaseTwo: Add eight-dimensional feature parity |
-| 3: safe training corpus | Not started; depends on Phase 2 | phase-three/safe-training-corpus | Feat/PhaseThree: Add safe corpus and grouped splits |
+| 3: safe training corpus | Prototype implemented; release review items recorded | phase-three/safe-training-corpus | Feat/PhaseThree: Add safe corpus and grouped splits |
 | 4: KNN research and evaluation | Not started; depends on Phase 3 | phase-four/knn-evaluation | Feat/PhaseFour: Add reproducible KNN evaluation |
 | 5: native model inference | Not started; depends on Phase 4 decision | phase-five/native-inference | Feat/PhaseFive: Add native KNN inference |
 | 6: hardening and packaging | Not started; depends on Phase 5 | phase-six/hardening-and-packaging | Feat/PhaseSix: Harden and package offline scanner |
 | 7: portfolio release | Not started; depends on Phase 6 | phase-seven/portfolio-release | Feat/PhaseSeven: Publish evaluated portfolio release |
 
-Each phase has its own branch and commits. Phase Two is stacked on the passing Phase One tip dc4723515043046b94a8daecba3a464be5af553d. Future branches start from the accepted preceding work; do not create empty or placeholder commits. Review each phase diff and evidence before integration into main. A phase may have several focused commits. Do not merge or tag a release merely because its branch exists.
+Each phase has its own branch and commits. Phases One and Two are merged into main. Phase Three starts from merged commit 204152d52987c8a25e042ce53b363325c80e3c8a. Future branches start from the accepted preceding work; do not create empty or placeholder commits. Review each phase diff and evidence before integration into main. A phase may have several focused commits. Do not merge or tag a release merely because its branch exists.
 
 ## Dependencies and effort
 
@@ -82,19 +82,19 @@ Gate: eight coordinates only; absolute cross-language error at most 1e-9 on gold
 
 ## Phase 3: ethical synthetic corpus and split manifest
 
-Estimated effort: 15–25 hours. Entry: frozen feature semantics.
+Estimated effort: 15–25 hours. Entry: frozen feature semantics. Implementation and review status: [Phase Three record](19-phase-three-corpus.md).
 
-- Build deterministic authored fixture generators; never collect live, leaked or user-repository credentials.
-- Define labels from fixture intent and review, not scanner outputs.
-- Add hard negatives, low-entropy positives, placeholders in sensitive assignments and unfamiliar contexts.
-- Record recipe, author/permission, licence, safe IDs, seeds, families and repository groups.
-- Connect related families, copied values and derivations into independent split groups; inspect deduplication.
-- Freeze a train/validation/test manifest and an unseen-format challenge set.
-- Complete the [data card](../data/DATA_CARD.md), including composition, intended use, exclusions and maintenance.
+- [x] Build deterministic authored fixture generators; never collect live, leaked or user-repository credentials.
+- [x] Define labels from fixture intent and review, not scanner outputs.
+- [x] Add hard negatives, low-entropy positives, placeholders in sensitive assignments and unfamiliar contexts.
+- [x] Record recipe, author/permission, licence, safe IDs, seeds, families and repository groups.
+- [x] Connect related families, copied values and derivations into independent split groups; inspect deduplication.
+- [x] Freeze a train/validation/test manifest and an unseen-format challenge set.
+- [x] Complete the [data card](../data/DATA_CARD.md), including composition, intended use, exclusions and maintenance.
 
 Collection goals: 5,000–10,000 candidates, at least 50 families and 20 fixture repositories. These are provisional targets, not a proven sufficient sample size.
 
-Gate: approved nonfunctional corpus, reviewed label sample, adequate independent groups and no split overlap. If groups collapse or labels are ambiguous, revise the corpus before training. Exit: recipes, manifest, reviewed data card and aggregate counts; no private source.
+Prototype gate: authored nonfunctional corpus, explicitly identified assisted label sample, adequate connected split groups and no overlap. Independent human adjudication and a redistribution licence remain dataset-release gates. If groups collapse or labels are ambiguous, revise the corpus before training. Exit: recipes, manifest, reviewed data card and aggregate counts; no private source.
 
 ## Phase 4: KNN research and measured evaluation
 

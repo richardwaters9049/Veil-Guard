@@ -1,0 +1,231 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Veil Guard authored synthetic corpus row v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "id",
+    "recipe_version",
+    "provenance",
+    "family_id",
+    "repository_id",
+    "derivation_id",
+    "copy_of",
+    "label",
+    "value_kind",
+    "label_rationale",
+    "value",
+    "source",
+    "start",
+    "end",
+    "feature_schema",
+    "feature_status",
+    "features",
+    "group_id",
+    "partition"
+  ],
+  "properties": {
+    "schema": {
+      "const": "veilguard.corpus.v1"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^vg-[0-9a-f]{24}$"
+    },
+    "recipe_version": {
+      "const": "synthetic-v1"
+    },
+    "provenance": {
+      "const": "authored_offline_synthetic"
+    },
+    "family_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "repository_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "derivation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "copy_of": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^vg-[0-9a-f]{24}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "label": {
+      "enum": [
+        "sensitive_candidate",
+        "benign_fixture",
+        "uncertain"
+      ]
+    },
+    "value_kind": {
+      "type": "string",
+      "minLength": 1
+    },
+    "label_rationale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "value": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "start": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "end": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "feature_schema": {
+      "const": "veilguard.features.v1"
+    },
+    "feature_status": {
+      "enum": [
+        "eligible",
+        "unsupported"
+      ]
+    },
+    "features": {
+      "anyOf": [
+        {
+          "type": "array",
+          "minItems": 8,
+          "maxItems": 8,
+          "prefixItems": [
+            {
+              "type": "number",
+              "minimum": 2.1972245773362196,
+              "maximum": 5.54907608489522
+            },
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 6.569855608330948
+            },
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          ],
+          "items": false
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "group_id": {
+      "type": "string",
+      "pattern": "^group-[0-9a-f]{20}$"
+    },
+    "partition": {
+      "enum": [
+        "train",
+        "validation",
+        "test",
+        "challenge"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "feature_status": {
+            "const": "eligible"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "features": {
+            "type": "array"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "features": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "partition": {
+            "const": "challenge"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "label": {
+            "const": "uncertain"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "label": {
+            "enum": [
+              "sensitive_candidate",
+              "benign_fixture"
+            ]
+          },
+          "feature_status": {
+            "const": "eligible"
+          },
+          "value": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 256,
+            "pattern": "^[\\u0020-\\u007e]+$"
+          }
+        }
+      }
+    }
+  ]
+}

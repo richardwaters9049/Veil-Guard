@@ -313,6 +313,18 @@
       "supports": "Using a uv project and committed lockfile; locked mode refuses automatic lock updates.",
       "limits": "A dependency lock does not pin the Python interpreter, prove offline execution or validate numerical parity.",
       "checked_on": "2026-11-05"
+    },
+    {
+      "id": "R29",
+      "citation": "Git project. git-init, Git environment variables and Pro Git: Git Objects.",
+      "type": "Official technical documentation",
+      "url": "https://git-scm.com/docs/git-init",
+      "additional_url": "https://git-scm.com/docs/git",
+      "metadata_url": "https://git-scm.com/book/en/v2/Git-Internals-Git-Objects",
+      "reviewed": "Explicit empty templates, object format and initial branch; configuration/environment overrides; SHA-1 blob header and content hashing",
+      "supports": "Controls used to initialise isolated authored fixture repositories and verify their staged blob identities.",
+      "limits": "These documented mechanisms do not prove an operating-system sandbox, validate corpus labels or measure scanner recall.",
+      "checked_on": "2026-11-05"
     }
   ]
 }

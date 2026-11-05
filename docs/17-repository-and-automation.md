@@ -92,7 +92,7 @@ With the pinned toolchain and dependencies already installed, cached-Cargo opera
 python3 scripts/check_all.py --offline
 ~~~
 
-The script runs whitespace checks, rustfmt, Clippy with warnings denied, all Rust tests, the optimized build, source/link/arithmetic documentation checks an optimized scan smoke fixture, Python reference/gate tests and eight-dimensional parity.
+The script runs whitespace checks, rustfmt, Clippy with warnings denied, all Rust tests, the optimized build, source/link/arithmetic documentation checks an optimized scan smoke fixture, Python reference/gate tests, eight-dimensional parity and the [frozen corpus/materialisation checks](19-phase-three-corpus.md).
 
 The smoke fixture stages an authored nonfunctional token shape, changes the worktree, and verifies that the binary still reads the staged bytes. It then reverses the arrangement. It checks output redaction and unchanged index/worktree bytes. No provider request or real credential is involved.
 
@@ -100,7 +100,7 @@ rust-toolchain.toml pins Rust 1.98.1 with rustfmt/Clippy. Cargo.lock pins depend
 
 ## GitHub Actions
 
-The [workflow](../.github/workflows/phase-one.yml) runs the same acceptance script on macos-15 and ubuntu-24.04 for main/Phase One/Phase Two pushes and pull requests to main. Runner environments are recorded in the logs; labels are documented by GitHub ([R27](13-sources.md#r27)).
+The [workflow](../.github/workflows/phase-one.yml) runs the same acceptance script on macos-15 and ubuntu-24.04 for main/Phase One/Phase Two/Phase Three pushes and pull requests to main. Runner environments are recorded in the logs; labels are documented by GitHub ([R27](13-sources.md#r27)).
 
 The workflow uses read-only contents permission, disables persisted checkout credentials, pins official checkout/setup-python actions to reviewed commit SHAs, and gives each job a 15-minute timeout. It builds/tests source; it does not grant release/deployment permissions.
 
