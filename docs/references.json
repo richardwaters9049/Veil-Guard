@@ -267,6 +267,52 @@
       "limits": "Does not prescribe our top-k policy or establish project performance.",
       "doi": null,
       "checked_on": "2026-11-05"
+    },
+    {
+      "id": "R25",
+      "citation": "Git project. gitrepository-layout documentation.",
+      "type": "Official technical documentation",
+      "url": "https://git-scm.com/docs/gitrepository-layout",
+      "reviewed": "Repository structure, Git files, common directories, objects/alternates and repository-format description",
+      "supports": "Git supports multiple metadata and object-storage layouts.",
+      "limits": "Veil Guard's refusal policy is narrower and project-specific; Git compatibility does not establish confinement.",
+      "doi": null,
+      "checked_on": "2026-11-05"
+    },
+    {
+      "id": "R26",
+      "citation": "libgit2 maintainers. git_repository_open_ext reference and repository implementation, v1.9.7.",
+      "type": "Official technical documentation and primary source code",
+      "url": "https://libgit2.org/docs/reference/v1.9.7/repository/git_repository_open_ext.html",
+      "metadata_url": "https://github.com/libgit2/libgit2/blob/v1.9.7/src/libgit2/repository.c",
+      "reviewed": "Explicit open flags; pinned crate source for config loading and environment-dependent object/index paths. Upstream tag corroborated through GitHub API.",
+      "supports": "Explicit open flags control discovery/environment use; the implementation distinguishes normal versus environment-driven opening.",
+      "limits": "Library opening can read standard global/system config; the project's preflight and local-config attachment are not a filesystem sandbox.",
+      "doi": null,
+      "checked_on": "2026-11-05"
+    },
+    {
+      "id": "R27",
+      "citation": "GitHub. Workflow syntax and GitHub-hosted runners reference.",
+      "type": "Official technical documentation",
+      "url": "https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax",
+      "additional_url": "https://docs.github.com/en/actions/reference/runners/github-hosted-runners",
+      "reviewed": "Push/pull-request workflow configuration, permissions, matrix/timeout controls and supported runner labels",
+      "supports": "Official workflow configuration and hosted-runner labels used by the acceptance pipeline.",
+      "limits": "A defined workflow or available runner is not a passing CI result; verify the per-commit run.",
+      "doi": null,
+      "checked_on": "2026-11-05"
+    },
+    {
+      "id": "R28",
+      "citation": "Astral. uv project guide and locking/syncing documentation.",
+      "type": "Official technical documentation",
+      "url": "https://docs.astral.sh/uv/concepts/projects/sync/",
+      "additional_url": "https://docs.astral.sh/uv/guides/projects/",
+      "reviewed": "Project manifest/environment structure; locked mode and lockfile consistency checks",
+      "supports": "Using a uv project and committed lockfile; locked mode refuses automatic lock updates.",
+      "limits": "A dependency lock does not pin the Python interpreter, prove offline execution or validate numerical parity.",
+      "checked_on": "2026-11-05"
     }
   ]
 }

@@ -1,10 +1,10 @@
 # Phase One implementation record
 
-Updated: 5 November 2026. Branch: phase-one/staged-scanner. Status: milestone 1A and the candidate/report portion of 1B implemented. Repository-format review and milestone 1C remain open in the [programme plan](09-delivery-plan.md).
+Updated: 5 November 2026. Branch: phase-one/staged-scanner. Status: milestones 1A/1B/1C implemented for the documented Phase One scope. The local and CI acceptance gates are recorded in the [repository/automation record](17-repository-and-automation.md).
 
 Git's staged/index semantics are grounded in [R17](13-sources.md#r17), with object/index interfaces in [R18](13-sources.md#r18). Project evidence comes from this repository's regression fixtures, not those references. This is a development scanner with narrow patterns, lexical candidate reviews and no AI model.
 
-## Current implementation
+## Phase One implementation
 
 | Area | Behaviour |
 | --- | --- |
@@ -54,7 +54,7 @@ Default limits: 1 MiB per old/new blob; 20 MiB combined inspected object bytes; 
 
 The 10-second deadline is cooperative. Repository metadata/index/object headers and individual library/matcher calls are not hard-interrupted. These content limits do not prove strict process-level memory/time isolation.
 
-Local memory/crash dumps, unrecognised sensitive filename metadata, hostile/corrupt repository configuration, alternate object stores and full error-path/resource behaviour remain hardening concerns. The scanner does not rotate credentials, scan history, install hooks or collect training data.
+Local memory/crash dumps, unrecognised sensitive filename metadata, concurrent hostile filesystem mutation and strict process-level isolation remain residual concerns. Alternate stores and unsupported metadata configurations are now explicitly refused; metadata/error/output regression coverage is recorded separately. The scanner does not rotate credentials, scan history, install hooks or collect training data.
 
 ## Verification history
 
@@ -74,6 +74,8 @@ Candidate/report slice, development version 0.1.0-dev.2:
 
 No accuracy, runtime benchmark or AI benefit has been measured.
 
+Repository/automation slice, version 0.1.0-dev.3: 62 Rust tests and the unified local acceptance command pass, including the optimized staged-only/redaction smoke fixture. The pinned workflow runs the same command on macOS and Linux; its linked run is the per-commit CI evidence. See [supported formats, limits and automation](17-repository-and-automation.md).
+
 | Evidence area | Current regression coverage |
 | --- | --- |
 | Git semantics | Unborn HEAD, both partial-staging directions, missing worktree file, unchanged lines, deletions and renames |
@@ -89,4 +91,4 @@ Tests use disposable, authored, nonfunctional fixtures. APFS-invalid byte names 
 
 ## Remaining work
 
-The candidate/report slice of 1B is implemented; the repository-format/alternate-object-store review is still pending. Milestone 1C must add automated checks and complete the scoped adversarial/error/resource acceptance work. Then Phase 2 can implement independent Rust/Python eight-feature parity. No phase is promoted merely because its implementation branch is pushed.
+The scoped Phase One engineering gate passed locally and in CI at dc47235. Its successor branch implements [Phase Two feature parity](18-phase-two-feature-parity.md). Phase Six still owns release packaging, dependency/licence audit, measured workload benchmarks and expanded operational verification.

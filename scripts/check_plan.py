@@ -8,6 +8,8 @@ from urllib.parse import urlsplit, unquote
 import json
 import math
 import re
+import os
+import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -56,7 +58,12 @@ def main():
     assert set(source_anchors) == {value.lower() for value in ids}, "Source index mismatch"
     linked_ids = set()
     checked = 0
-    documents = list(ROOT.rglob("*.md"))
+    # Check authored files, including untracked work; skip ignored build/dependency trees.
+    names = subprocess.check_output(
+        ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z", "--", "*.md"],
+        cwd=ROOT,
+    )
+    documents = [ROOT / os.fsdecode(name) for name in names.split(b"\0") if name]
     for doc in documents:
         content = doc.read_text()
         doc_source_ids = set()

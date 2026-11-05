@@ -26,33 +26,7 @@ pub(crate) struct Extraction {
 }
 
 fn sensitive_key(key: &str) -> bool {
-    const WORDS: [&str; 7] = [
-        "password",
-        "passwd",
-        "secret",
-        "token",
-        "credential",
-        "apikey",
-        "privatekey",
-    ];
-    let mut separated = String::new();
-    let mut lower = false;
-    for c in key.chars() {
-        if c.is_ascii_uppercase() && lower {
-            separated.push(' ');
-        }
-        separated.push(if c.is_ascii_alphanumeric() {
-            c.to_ascii_lowercase()
-        } else {
-            ' '
-        });
-        lower = c.is_ascii_lowercase();
-    }
-    let tokens: Vec<_> = separated.split_whitespace().collect();
-    tokens.iter().any(|t| WORDS.contains(t))
-        || tokens
-            .windows(2)
-            .any(|w| WORDS.contains(&format!("{}{}", w[0], w[1]).as_str()))
+    !crate::features::keyword_spans(key).is_empty()
 }
 
 fn quoted_end(bytes: &[u8], start: usize) -> (usize, bool, bool) {

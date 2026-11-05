@@ -1,7 +1,7 @@
 {
   "schema_version": "veilguard.features.v1",
   "dimension": 8,
-  "status": "proposed_not_implemented",
+  "status": "implemented_parity_checked_no_model",
   "candidate": {
     "encoding": "printable_ascii_0x20_to_0x7e",
     "min_length": 8,

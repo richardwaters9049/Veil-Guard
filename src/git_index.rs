@@ -1,8 +1,9 @@
 use crate::candidates;
 use crate::privacy::PathGuard;
 use crate::report::{Finding, Report, escape_path};
+use crate::repository;
 use crate::rules;
-use git2::{DiffOptions, ErrorCode, ObjectType, Patch, Repository};
+use git2::{DiffOptions, ObjectType, Patch, Repository};
 use std::collections::BTreeSet;
 use std::path::Path;
 use std::time::{Duration, Instant};
@@ -28,17 +29,6 @@ impl Default for ScanLimits {
             deadline: Duration::from_secs(10),
         }
     }
-}
-
-#[cfg(unix)]
-fn object_path(bytes: &[u8]) -> std::path::PathBuf {
-    use std::os::unix::ffi::OsStrExt;
-    Path::new(std::ffi::OsStr::from_bytes(bytes)).to_path_buf()
-}
-
-#[cfg(not(unix))]
-fn object_path(bytes: &[u8]) -> std::path::PathBuf {
-    Path::new(&String::from_utf8_lossy(bytes).to_string()).to_path_buf()
 }
 
 fn blob_bytes(
@@ -104,19 +94,13 @@ pub fn scan(path: &Path, limits: &ScanLimits) -> Result<Report, &'static str> {
         return Err("invalid_scan_limits");
     }
     let start = Instant::now();
-    let repo = Repository::discover(path).map_err(|_| "repository_unavailable")?;
-    if repo.is_bare() {
-        return Err("bare_repository_unsupported");
-    }
+    let scoped = repository::open(path, start, limits.deadline)?;
+    let repo = &scoped.repo;
     let index = repo.index().map_err(|_| "index_unavailable")?;
     if index.has_conflicts() {
         return Err("index_conflicts");
     }
-    let head_tree = match repo.head() {
-        Ok(head) => Some(head.peel_to_tree().map_err(|_| "head_tree_unavailable")?),
-        Err(err) if matches!(err.code(), ErrorCode::UnbornBranch | ErrorCode::NotFound) => None,
-        Err(_) => return Err("head_unavailable"),
-    };
+    let head_tree = repository::head_tree(repo)?;
     let mut report = Report::default();
     let mut privacy = PathGuard::default();
     for (number, entry) in index.iter().enumerate() {
@@ -128,12 +112,27 @@ pub fn scan(path: &Path, limits: &ScanLimits) -> Result<Report, &'static str> {
             report.issue(None, "index_entry_limit_exceeded");
             break;
         }
-        let path = object_path(&entry.path);
-        let previous = match head_tree.as_ref().map(|t| t.get_path(&path)) {
-            Some(Ok(value)) => Some(value),
-            Some(Err(err)) if err.code() == ErrorCode::NotFound => None,
-            Some(Err(_)) => {
-                report.issue(Some(escape_path(&entry.path)), "baseline_path_unavailable");
+        let display = escape_path(&entry.path);
+        if entry.path.len() > 4096 {
+            report.issue(Some(display), "path_limit_exceeded");
+            continue;
+        }
+        if entry.path.is_empty()
+            || entry
+                .path
+                .split(|b| *b == b'/')
+                .any(|p| p.is_empty() || p == b"." || p == b"..")
+        {
+            report.issue(Some(display), "invalid_index_path");
+            continue;
+        }
+        let previous = match head_tree
+            .as_ref()
+            .map(|tree| repository::baseline(repo, tree, &entry.path))
+        {
+            Some(Ok(value)) => value,
+            Some(Err(code)) => {
+                report.issue(Some(display), code);
                 continue;
             }
             None => None,
@@ -142,11 +141,6 @@ pub fn scan(path: &Path, limits: &ScanLimits) -> Result<Report, &'static str> {
             .as_ref()
             .is_some_and(|p| p.id() == entry.id && p.filemode() as u32 == entry.mode)
         {
-            continue;
-        }
-        let display = escape_path(&entry.path);
-        if entry.path.len() > 4096 {
-            report.issue(Some(display), "path_limit_exceeded");
             continue;
         }
         match entry.mode & 0o170000 {
@@ -164,7 +158,7 @@ pub fn scan(path: &Path, limits: &ScanLimits) -> Result<Report, &'static str> {
                 continue;
             }
         }
-        let new_bytes = match blob_bytes(&repo, entry.id, &mut report, limits) {
+        let new_bytes = match blob_bytes(repo, entry.id, &mut report, limits) {
             Ok(value) => value,
             Err(code) => {
                 report.issue(Some(display), code);
@@ -184,7 +178,7 @@ pub fn scan(path: &Path, limits: &ScanLimits) -> Result<Report, &'static str> {
         };
         let old_bytes = if let Some(previous) = previous {
             if previous.kind() == Some(ObjectType::Blob) {
-                match blob_bytes(&repo, previous.id(), &mut report, limits) {
+                match blob_bytes(repo, previous.id(), &mut report, limits) {
                     Ok(value) => value,
                     Err(code) => {
                         report.issue(Some(display), code);
@@ -287,6 +281,9 @@ pub fn scan(path: &Path, limits: &ScanLimits) -> Result<Report, &'static str> {
     });
     for (index, finding) in report.findings.iter_mut().enumerate() {
         finding.id = format!("finding-{:05}", index + 1);
+    }
+    if !scoped.unchanged() {
+        report.global_issue("repository_metadata_changed");
     }
     privacy.finish(&mut report);
     Ok(report)

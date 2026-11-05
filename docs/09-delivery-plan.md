@@ -9,15 +9,15 @@ The goal is a native offline credential-review CLI with an evaluated eight-dimen
 | Phase | Status | Dedicated branch | Planned lead commit |
 | --- | --- | --- | --- |
 | 0: evidence-backed planning | Complete baseline | main | Feat/Docs: Sources added |
-| 1: staged rule-only scanner | In progress; 1A and candidate/report slice implemented | phase-one/staged-scanner | Feat/PhaseOne: Add staged scanner and programme roadmap |
-| 2: eight-dimensional feature parity | Not started; depends on Phase 1 | phase-two/eight-dimensional-features | Feat/PhaseTwo: Add eight-dimensional feature parity |
+| 1: staged rule-only scanner | Implemented; per-commit acceptance gate | phase-one/staged-scanner | Feat/PhaseOne: Add staged scanner and programme roadmap |
+| 2: eight-dimensional feature parity | Implemented; per-commit parity/acceptance gate | phase-two/eight-dimensional-features | Feat/PhaseTwo: Add eight-dimensional feature parity |
 | 3: safe training corpus | Not started; depends on Phase 2 | phase-three/safe-training-corpus | Feat/PhaseThree: Add safe corpus and grouped splits |
 | 4: KNN research and evaluation | Not started; depends on Phase 3 | phase-four/knn-evaluation | Feat/PhaseFour: Add reproducible KNN evaluation |
 | 5: native model inference | Not started; depends on Phase 4 decision | phase-five/native-inference | Feat/PhaseFive: Add native KNN inference |
 | 6: hardening and packaging | Not started; depends on Phase 5 | phase-six/hardening-and-packaging | Feat/PhaseSix: Harden and package offline scanner |
 | 7: portfolio release | Not started; depends on Phase 6 | phase-seven/portfolio-release | Feat/PhaseSeven: Publish evaluated portfolio release |
 
-Each phase has its own branch and commits. Only Phase One is created now. Future branches start from the accepted preceding work; do not create branches with empty or placeholder commits. Keep main as the accepted baseline, review each phase diff and evidence, and merge before starting the next dependent phase. A phase may have several focused commits. Do not merge or tag a release merely because its branch exists.
+Each phase has its own branch and commits. Phase Two is stacked on the passing Phase One tip dc4723515043046b94a8daecba3a464be5af553d. Future branches start from the accepted preceding work; do not create empty or placeholder commits. Review each phase diff and evidence before integration into main. A phase may have several focused commits. Do not merge or tag a release merely because its branch exists.
 
 ## Dependencies and effort
 
@@ -51,30 +51,32 @@ Status: implemented in this branch, subject to recorded verification. This is a 
 - [x] Separate candidate/finding budgets and protect blocking-warning priority.
 - [x] Align the report-v2 schema with an authored example and test its field contract.
 - [x] Test observed-value filename scrubbing, budget fallback and incomplete-scan path withholding.
-- [ ] Finish hostile Git metadata, alternate object store, discovery and corruption review; document/restrict supported repository formats.
+- [x] Review and restrict repository layouts, metadata redirects and corrupt baselines; record supported formats and residual race/resource limits.
 
-The [candidate/report contract](16-candidate-and-report-contract.md) records what is implemented and the limits of this lexical grammar. Milestone 1B remains open for the repository-format review; milestone 1C remains open for automated checks and deeper hardening.
+The [candidate/report contract](16-candidate-and-report-contract.md) records what is implemented and the limits of this lexical grammar. The [repository/automation record](17-repository-and-automation.md) completes the scoped layout review and records the acceptance pipeline. Milestones 1B and 1C are implemented; the per-commit checks remain the acceptance gate.
 
 ### Milestone 1C: phase acceptance
 
-- Add automated format/lint/test/documentation checks on the initial supported platform.
-- Exercise resource exhaustion, errors, panic redaction and report-file failures; retain findings when coverage is incomplete.
-- Demonstrate exact-index behaviour without changing index/worktree bytes or executing repository-defined commands.
-- Record supported rules, exclusions, residual risks and actual toolchain.
-- Gate: all Phase 1 tests/checks pass, generic extraction meets the declared grammar, and no AI is implied.
+- [x] Automate format/lint/test/documentation/release-smoke checks locally and in a macOS/Linux CI matrix.
+- [x] Exercise input budgets, invalid metadata, panic-payload redaction, broken stdout and report-file failures.
+- [x] Verify exact-index behaviour and no repository hook/filter/diff/fsmonitor execution in authored fixtures.
+- [x] Record supported layouts, rules, exclusions, residual risks and the pinned toolchain/library.
+- [x] Local Phase One checks pass for the declared scope; require a passing CI run for the accepted commit. No AI is implied.
+
+The gate is complete for the documented prototype scope when local and CI checks pass. Packaging, strict process isolation, benchmarks and all ML gates remain later work; this is not a claim of complete protection against an active local attacker.
 
 Exit artefacts: source, lockfile, executable instructions, rule/report contracts, regression fixtures and evidence record. No hooks, model or research dataset required.
 
 ## Phase 2: exactly eight features in Rust and Python
 
-Estimated effort: 12–20 hours. Entry: accepted Phase 1 extractor.
+Estimated effort: 12–20 hours. Entry: accepted Phase 1 extractor. Implementation/evidence: [Phase Two record](18-phase-two-feature-parity.md).
 
-- Implement the [ordered feature contract](04-eight-dimensional-features.md) independently in Rust and Python.
-- Cover length, empirical character entropy, character ratios, context proximity, sensitive assignment and placeholder edit similarity.
-- Add reviewed hand-worked fixtures for every coordinate and boundary, including distances 0/80/81.
-- Establish a locked Python environment with uv; commit its lockfile.
-- Validate finite values, exact order/ranges, unsupported inputs and schema versions.
-- Write feature-level distance explanation fixtures without printing candidate values.
+- [x] Implement the [ordered feature contract](04-eight-dimensional-features.md) independently in Rust and Python.
+- [x] Cover length, empirical character entropy, character ratios, context proximity, sensitive assignment and placeholder edit similarity.
+- [x] Add reviewed hand-worked fixtures for every coordinate and boundary, including distances 0/80/81.
+- [x] Establish a locked Python environment with uv; commit its lockfile.
+- [x] Validate finite values, exact order/ranges, unsupported inputs and schema versions.
+- [x] Write feature-level distance explanation fixtures without printing candidate values.
 
 Gate: eight coordinates only; absolute cross-language error at most 1e-9 on golden fixtures; no context/label/filename leakage as hidden extra coordinates. This tolerance is a project target. Exit: independent extractors, fixtures, parity evidence and updated contract.
 

@@ -2,7 +2,7 @@
 
 Updated: 5 November 2026. Grammar: veilguard.candidates.v1. Report: veilguard.report.v2. Development build: 0.1.0-dev.2.
 
-This is our implemented lexical contract, not a language parser or trained model. Git staged semantics are sourced to [R17](13-sources.md#r17); index/object interfaces to [R18](13-sources.md#r18). The grammar and limits below are project decisions verified by authored regression fixtures. The [eight-feature contract](04-eight-dimensional-features.md) remains a future Rust/Python implementation task.
+This is our implemented lexical contract, not a language parser or trained model. Git staged semantics are sourced to [R17](13-sources.md#r17); index/object interfaces to [R18](13-sources.md#r18). The grammar and limits below are project decisions verified by authored regression fixtures. The [eight-feature contract](04-eight-dimensional-features.md) is now implemented independently for research; [Phase Two](18-phase-two-feature-parity.md) records parity and its limits.
 
 ## Extraction scope
 
@@ -30,7 +30,7 @@ For a supported literal, preserve all bytes inside quotes, including spaces. Do 
 
 ## Feature eligibility and unsupported review
 
-feature_eligible_candidates counts syntactically supported printable-ASCII literals of 8–256 bytes. It does not mean a feature vector or model exists. Every eligible generic finding currently has reason model_not_available.
+feature_eligible_candidates counts syntactically supported printable-ASCII literals of 8–256 bytes. It does not mean scan computes a vector or model score. The Phase Two feature API is tested separately. Every eligible generic finding currently has reason model_not_available.
 
 | Condition | Review reason | Feature eligible |
 | --- | --- | --- |
@@ -82,6 +82,6 @@ Withholding an incomplete scan's paths avoids relying on a redaction dictionary 
 
 This is not anonymisation. Complete scans can still reveal ordinary directory names and unrecognised sensitive metadata; the scanner has no knowledge of arbitrary secrets that were not recognised within its declared scope. A recognised source value may coincide with a static metadata word; no claim of universal substring secrecy is made.
 
-## Remaining Phase One gate
+## Phase One acceptance
 
-General candidate extraction, occurrence columns, independent budgets, current schema/example alignment and the tested filename policy are implemented. Review of hostile repository metadata/alternate object stores and automated CI/resource/error-path hardening remains open. Phase One is not marked complete, and no feature extractor, training data or AI inference is claimed.
+General candidate extraction, occurrence columns, independent budgets, current schema/example alignment and the tested filename policy are implemented. The [repository/automation gate](17-repository-and-automation.md) now defines refused layouts, corrupt-baseline handling, control-file change detection and automated acceptance. Phase Two adds the separately tested feature API. Training data and AI inference remain unimplemented.

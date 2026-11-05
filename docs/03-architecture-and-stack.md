@@ -37,6 +37,7 @@ Exact dependency versions must be selected, audited and locked at implementation
 
 - src/cli.rs: commands and exit handling.
 - src/git_index.rs: repository/index snapshot and staged blob reading.
+- src/repository.rs: layout/config policy, bounded metadata, baseline tree walking and control stamps.
 - src/candidates.rs: bounded candidate extraction.
 - src/rules.rs: deterministic rules and IDs.
 - src/features.rs: eight-feature contract.
@@ -58,6 +59,6 @@ Never unpickle or load joblib artefacts in the shipped CLI. scikit-learn warns t
 
 ## Trust boundaries
 
-Repository bytes and repo configuration are untrusted. Do not execute hooks, build scripts, filters, textconv, external diffs or repository-defined commands. Do not recurse into submodules, follow symlink targets or read outside the selected repository scope. Treat Git configuration that enables external behaviour as disabled in the reader.
+Repository bytes and repo configuration are untrusted. Do not execute hooks, build scripts, filters, textconv, external diffs or repository-defined commands. Do not recurse into submodules or follow repository metadata symlinks. Source blobs must come from the verified local object store. Initial library open may consult standard trusted user/system Git configuration; the [repository boundary](17-repository-and-automation.md) documents this distinction and the residual race risk. Treat Git configuration that enables external behaviour as disabled in the reader.
 
 Training artefacts cannot grant file/network actions. Reports can contain sensitive paths; store explicit output with restrictive permissions where supported, refuse symlink destinations and use atomic writes. Redact before formatting and serialisation. Rust memory safety does not guarantee zeroisation of every allocation or crash dump; document the remaining local-machine exposure.

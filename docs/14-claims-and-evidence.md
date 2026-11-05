@@ -1,6 +1,6 @@
 # Claims and evidence register
 
-Evidence revision: 5 November 2026. Milestone 1A has a rule-only implementation and a [regression record](15-phase-one.md). The candidate/report slice is now implemented and [specified](16-candidate-and-report-contract.md); repository-format review, feature parity, training and benchmarks remain pending. This register governs README, documentation, demos and portfolio wording.
+Evidence revision: 5 November 2026. Milestone 1A has a rule-only implementation and a [regression record](15-phase-one.md). The candidate/report slice is now implemented and [specified](16-candidate-and-report-contract.md); repository-format restrictions and automated checks are now [recorded](17-repository-and-automation.md). Feature parity, training and benchmarks remain pending. This register governs README, documentation, demos and portfolio wording.
 
 ## How to read the labels
 
@@ -27,7 +27,7 @@ University profiles identify people; they are not evidence of endorsement. Paper
 | C08 | Group-disjoint evaluation helps address related-example leakage — method/design | [R12](13-sources.md#r12), [R14](13-sources.md#r14) | Correct connected groups and manifest inspection still required |
 | C09 | Precision/recall analysis addresses class-imbalance questions — external evidence | [R13](13-sources.md#r13) | Report prevalence, supports, coverage and exact metric definitions |
 | C10 | A weighted vote is not established here as a calibrated probability — limitation | [R23](13-sources.md#r23); no calibration experiment | Do not say “75% chance this is a live key” |
-| C11 | The index represents staged content compared with HEAD — external evidence | [R17](13-sources.md#r17) | Partial-staging/unborn-HEAD regressions pass on the recorded macOS environment; broader hardening remains open |
+| C11 | The index represents staged content compared with HEAD — external evidence | [R17](13-sources.md#r17) | Partial-staging/unborn-HEAD and repository/output hardening regressions pass locally; per-commit macOS/Linux results are in the acceptance workflow |
 | C12 | Pickle-based persistence carries code-execution risk — external evidence | [R19](13-sources.md#r19) | JSON avoids that mechanism; strict parsing still needs testing |
 | C13 | Offline/redacted operation will protect source privacy — design goal | [Threat model](08-ethics-and-threat-model.md); relevant logging guidance [R20](13-sources.md#r20) | Capture outputs, instrument network/process behaviour, disclose local residual risk; no absolute guarantee |
 | C14 | KNN will reduce review effort/false positives — hypothesis | No project evidence | Baseline ranking study plus a separate consenting-user study before time-saving claims |
