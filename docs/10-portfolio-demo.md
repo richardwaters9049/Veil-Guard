@@ -4,7 +4,7 @@
 
 **Publication rule.** Support background claims with the [source register](13-sources.md) and performance claims with actual [evaluation evidence](07-evaluation-and-acceptance.md). Model cards describe intended uses and limitations ([R16](13-sources.md#r16)); a portfolio description should keep that distinction visible.
 
-Current planning-stage wording: “Veil Guard is a planned native offline security CLI exploring explainable eight-dimensional KNN ranking of possible credentials in staged Git changes.”
+Current prototype wording: “Veil Guard is a native offline security CLI prototype for staged credential review, with an eight-dimensional KNN experiment planned.”
 
 After an implemented and evaluated release, the case study may describe demonstrated behaviour using the measured release/version.
 
@@ -21,7 +21,7 @@ Add “experimental” to the model description until it passes the evaluation g
 7. Show a real measured benchmark table with sample sizes and limits; if AI did not help, say so.
 8. End with the defensive scope, reproducibility and next research question.
 
-The scanner and commands are not implemented at planning stage. Do not record this as a completed software demonstration yet.
+The rule-only staged scanner milestone is now runnable; its [implementation record](15-phase-one.md) describes supported behaviour. The AI steps and benchmark story above remain planned. A milestone demonstration may show actual partial-staging/redaction behaviour, but must not imply that feature extraction, training or inference exists.
 
 ## Evidence to include on the portfolio
 

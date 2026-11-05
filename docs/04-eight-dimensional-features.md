@@ -8,7 +8,7 @@ Schema: veilguard.features.v1. Exactly eight coordinates, fixed order. This is a
 
 For generic inference, v is a literal printable ASCII value of length L with 8 ≤ L ≤ 256. Strip only one recognised enclosing quote pair during candidate extraction. Do not trim, case-fold, decode escapes/base64, concatenate or Unicode-normalise v. Keep the original staged byte span for locating context. Unsupported inputs get review, never an imputed vector.
 
-Supported generic extraction begins with quoted single-line values and simple unquoted assignment values; implement language-specific escape handling later behind a schema change. Quotes with ambiguous escapes are review-only in v1. Duplicate spans are deduplicated by location, not value.
+The implemented [candidate grammar](16-candidate-and-report-contract.md) extracts quoted single-line values and simple unquoted assignment values. It labels unsupported cases for review; language-specific escape handling remains future work behind a grammar/schema revision. Quotes with ambiguous escapes are review-only in v1. Duplicate spans are deduplicated by location, not value.
 
 ## Ordered vector
 

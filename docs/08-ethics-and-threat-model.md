@@ -30,7 +30,7 @@ Adversaries: malicious repository authors, tampered model distributors, accident
 
 ## Privacy commitments
 
-No runtime telemetry, analytics, remote model calls, provider validation, content upload or hidden training ingestion. No secret hashes as identifiers. Numerical features are not guaranteed anonymisation; default reports show distance contributions rather than raw vectors. Safe exemplar IDs refer only to the approved lab corpus.
+No runtime telemetry, analytics, remote model calls, provider validation, content upload or hidden training ingestion. No secret hashes as identifiers. Current filename displays scrub observed candidate values and withhold all paths when a scan is incomplete; see the [candidate/report privacy contract](16-candidate-and-report-contract.md). This is not anonymisation. Numerical features are not guaranteed anonymisation; default reports show distance contributions rather than raw vectors. Safe exemplar IDs refer only to the approved lab corpus.
 
 No plaintext source copied into diagnostic archives. Error reporting must not include input buffers. Avoid logging environment variables. Do not scan the user's whole home directory or unrelated repositories.
 

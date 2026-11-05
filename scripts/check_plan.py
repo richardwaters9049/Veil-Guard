@@ -85,8 +85,8 @@ def main():
     assert linked_ids == set(ids), ("Uncited sources", set(ids) - linked_ids)
     print(f"Planning checks passed: 8 features, vote={vote}, {checked} local links/anchors, "
           f"{len(records)} cited sources, {len(documents)} Markdown documents.")
-    print("No scanner functionality, external-link availability, source entailment "
-          "or model performance has been tested.")
+    print("This check does not test scanner functionality, external-link availability, "
+          "source entailment or model performance.")
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@
 
 ## Functional requirements
 
-**Design status.** FR1–FR10, exit codes, budgets and hook policy are project requirements, not externally validated capabilities. Git defines staged/index-versus-commit comparison ([R17](13-sources.md#r17)); git2 documents APIs that can implement it ([R18](13-sources.md#r18)). Tests must establish whether our implementation meets these requirements.
+**Design status.** FR1–FR10 describe the target programme. The [Phase One record](15-phase-one.md) identifies the implemented scan subset and regression evidence; model and hook requirements remain pending. Git defines staged/index-versus-commit comparison ([R17](13-sources.md#r17)); git2 documents APIs that can implement it ([R18](13-sources.md#r18)). Tests must establish whether our implementation meets these requirements.
 
 - FR1: Default to an explicitly selected local repository, discovered from the current directory. No remote clone or network fetch.
 - FR2: Compare HEAD to the index; for an unborn branch compare the index to an empty tree. Read staged blob bytes, never substitute working-tree content.
@@ -10,22 +10,30 @@
 - FR4: Handle renames, spaces, non-UTF-8 paths, deletions, partially staged files, empty commits, submodules and symlinks deliberately. Symlink targets are not followed; submodule content is out of scope.
 - FR5: Deterministic high-confidence rules always produce visible findings. Generic candidates receive a model rank or review state; none are silently erased by the model.
 - FR6: All outputs redact values and source snippets, including errors, trace mode, JSON, terminal and CI.
-- FR7: Output a scan-completeness summary with skipped paths and reasons. Escape terminal control bytes in every repository-derived field.
+- FR7: Output a scan-completeness summary and skip reasons. Paths may be escaped/redacted, or withheld when incomplete coverage prevents reliable filename scrubbing. Escape terminal control bytes in every displayed repository-derived field.
 - FR8: Import only a version-compatible, bounded, local model bundle. Missing, corrupt or incompatible models leave rules available and mark generic results unranked.
 - FR9: Explicit hook installation only. Preserve an existing hook and refuse to overwrite it; provide manual integration instructions.
 - FR10: No automatic source changes, credential validation, network calls or online learning.
 
-## Proposed commands — not implemented
+## Commands and implementation status
+
+The first three scan forms work in the Phase One source build; use `cargo run --locked --` before `scan` until installed:
 
 ```sh
 veilguard scan --staged
+veilguard scan --staged --repo /absolute/path/to/owned-repository
 veilguard scan --staged --format json --output findings.json
+```
+
+The following commands remain proposals for Phases 5 and 6:
+
+```sh
 veilguard explain --report findings.json --finding finding-001
 veilguard model inspect ./models/release-model.json
 veilguard hooks install
 veilguard hooks uninstall
 ```
-Text-only reports are default; JSON output is explicit and contains no candidate value. Explain reads an existing redacted report, never an argument containing a secret. A report has model/schema identifiers and feature contributions but not the raw eight-feature vector by default.
+Text-only reports are default; JSON output is explicit and contains no candidate value. Explain reads an existing redacted report, never an argument containing a secret. The current [report-v2 contract](16-candidate-and-report-contract.md) includes schema/grammar identifiers, byte columns and unranked review reasons. Feature contributions and scores remain future model work; neither values nor raw vectors are present.
 
 ## Exit code contract
 
@@ -42,11 +50,11 @@ Priority is 3 > 2 > 1 > 0; incomplete scans with findings return 2 and retain th
 
 Supported generic candidates: printable ASCII strings of 8–256 characters. Extract quoted string spans and unquoted assignment values using bounded parsers for simple source/config lines. A credential-labelled assignment shorter than 8 or longer than 256 is emitted as unranked review. Multi-line private keys use independent rules. Unicode literals, concatenation, generated values, encoded/nested payloads and archives are unsupported by generic inference.
 
-Budget proposals: 1 MiB per text blob, 20 MiB aggregate staged bytes, 10,000 candidates and 10 seconds wall time. Exceeding any limit reports incompleteness; do not silently truncate and report success. Binary blobs are skipped and reported, not interpreted as clean. Refuse unresolved index conflicts. Dependency locks/vendor/generated paths are not auto-suppressed; explicit user exclusions appear in the coverage summary.
+Target budgets: 1 MiB per blob, 20 MiB aggregate inspected bytes, 10,000 candidates and a 10-second deadline. The current implementation counts old and staged bytes together and independently caps 10,000 generic candidates and 10,000 retained findings; its deadline is cooperative, not a hard interruption. These implementation limits are detailed in the [Phase One record](15-phase-one.md). Exceeding any limit reports incompleteness; do not silently truncate and report success. Binary blobs are skipped and reported, not interpreted as clean. Refuse unresolved index conflicts. Dependency locks/vendor/generated paths are not auto-suppressed; explicit user exclusions appear in the coverage summary.
 
 ## Reporting and remediation
 
-Each finding includes a synthetic occurrence ID, escaped relative path, staged line, rule ID, severity/policy decision, model status and optional uncalibrated vote. Do not output complete lines, token fragments, token hashes or a reproducible hash of the candidate value.
+Each current finding includes a synthetic occurrence ID, protected path, staged start/end line and byte columns, rule ID, severity/policy decision, model status and nullable review reason. An uncalibrated vote is future work, not a current report field. Do not output complete lines, token fragments, token hashes or a reproducible hash of the candidate value.
 
 Advise the user to remove a staged credential and follow its provider's revocation/rotation process if it may have been exposed. OWASP describes secret lifecycle management and rotation/revocation ([R20](13-sources.md#r20)). Never claim removing it from a new commit revokes an existing credential or clears Git history.
 
