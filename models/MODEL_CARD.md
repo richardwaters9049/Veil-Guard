@@ -12,7 +12,7 @@ Offline prioritisation of ambiguous credential candidates in staged Git text. Hu
 
 ## Method
 
-Exactly eight numeric coordinates; train-fitted standardisation; exact Euclidean KNN; inverse-distance vote with explicit zero-distance handling; review/abstention rules. Research inference is Python; a native Rust inference library and synthetic parity check are implemented. Scanner integration remains pending.
+Exactly eight numeric coordinates; train-fitted standardisation; exact Euclidean KNN; inverse-distance vote with explicit zero-distance handling; review/abstention rules. Research inference is Python; a native Rust inference library and synthetic parity check are implemented. Explicit scanner integration, fallback and redacted explanation commands are implemented; all generic findings remain reviews.
 
 ## Training and evaluation
 

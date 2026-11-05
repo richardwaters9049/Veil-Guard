@@ -2,7 +2,8 @@ use clap::{Parser, Subcommand, ValueEnum, error::ErrorKind};
 use std::io::{self, Write};
 use std::path::{Path, PathBuf};
 use std::process::ExitCode;
-use veilguard::{ScanLimits, scan};
+use veilguard::{ModelSelection, ScanLimits, scan_with_model};
+use veilguard::{explanation, local_input, model::Model};
 
 macro_rules! safe_error {
     ($($argument:tt)*) => {{
@@ -34,7 +35,32 @@ enum Command {
         /// Write a new report; refuse existing files and symlinks.
         #[arg(long)]
         output: Option<PathBuf>,
+        /// Explicit local experimental bundle; failure preserves rule-only scanning.
+        #[arg(long)]
+        model: Option<PathBuf>,
+        /// Retain at most five numerical neighbour explanations per scored finding.
+        #[arg(long, requires = "model")]
+        explanations: bool,
     },
+    /// Explain an existing redacted v3 report without reading repository source.
+    Explain {
+        #[arg(long)]
+        report: PathBuf,
+        #[arg(long)]
+        finding: String,
+        #[arg(long, value_enum, default_value = "text")]
+        format: Format,
+    },
+    /// Inspect a local experimental model without printing its reference vectors.
+    Model {
+        #[command(subcommand)]
+        command: ModelCommand,
+    },
+}
+
+#[derive(Subcommand)]
+enum ModelCommand {
+    Inspect { path: PathBuf },
 }
 
 #[derive(Clone, Copy, ValueEnum)]
@@ -76,13 +102,83 @@ fn run() -> u8 {
             return 2;
         }
     };
-    let Command::Scan {
-        staged: _,
-        repo,
-        format,
-        output,
-    } = cli.command;
-    let report = match scan(&repo, &ScanLimits::default()) {
+    let (repo, format, output, model, explanations) = match cli.command {
+        Command::Explain {
+            report,
+            finding,
+            format,
+        } => {
+            let result = local_input::read(&report, explanation::MAX_REPORT_BYTES)
+                .and_then(|bytes| explanation::from_report(&bytes, &finding));
+            return match result {
+                Ok(explanation) => {
+                    let content = match format {
+                        Format::Text => explanation.text(),
+                        Format::Json => match serde_json::to_string_pretty(&explanation) {
+                            Ok(text) => text + "\n",
+                            Err(_) => return 3,
+                        },
+                    };
+                    if io::stdout().write_all(content.as_bytes()).is_ok() {
+                        0
+                    } else {
+                        2
+                    }
+                }
+                Err(_) => {
+                    safe_error!(
+                        "Veil Guard: explanation unavailable; invalid, unsupported or missing report/finding."
+                    );
+                    2
+                }
+            };
+        }
+        Command::Model {
+            command: ModelCommand::Inspect { path },
+        } => {
+            let result = local_input::read(&path, veilguard::model::MAX_MODEL_BYTES)
+                .ok()
+                .and_then(|bytes| Model::from_json(&bytes).ok());
+            return match result {
+                Some(model) => match serde_json::to_vec_pretty(&model.inspection()) {
+                    Ok(mut bytes) => {
+                        bytes.push(b'\n');
+                        if io::stdout().write_all(&bytes).is_ok() {
+                            0
+                        } else {
+                            2
+                        }
+                    }
+                    Err(_) => 3,
+                },
+                None => {
+                    safe_error!(
+                        "Veil Guard: model unavailable or invalid; input details withheld."
+                    );
+                    2
+                }
+            };
+        }
+        Command::Scan {
+            staged: _,
+            repo,
+            format,
+            output,
+            model,
+            explanations,
+        } => (repo, format, output, model, explanations),
+    };
+    let loaded = model.as_ref().map(|path| {
+        local_input::read(path, veilguard::model::MAX_MODEL_BYTES)
+            .map(|bytes| Model::from_json(&bytes))
+    });
+    let selection = match &loaded {
+        None => ModelSelection::NotRequested,
+        Some(Err(_)) => ModelSelection::Unavailable,
+        Some(Ok(Err(_))) => ModelSelection::Invalid,
+        Some(Ok(Ok(model))) => ModelSelection::Ready(model),
+    };
+    let report = match scan_with_model(&repo, &ScanLimits::default(), selection, explanations) {
         Ok(report) => report,
         Err(code) => {
             safe_error!("Veil Guard: scan failed [{code}].");

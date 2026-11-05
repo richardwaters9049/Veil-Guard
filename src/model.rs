@@ -74,6 +74,8 @@ pub struct Prediction<'a> {
 
 #[derive(Serialize)]
 pub struct Neighbour<'a> {
+    #[serde(skip)]
+    pub reference_index: usize,
     pub id: &'a str,
     pub label: u8,
     pub distance: f64,
@@ -159,6 +161,18 @@ impl Model {
         Ok(Self(b))
     }
 
+    /// Safe metadata only; no model-supplied free text or reference vectors.
+    pub fn inspection(&self) -> serde_json::Value {
+        serde_json::json!({"schema":"veilguard.model-inspection.v1",
+            "status":"experimental_research_only", "feature_schema": features::SCHEMA,
+            "feature_names": features::NAMES, "references":self.reference_count(),
+            "k":self.0.k, "weights":self.0.weights, "review_all":self.0.policy.review_all,
+            "selection_status":self.0.policy.selection_status,
+            "margin":self.0.policy.margin, "distance_limit":self.0.policy.distance_limit,
+            "training_partition":"train",
+            "note":"Uncalibrated research votes; no credential validity or model-based blocking."})
+    }
+
     pub fn model_id(&self) -> &str {
         &self.0.model_id
     }
@@ -181,7 +195,7 @@ impl Model {
         let mut ordered = Vec::with_capacity(b.references.len());
         let mut zero_count = 0;
         let mut zero_positive = 0;
-        for r in &b.references {
+        for (reference_index, r) in b.references.iter().enumerate() {
             let contributions: [f64; 8] = std::array::from_fn(|i| {
                 let delta = r.vector[i] - z[i];
                 delta * delta
@@ -196,6 +210,7 @@ impl Model {
                 zero_positive += usize::from(r.label);
             }
             ordered.push(Neighbour {
+                reference_index,
                 id: &r.id,
                 label: r.label,
                 distance: squared.sqrt(),

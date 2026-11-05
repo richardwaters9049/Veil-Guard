@@ -1,8 +1,9 @@
-use crate::candidates;
+use crate::model::Model;
 use crate::privacy::PathGuard;
-use crate::report::{Finding, Report, escape_path};
+use crate::report::{Finding, ModelEvidence, NeighbourEvidence, Report, escape_path};
 use crate::repository;
 use crate::rules;
+use crate::{candidates, features};
 use git2::{DiffOptions, ObjectType, Patch, Repository};
 use std::collections::BTreeSet;
 use std::path::Path;
@@ -79,8 +80,37 @@ fn changed_lines(old: &[u8], new: &[u8]) -> Result<BTreeSet<u32>, &'static str> 
     Ok(changed)
 }
 
-/// Reads object bytes only. The deadline is cooperative, not a per-library-call cap.
+/// Model selection is explicit; no repository configuration can enable inference.
+#[derive(Clone, Copy)]
+pub enum ModelSelection<'a> {
+    NotRequested,
+    Unavailable,
+    Invalid,
+    Ready(&'a Model),
+}
+impl ModelSelection<'_> {
+    fn status(self) -> &'static str {
+        match self {
+            Self::NotRequested => "not_requested",
+            Self::Unavailable => "unavailable",
+            Self::Invalid => "invalid",
+            Self::Ready(_) => "experimental",
+        }
+    }
+}
+
+/// Rule-only compatibility entry point.
 pub fn scan(path: &Path, limits: &ScanLimits) -> Result<Report, &'static str> {
+    scan_with_model(path, limits, ModelSelection::NotRequested, false)
+}
+
+/// Reads object bytes only. The deadline is cooperative, not a per-library-call cap.
+pub fn scan_with_model(
+    path: &Path,
+    limits: &ScanLimits,
+    selection: ModelSelection<'_>,
+    explanations: bool,
+) -> Result<Report, &'static str> {
     if !cfg!(unix) {
         return Err("platform_unsupported");
     }
@@ -101,7 +131,10 @@ pub fn scan(path: &Path, limits: &ScanLimits) -> Result<Report, &'static str> {
         return Err("index_conflicts");
     }
     let head_tree = repository::head_tree(repo)?;
-    let mut report = Report::default();
+    let mut report = Report {
+        model_status: selection.status(),
+        ..Report::default()
+    };
     let mut privacy = PathGuard::default();
     for (number, entry) in index.iter().enumerate() {
         if start.elapsed() >= limits.deadline {
@@ -215,8 +248,9 @@ pub fn scan(path: &Path, limits: &ScanLimits) -> Result<Report, &'static str> {
                     rule_id: rule.rule,
                     severity: "high",
                     policy: "block",
-                    model_status: "not_implemented",
+                    model_status: "not_applicable",
                     review_reason: None,
+                    model: None,
                 },
                 limits.max_findings,
             );
@@ -230,6 +264,18 @@ pub fn scan(path: &Path, limits: &ScanLimits) -> Result<Report, &'static str> {
             limits.max_candidates.saturating_sub(report.candidates),
         );
         report.candidates += extraction.candidates.len();
+        let source_lines: Vec<_> = if matches!(selection, ModelSelection::Ready(_)) {
+            let mut offset = 0;
+            text.split('\n')
+                .map(|line| {
+                    let entry = (offset, line.trim_end_matches('\r'));
+                    offset += line.len() + 1;
+                    entry
+                })
+                .collect()
+        } else {
+            Vec::new()
+        };
         for candidate in extraction.candidates {
             privacy.remember_source(&text[candidate.span.clone()]);
             if candidate.reason == "model_not_available" {
@@ -240,6 +286,60 @@ pub fn scan(path: &Path, limits: &ScanLimits) -> Result<Report, &'static str> {
                 .any(|r| r.span.start < candidate.span.end && candidate.span.start < r.span.end)
             {
                 continue;
+            }
+            let mut model_status = if candidate.reason == "model_not_available" {
+                selection.status()
+            } else {
+                "unsupported"
+            };
+            let mut review_reason = Some(candidate.reason);
+            let mut evidence = None;
+            if candidate.reason == "model_not_available"
+                && let ModelSelection::Ready(model) = selection
+            {
+                if start.elapsed() >= limits.deadline {
+                    report.global_issue("cooperative_deadline_exceeded");
+                    report.model_status = "degraded";
+                    model_status = "inference_failed";
+                    review_reason = Some("inference_budget_exceeded");
+                } else {
+                    let (line_start, line) = source_lines[candidate.line as usize - 1];
+                    let span = candidate.span.start - line_start..candidate.span.end - line_start;
+                    let prediction = features::from_line(line, span)
+                        .ok()
+                        .and_then(|f| model.predict(f.coordinates()).ok());
+                    if let Some(prediction) = prediction {
+                        model_status = "ranked_experimental";
+                        review_reason = prediction
+                            .review_reason
+                            .or(Some("experimental_review_only"));
+                        evidence = Some(ModelEvidence {
+                            score: prediction.score,
+                            rank: 0,
+                            nearest: prediction.nearest,
+                            zero_count: prediction.zero_count,
+                            conflict: prediction.conflict,
+                            outside: prediction.outside,
+                            neighbours: explanations.then(|| {
+                                prediction
+                                    .neighbours
+                                    .iter()
+                                    .take(5)
+                                    .map(|n| NeighbourEvidence {
+                                        reference: n.reference_index + 1,
+                                        label: n.label,
+                                        distance: n.distance,
+                                        contributions: n.contributions,
+                                    })
+                                    .collect()
+                            }),
+                        });
+                    } else {
+                        report.model_status = "degraded";
+                        model_status = "inference_failed";
+                        review_reason = Some("inference_failed");
+                    }
+                }
             }
             report.add_finding(
                 Finding {
@@ -256,8 +356,9 @@ pub fn scan(path: &Path, limits: &ScanLimits) -> Result<Report, &'static str> {
                     },
                     severity: "review",
                     policy: "review",
-                    model_status: "not_implemented",
-                    review_reason: Some(candidate.reason),
+                    model_status,
+                    review_reason,
+                    model: evidence,
                 },
                 limits.max_findings,
             );
@@ -281,6 +382,19 @@ pub fn scan(path: &Path, limits: &ScanLimits) -> Result<Report, &'static str> {
     });
     for (index, finding) in report.findings.iter_mut().enumerate() {
         finding.id = format!("finding-{:05}", index + 1);
+    }
+    // Preserve occurrence IDs/location order. Rank only retained, model-scored reviews.
+    let mut ranked: Vec<_> = report
+        .findings
+        .iter()
+        .enumerate()
+        .filter_map(|(i, f)| f.model.as_ref().map(|m| (i, m.score)))
+        .collect();
+    ranked.sort_by(|a, b| b.1.total_cmp(&a.1).then_with(|| a.0.cmp(&b.0)));
+    for (rank, (index, _)) in ranked.into_iter().enumerate() {
+        if let Some(model) = &mut report.findings[index].model {
+            model.rank = rank + 1;
+        }
     }
     if !scoped.unchanged() {
         report.global_issue("repository_metadata_changed");

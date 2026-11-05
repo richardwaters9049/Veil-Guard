@@ -1,0 +1,30 @@
+{
+  "report_schema": "veilguard.report.v3",
+  "scope": "staged_index",
+  "scanner_version": "0.1.0-dev.4",
+  "candidate_grammar": "veilguard.candidates.v1",
+  "model_status": "not_requested",
+  "path_status": "escaped",
+  "coverage_complete": true,
+  "scanned_files": 1,
+  "inspected_bytes": 27,
+  "candidates": 1,
+  "feature_eligible_candidates": 1,
+  "findings": [
+    {
+      "id": "finding-00001",
+      "path": "fixtures/config.example",
+      "staged_line": 4,
+      "staged_column": 10,
+      "end_line": 4,
+      "end_column": 18,
+      "rule_id": "sensitive-assignment",
+      "severity": "review",
+      "policy": "review",
+      "model_status": "not_requested",
+      "review_reason": "model_not_available",
+      "model": null
+    }
+  ],
+  "issues": []
+}
