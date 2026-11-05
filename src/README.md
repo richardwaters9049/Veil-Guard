@@ -1,6 +1,6 @@
 # Native implementation
 
-Phase One milestone 1A is implemented. See the [implementation record](../docs/15-phase-one.md) for executable commands, scope and limitations, and the [delivery plan](../docs/09-delivery-plan.md) for all remaining phase gates.
+Phase One milestone 1A and the candidate/report portion of 1B are implemented. See the [implementation record](../docs/15-phase-one.md) for executable commands, scope and limitations, and the [delivery plan](../docs/09-delivery-plan.md) for all remaining phase gates.
 
 Git index semantics are documented in [R17](../docs/13-sources.md#r17); the git2 API is [R18](../docs/13-sources.md#r18). Those sources inform the design. The integration suite supplies the limited project evidence.
 
@@ -8,7 +8,9 @@ Git index semantics are documented in [R17](../docs/13-sources.md#r17); the git2
 | --- | --- |
 | lib.rs | Scanner API |
 | git_index.rs | Index snapshot, bounded object reading and in-memory changed-line calculation |
-| rules.rs | Two blocking pattern rules and a sensitive-assignment review rule |
+| rules.rs | Independent blocking pattern occurrences |
+| candidates.rs | Bounded lexical candidates, byte spans and unsupported-review reasons |
+| privacy.rs | Transient observed-value path scrubbing and incomplete-scan path withholding |
 | report.rs | Redacted data contract, coverage state, escaped path display and text output |
 | main.rs | CLI parsing, redacted errors, output files and exit handling |
 

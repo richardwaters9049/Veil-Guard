@@ -1,3 +1,5 @@
+use crate::candidates;
+use crate::privacy::PathGuard;
 use crate::report::{Finding, Report, escape_path};
 use crate::rules;
 use git2::{DiffOptions, ErrorCode, ObjectType, Patch, Repository};
@@ -10,6 +12,7 @@ pub struct ScanLimits {
     pub max_blob_bytes: usize,
     pub max_total_bytes: usize,
     pub max_findings: usize,
+    pub max_candidates: usize,
     pub max_index_entries: usize,
     pub deadline: Duration,
 }
@@ -20,6 +23,7 @@ impl Default for ScanLimits {
             max_blob_bytes: 1024 * 1024,
             max_total_bytes: 20 * 1024 * 1024,
             max_findings: 10_000,
+            max_candidates: 10_000,
             max_index_entries: 100_000,
             deadline: Duration::from_secs(10),
         }
@@ -63,13 +67,37 @@ fn blob_bytes(
     Ok(blob.content().to_vec())
 }
 
-/// Read staged index entries and Git object bytes only. Diff uses in-memory buffers,
-/// with no repository-supplied paths, filters, external commands or working-tree data.
-/// The cooperative deadline bounds scheduling, not an individual libgit2 call.
+fn changed_lines(old: &[u8], new: &[u8]) -> Result<BTreeSet<u32>, &'static str> {
+    let mut options = DiffOptions::new();
+    options.force_text(true).context_lines(0);
+    let patch = Patch::from_buffers(old, None, new, None, Some(&mut options))
+        .map_err(|_| "in_memory_diff_failed")?;
+    let mut changed = BTreeSet::new();
+    for hunk in 0..patch.num_hunks() {
+        let (_, count) = patch.hunk(hunk).map_err(|_| "diff_hunk_unavailable")?;
+        for line in 0..count {
+            let line = patch
+                .line_in_hunk(hunk, line)
+                .map_err(|_| "diff_line_unavailable")?;
+            if line.origin() == '+'
+                && let Some(number) = line.new_lineno()
+            {
+                changed.insert(number);
+            }
+        }
+    }
+    Ok(changed)
+}
+
+/// Reads object bytes only. The deadline is cooperative, not a per-library-call cap.
 pub fn scan(path: &Path, limits: &ScanLimits) -> Result<Report, &'static str> {
+    if !cfg!(unix) {
+        return Err("platform_unsupported");
+    }
     if limits.max_blob_bytes == 0
         || limits.max_total_bytes == 0
         || limits.max_findings == 0
+        || limits.max_candidates == 0
         || limits.max_index_entries == 0
         || limits.deadline.is_zero()
     {
@@ -90,6 +118,7 @@ pub fn scan(path: &Path, limits: &ScanLimits) -> Result<Report, &'static str> {
         Err(_) => return Err("head_unavailable"),
     };
     let mut report = Report::default();
+    let mut privacy = PathGuard::default();
     for (number, entry) in index.iter().enumerate() {
         if start.elapsed() >= limits.deadline {
             report.issue(None, "cooperative_deadline_exceeded");
@@ -168,59 +197,97 @@ pub fn scan(path: &Path, limits: &ScanLimits) -> Result<Report, &'static str> {
         } else {
             Vec::new()
         };
-        let mut options = DiffOptions::new();
-        options.force_text(true).context_lines(0);
-        let patch =
-            match Patch::from_buffers(&old_bytes, None, &new_bytes, None, Some(&mut options)) {
-                Ok(value) => value,
-                Err(_) => {
-                    report.issue(Some(display), "in_memory_diff_failed");
-                    continue;
-                }
-            };
-        let mut changed = BTreeSet::new();
-        for hunk in 0..patch.num_hunks() {
-            let (_, count) = patch.hunk(hunk).map_err(|_| "diff_hunk_unavailable")?;
-            for line in 0..count {
-                let line = patch
-                    .line_in_hunk(hunk, line)
-                    .map_err(|_| "diff_line_unavailable")?;
-                if line.origin() == '+'
-                    && let Some(number) = line.new_lineno()
-                {
-                    changed.insert(number);
-                }
+        let changed = match changed_lines(&old_bytes, &new_bytes) {
+            Ok(value) => value,
+            Err(code) => {
+                report.issue(Some(display), code);
+                continue;
             }
+        };
+        let (blocking, rule_limit) = rules::detect(text, &changed, limits.max_findings);
+        for rule in &blocking {
+            // Retained transiently for cross-file path redaction, never serialised.
+            for value in text[rule.span.clone()].lines() {
+                privacy.remember(value.trim());
+            }
+            report.add_finding(
+                Finding {
+                    id: String::new(),
+                    path: display.clone(),
+                    staged_line: rule.line,
+                    staged_column: rule.column,
+                    end_line: rule.end_line,
+                    end_column: rule.end_column,
+                    rule_id: rule.rule,
+                    severity: "high",
+                    policy: "block",
+                    model_status: "not_implemented",
+                    review_reason: None,
+                },
+                limits.max_findings,
+            );
         }
-        let (findings, limit_hit) = rules::detect(
+        if rule_limit {
+            report.global_issue("finding_limit_exceeded");
+        }
+        let extraction = candidates::extract(
             text,
             &changed,
-            limits.max_findings.saturating_sub(report.findings.len()),
+            limits.max_candidates.saturating_sub(report.candidates),
         );
-        report.scanned_files += 1;
-        for finding in findings {
-            report.findings.push(Finding {
-                id: format!("finding-{:05}", report.findings.len() + 1),
-                path: display.clone(),
-                staged_line: finding.line,
-                rule_id: finding.rule,
-                severity: if finding.policy == "block" {
-                    "high"
-                } else {
-                    "review"
+        report.candidates += extraction.candidates.len();
+        for candidate in extraction.candidates {
+            privacy.remember_source(&text[candidate.span.clone()]);
+            if candidate.reason == "model_not_available" {
+                report.feature_eligible_candidates += 1;
+            }
+            if blocking
+                .iter()
+                .any(|r| r.span.start < candidate.span.end && candidate.span.start < r.span.end)
+            {
+                continue;
+            }
+            report.add_finding(
+                Finding {
+                    id: String::new(),
+                    path: display.clone(),
+                    staged_line: candidate.line,
+                    staged_column: candidate.column,
+                    end_line: candidate.line,
+                    end_column: candidate.end_column,
+                    rule_id: if candidate.sensitive {
+                        "sensitive-assignment"
+                    } else {
+                        "generic-candidate"
+                    },
+                    severity: "review",
+                    policy: "review",
+                    model_status: "not_implemented",
+                    review_reason: Some(candidate.reason),
                 },
-                policy: finding.policy,
-                model_status: "not_implemented",
-            });
+                limits.max_findings,
+            );
         }
-        if limit_hit {
-            report.issue(Some(display), "finding_limit_exceeded");
-            break;
+        if extraction.limit_hit {
+            report.global_issue("candidate_limit_exceeded");
         }
+        report.scanned_files += 1;
         if start.elapsed() >= limits.deadline {
-            report.issue(None, "cooperative_deadline_exceeded");
+            report.global_issue("cooperative_deadline_exceeded");
             break;
         }
     }
+    report.findings.sort_by(|a, b| {
+        (&a.path, a.staged_line, a.staged_column, a.rule_id).cmp(&(
+            &b.path,
+            b.staged_line,
+            b.staged_column,
+            b.rule_id,
+        ))
+    });
+    for (index, finding) in report.findings.iter_mut().enumerate() {
+        finding.id = format!("finding-{:05}", index + 1);
+    }
+    privacy.finish(&mut report);
     Ok(report)
 }

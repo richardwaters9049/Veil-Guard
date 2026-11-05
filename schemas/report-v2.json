@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/richardwaters9049/Veil-Guard/blob/phase-one/staged-scanner/schemas/report-v2.json",
+  "title": "Veil Guard Phase One redacted report v2",
+  "description": "One-based byte columns, end exclusive. No raw values, hashes or feature vectors. Cross-field consistency is tested separately.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "report_schema",
+    "scope",
+    "scanner_version",
+    "candidate_grammar",
+    "model_status",
+    "path_status",
+    "coverage_complete",
+    "scanned_files",
+    "inspected_bytes",
+    "candidates",
+    "feature_eligible_candidates",
+    "findings",
+    "issues"
+  ],
+  "properties": {
+    "report_schema": {
+      "const": "veilguard.report.v2"
+    },
+    "scope": {
+      "const": "staged_index"
+    },
+    "scanner_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "candidate_grammar": {
+      "const": "veilguard.candidates.v1"
+    },
+    "model_status": {
+      "const": "not_implemented"
+    },
+    "path_status": {
+      "enum": [
+        "escaped",
+        "redacted",
+        "withheld"
+      ]
+    },
+    "coverage_complete": {
+      "type": "boolean"
+    },
+    "scanned_files": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "inspected_bytes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "candidates": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "feature_eligible_candidates": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/finding"
+      }
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/issue"
+      }
+    }
+  },
+  "$defs": {
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "path",
+        "staged_line",
+        "staged_column",
+        "end_line",
+        "end_column",
+        "rule_id",
+        "severity",
+        "policy",
+        "model_status",
+        "review_reason"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^finding-[0-9]{5,}$"
+        },
+        "path": {
+          "type": "string"
+        },
+        "staged_line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "staged_column": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "end_line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "end_column": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "rule_id": {
+          "enum": [
+            "github-pat-shape",
+            "private-key-marker",
+            "sensitive-assignment",
+            "generic-candidate"
+          ]
+        },
+        "severity": {
+          "enum": [
+            "high",
+            "review"
+          ]
+        },
+        "policy": {
+          "enum": [
+            "block",
+            "review"
+          ]
+        },
+        "model_status": {
+          "const": "not_implemented"
+        },
+        "review_reason": {
+          "enum": [
+            "model_not_available",
+            "non_ascii_or_control_literal",
+            "short_literal",
+            "long_literal",
+            "multiline_delimiter_unsupported",
+            "multiline_or_template_unsupported",
+            "unterminated_literal",
+            "unsupported_expression",
+            "escaped_literal",
+            null
+          ]
+        }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "code"
+      ],
+      "properties": {
+        "path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "code": {
+          "type": "string",
+          "pattern": "^[a-z_]+$"
+        }
+      }
+    }
+  }
+}

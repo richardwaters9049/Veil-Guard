@@ -2,7 +2,7 @@
 
 ## Explainable, offline credential triage for staged Git changes
 
-**Status: Phase One development — 5 November 2026.** The staged rule-only scanner milestone is implemented; Phase One remains in progress. No feature extractor, trained model or measured detection-accuracy results exist yet. Veil Guard is a working project name; naming clearance is pending.
+**Status: Phase One development — 5 November 2026.** The staged scanner and candidate/report slice are implemented; Phase One remains in progress. No feature extractor, trained model or measured detection-accuracy results exist yet. Veil Guard is a working project name; naming clearance is pending.
 
 Veil Guard will be a native command-line developer security tool. It will read the Git index, identify possible hard-coded credentials, and use an eight-dimensional k-nearest neighbours model to rank ambiguous candidates for review. It will explain decisions using redacted locations, numerical feature differences and curated example IDs. It will have no web server, browser UI, dashboard or cloud inference.
 
@@ -45,6 +45,7 @@ Start with the [annotated sources and professor profiles](docs/13-sources.md), i
 | [Sources and academic reading](docs/13-sources.md) | Annotated references, professors, theses, dissertations and reading order |
 | [Claims and evidence](docs/14-claims-and-evidence.md) | External evidence, choices, hypotheses, targets and pending results |
 | [Phase One implementation](docs/15-phase-one.md) | Executable commands, milestone evidence and remaining work |
+| [Candidate/report contract](docs/16-candidate-and-report-contract.md) | Implemented lexical grammar, byte spans, report v2 and filename policy |
 | [Model card template](models/MODEL_CARD.md) | Intended use, evidence and limitations |
 | [Data card template](data/DATA_CARD.md) | Provenance, consent and split accounting |
 
@@ -52,7 +53,7 @@ Start with the [annotated sources and professor profiles](docs/13-sources.md), i
 
 `schemas/feature-contract.json` is the machine-readable eight-feature contract.
 `examples/illustrative-vectors.json` contains fabricated vectors to explain the mathematics, not training data.
-`examples/finding.example.json` shows a fully redacted proposed output.
+`examples/finding.example.json` is an authored example of the current report-v2 contract; `schemas/report-v2.json` defines its JSON shape.
 `scripts/check_plan.py` validates planning links, source citations and illustrative mathematics using Python's standard library. `docs/references.json` holds the structured source register. These checks do not verify source entailment, external link uptime or model performance.
 `src/` contains the first Rust scanner; `tests/staged_scan.rs` exercises it. `research/` remains reserved for the offline ML pipeline.
 
@@ -67,9 +68,9 @@ cargo run --locked -- scan --staged --repo /absolute/path/to/owned-repository
 cargo run --locked -- scan --staged --repo /absolute/path/to/owned-repository --format json
 ```
 
-Replace the example repository path with a directory you own or have permission to inspect. The current rules detect two narrow patterns and sensitive-key assignments; they are not a comprehensive scanner. Exit 0 can include review findings and does not establish safety. See [current scope and limits](docs/15-phase-one.md).
+Replace the example repository path with a directory you own or have permission to inspect. The current scanner detects two narrow patterns and reports quoted/unquoted lexical candidates for review; it is not a comprehensive scanner or language parser. Exit 0 can include review findings and does not establish safety. See [current scope and limits](docs/15-phase-one.md).
 
-Next: finish general bounded candidate extraction and Phase One acceptance before starting feature parity or training.
+Next: finish repository-format/alternate-object-store review and Phase One hardening/acceptance before feature parity or training.
 
 ### Run the current planning check
 

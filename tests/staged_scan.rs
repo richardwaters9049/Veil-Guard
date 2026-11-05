@@ -164,7 +164,7 @@ fn generic_sensitive_assignment_is_visible_but_does_not_block() {
     let fixture = Fixture::new();
     fixture.stage(
         "config.txt",
-        "api_key = 'authored-fixture-only'\ntokenizer = 'ordinary'\n",
+        "api_key = 'authored-fixture-only'\ntokenizer = 'short'\n",
     );
     let report = fixture.report();
     assert_eq!(report.findings.len(), 1);
@@ -461,4 +461,285 @@ fn byte_budget_counts_both_baseline_and_staged_blob() {
     let report = scan(fixture.path(), &limits).unwrap();
     assert_eq!(report.exit_code(), 2);
     assert_eq!(report.issues[0].code, "total_bytes_limit_exceeded");
+}
+
+#[test]
+fn separate_quoted_values_on_one_line_keep_distinct_byte_spans() {
+    let fixture = Fixture::new();
+    fixture.stage("config.txt", "call(\"abcdefgh\", \"ijklmnop\")\n");
+    let report = fixture.report();
+    assert_eq!(report.candidates, 2);
+    assert_eq!(report.feature_eligible_candidates, 2);
+    assert_eq!(report.findings.len(), 2);
+    assert_eq!(
+        (
+            report.findings[0].staged_column,
+            report.findings[0].end_column
+        ),
+        (7, 15)
+    );
+    assert_eq!(
+        (
+            report.findings[1].staged_column,
+            report.findings[1].end_column
+        ),
+        (19, 27)
+    );
+    assert_ne!(report.findings[0].id, report.findings[1].id);
+    assert!(!report.text().contains("abcdefgh"));
+}
+
+#[test]
+fn repeated_values_are_deduplicated_by_location_only() {
+    let fixture = Fixture::new();
+    fixture.stage("config.txt", "call(\"abcdefgh\", \"abcdefgh\")");
+    let report = fixture.report();
+    assert_eq!(report.candidates, 2);
+    assert_eq!(report.findings.len(), 2);
+    assert_ne!(report.findings[0].id, report.findings[1].id);
+}
+
+#[test]
+fn quoted_assignment_keys_and_values_are_not_double_counted() {
+    let fixture = Fixture::new();
+    fixture.stage("config.txt", "\"privateKey\": \"abcdefgh\", # fixture\n");
+    let report = fixture.report();
+    assert_eq!(report.candidates, 1);
+    assert_eq!(report.findings.len(), 1);
+    assert_eq!(report.findings[0].rule_id, "sensitive-assignment");
+    assert_eq!(
+        report.findings[0].review_reason,
+        Some("model_not_available")
+    );
+}
+
+#[test]
+fn crlf_and_spaces_inside_values_are_preserved_in_span_metadata() {
+    let fixture = Fixture::new();
+    fixture.stage("config.txt", "token = \" abcd ef \"\r\n");
+    let report = fixture.report();
+    assert_eq!(report.feature_eligible_candidates, 1);
+    assert_eq!(report.findings[0].staged_column, 10);
+    assert_eq!(report.findings[0].end_column, 19);
+    assert_eq!(report.findings[0].end_line, 1);
+}
+
+#[test]
+fn supported_unquoted_literals_keep_url_slashes_and_trailing_comments_out() {
+    let fixture = Fixture::new();
+    fixture.stage("config.txt", "endpoint=https://lab.invalid/x # fixture\n");
+    let report = fixture.report();
+    assert_eq!(report.candidates, 1);
+    assert_eq!(report.feature_eligible_candidates, 1);
+    assert_eq!(
+        report.findings[0].end_column - report.findings[0].staged_column,
+        21
+    );
+}
+
+#[test]
+fn comment_only_quoted_strings_are_not_generic_candidates() {
+    let fixture = Fixture::new();
+    fixture.stage("config.txt",
+        "// ignored \"abcdefgh\"\n# ignored \"ijklmnop\"\ncall(\"qrstuvwx\") # \"comment-only-value\"\n");
+    assert_eq!(fixture.report().candidates, 1);
+    fixture.stage("config.txt", format!("# {}\n", fake_pat()));
+    assert_eq!(fixture.report().exit_code(), 1); // Pattern rules do not ignore comments.
+}
+
+#[test]
+fn unsupported_values_stay_visible_without_feature_eligibility() {
+    let cases = [
+        ("token = \"authored\\nfixture\"\n", "escaped_literal"),
+        (
+            "token = \"lab-é-fixture\"\n",
+            "non_ascii_or_control_literal",
+        ),
+        (
+            "token = \"abcdefgh\" + \"ijklmnop\"\n",
+            "unsupported_expression",
+        ),
+        ("token = build(\"abcdefgh\")\n", "unsupported_expression"),
+        ("token = \"abcdefgh\n", "unterminated_literal"),
+        (
+            "token = \"\"\"abcdefgh\"\"\"\n",
+            "multiline_delimiter_unsupported",
+        ),
+        ("token = abc+defgh==\n", "unsupported_expression"),
+    ];
+    for (source, expected) in cases {
+        let fixture = Fixture::new();
+        fixture.stage("config.txt", source);
+        let report = fixture.report();
+        assert_eq!(report.candidates, 1);
+        assert_eq!(report.feature_eligible_candidates, 0);
+        assert_eq!(report.findings[0].review_reason, Some(expected));
+        assert_eq!(report.findings[0].policy, "review");
+        assert_eq!(report.exit_code(), 0);
+    }
+}
+
+#[test]
+fn generic_concatenation_is_review_only() {
+    let fixture = Fixture::new();
+    fixture.stage("config.txt", "use(\"abcdefgh\" + \"ijklmnop\")\n");
+    let report = fixture.report();
+    assert_eq!(report.candidates, 2);
+    assert_eq!(report.feature_eligible_candidates, 0);
+    assert!(
+        report
+            .findings
+            .iter()
+            .all(|f| f.review_reason == Some("unsupported_expression"))
+    );
+}
+
+#[test]
+fn sensitive_length_boundaries_are_explicit_and_not_imputed() {
+    let fixture = Fixture::new();
+    fixture.stage(
+        "config.txt",
+        format!(
+            "password = '{}'\nsecret = '{}'\ntoken = '{}'\napi_key = '{}'\nprivate_key = ''\n",
+            "a".repeat(7),
+            "b".repeat(8),
+            "c".repeat(256),
+            "d".repeat(257)
+        ),
+    );
+    let report = fixture.report();
+    assert_eq!(report.candidates, 5);
+    assert_eq!(report.feature_eligible_candidates, 2);
+    assert_eq!(report.findings[0].review_reason, Some("short_literal"));
+    assert_eq!(report.findings[3].review_reason, Some("long_literal"));
+    assert_eq!(report.findings[4].review_reason, Some("short_literal"));
+}
+
+#[test]
+fn candidate_budget_is_independent_and_does_not_hide_later_blocking_rules() {
+    let fixture = Fixture::new();
+    fixture.stage("a.txt", "call(\"abcdefgh\", \"ijklmnop\")");
+    fixture.stage("z.txt", fake_pat());
+    let limits = ScanLimits {
+        max_candidates: 1,
+        ..ScanLimits::default()
+    };
+    let report = scan(fixture.path(), &limits).unwrap();
+    assert_eq!(report.candidates, 1);
+    assert_eq!(report.exit_code(), 2);
+    assert!(
+        report
+            .issues
+            .iter()
+            .any(|i| i.code == "candidate_limit_exceeded")
+    );
+    assert!(report.findings.iter().any(|f| f.policy == "block"));
+}
+
+#[test]
+fn reviews_cannot_consume_the_slot_for_a_later_blocking_rule() {
+    let fixture = Fixture::new();
+    fixture.stage("a.txt", "token = 'abcdefgh'\n");
+    fixture.stage("z.txt", fake_pat());
+    let limits = ScanLimits {
+        max_findings: 1,
+        ..ScanLimits::default()
+    };
+    let report = scan(fixture.path(), &limits).unwrap();
+    assert_eq!(report.findings.len(), 1);
+    assert_eq!(report.findings[0].policy, "block");
+    assert_eq!(report.exit_code(), 2);
+}
+
+#[test]
+fn two_pattern_matches_on_one_line_are_separate_occurrences() {
+    let fixture = Fixture::new();
+    fixture.stage("config.txt", format!("{} {}", fake_pat(), fake_pat()));
+    let report = fixture.report();
+    assert_eq!(report.findings.len(), 2);
+    assert_eq!(report.findings[0].staged_column, 1);
+    assert_eq!(report.findings[1].staged_column, 42);
+    assert_ne!(report.findings[0].id, report.findings[1].id);
+}
+
+#[test]
+fn blocking_span_is_not_duplicated_as_an_unranked_generic_finding() {
+    let fixture = Fixture::new();
+    fixture.stage("config.txt", format!("token = \"{}\"\n", fake_pat()));
+    let report = fixture.report();
+    assert_eq!(report.candidates, 1);
+    assert_eq!(report.findings.len(), 1);
+    assert_eq!(report.findings[0].policy, "block");
+}
+
+#[test]
+fn source_values_are_redacted_from_same_and_cross_file_report_paths() {
+    let fixture = Fixture::new();
+    fixture.stage("a-abcdefgh.txt", "token = 'ijklmnop'\n");
+    fixture.stage("z-source.txt", "token = 'abcdefgh'\n");
+    for format in ["text", "json"] {
+        let output = fixture.run(&["--format", format]);
+        assert_eq!(output.status.code(), Some(0));
+        let rendered = String::from_utf8(output.stdout).unwrap();
+        assert!(!rendered.contains("abcdefgh"));
+        assert!(!rendered.contains("ijklmnop"));
+    }
+    assert_eq!(fixture.report().path_status, "redacted");
+}
+
+#[test]
+fn recognised_pattern_is_redacted_from_a_filename_even_without_matching_source_value() {
+    let fixture = Fixture::new();
+    fixture.stage(format!("{}.txt", fake_pat()), "token = 'abcdefgh'\n");
+    assert!(!fixture.report().text().contains(&fake_pat()));
+}
+
+#[test]
+fn inner_literals_in_unsupported_expressions_are_redacted_from_paths() {
+    let fixture = Fixture::new();
+    fixture.stage("a-abcdefgh.txt", "token = build(\"abcdefgh\")\n");
+    assert!(!fixture.report().text().contains("abcdefgh"));
+}
+
+#[test]
+fn incomplete_scan_withholds_all_paths_but_retains_findings_and_issue_codes() {
+    let fixture = Fixture::new();
+    fixture.stage("a-unknown-sensitive-value.txt", fake_pat());
+    fixture.stage("z.bin", b"\x00binary");
+    let report = fixture.report();
+    assert_eq!(report.path_status, "withheld");
+    assert_eq!(report.findings.len(), 1);
+    assert_eq!(report.findings[0].path, "[path withheld]");
+    assert_eq!(report.issues[0].code, "binary_blob_unsupported");
+    assert!(!report.text().contains("unknown-sensitive-value"));
+}
+
+#[test]
+fn v2_report_and_example_have_the_same_contract_and_no_value_fields() {
+    let fixture = Fixture::new();
+    fixture.stage("config.txt", "token = 'abcdefgh'\n");
+    let report = fixture.report();
+    let json = serde_json::to_value(report).unwrap();
+    let example: serde_json::Value =
+        serde_json::from_str(include_str!("../examples/finding.example.json")).unwrap();
+    assert_eq!(json["report_schema"], "veilguard.report.v2");
+    assert_eq!(json["candidate_grammar"], "veilguard.candidates.v1");
+    assert_eq!(
+        json.as_object().unwrap().keys().collect::<Vec<_>>(),
+        example.as_object().unwrap().keys().collect::<Vec<_>>()
+    );
+    assert_eq!(
+        json["findings"][0]
+            .as_object()
+            .unwrap()
+            .keys()
+            .collect::<Vec<_>>(),
+        example["findings"][0]
+            .as_object()
+            .unwrap()
+            .keys()
+            .collect::<Vec<_>>()
+    );
+    assert!(json["findings"][0].get("value").is_none());
+    assert!(json["findings"][0].get("features").is_none());
 }

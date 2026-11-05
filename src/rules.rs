@@ -1,5 +1,6 @@
 use regex::Regex;
 use std::collections::BTreeSet;
+use std::ops::Range;
 use std::sync::LazyLock;
 
 static PAT: LazyLock<Regex> =
@@ -8,66 +9,37 @@ static KEY: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(r"^-----BEGIN (?:RSA |EC |DSA |OPENSSH |ENCRYPTED )?PRIVATE KEY-----$")
         .expect("static rule")
 });
-static ASSIGNMENT: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r#"^\s*["']?([A-Za-z_][A-Za-z0-9_.-]*)["']?\s*[:=]\s*(\S.*?)\s*$"#)
-        .expect("static rule")
-});
 
-pub struct RuleFinding {
+pub(crate) struct RuleFinding {
     pub line: u32,
+    pub column: u32,
+    pub end_line: u32,
+    pub end_column: u32,
+    pub span: Range<usize>,
     pub rule: &'static str,
-    pub policy: &'static str,
 }
 
-fn sensitive_key(key: &str) -> bool {
-    const WORDS: [&str; 7] = [
-        "password",
-        "passwd",
-        "secret",
-        "token",
-        "credential",
-        "apikey",
-        "privatekey",
-    ];
-    let mut separated = String::new();
-    let mut previous_lower = false;
-    for c in key.chars() {
-        if c.is_ascii_uppercase() && previous_lower {
-            separated.push(' ');
-        }
-        if c.is_ascii_alphanumeric() {
-            separated.push(c.to_ascii_lowercase());
-        } else {
-            separated.push(' ');
-        }
-        previous_lower = c.is_ascii_lowercase();
-    }
-    let tokens: Vec<_> = separated.split_whitespace().collect();
-    tokens.iter().any(|t| WORDS.contains(t))
-        || tokens
-            .windows(2)
-            .any(|w| WORDS.contains(&format!("{}{}", w[0], w[1]).as_str()))
-}
-
-/// Scope: one finding per physical line/rule, not a candidate count or 8D extractor.
-/// Assignment values are deliberately never copied into a finding.
-pub fn detect(text: &str, changed: &BTreeSet<u32>, cap: usize) -> (Vec<RuleFinding>, bool) {
+pub(crate) fn detect(text: &str, changed: &BTreeSet<u32>, cap: usize) -> (Vec<RuleFinding>, bool) {
     let mut found = Vec::new();
-    let mut key_start: Option<(u32, String)> = None;
+    let mut key_start: Option<(usize, String)> = None;
     let mut key_changed = None;
-    let mut last_line = 0;
-    for (i, line) in text.split('\n').enumerate() {
-        let number = (i + 1) as u32;
+    let mut offset = 0;
+    let mut last_line = 1;
+    let mut last_column = 1;
+    for (index, physical) in text.split_inclusive('\n').enumerate() {
+        let number = (index + 1) as u32;
+        let line = physical.trim_end_matches('\n').trim_end_matches('\r');
         last_line = number;
+        last_column = line.len() as u32 + 1;
         let trimmed = line.trim();
         if key_start.is_none() && KEY.is_match(trimmed) {
-            key_start = Some((number, trimmed.replacen("BEGIN", "END", 1)));
+            key_start = Some((offset, trimmed.replacen("BEGIN", "END", 1)));
             key_changed = None;
         }
         if key_start.is_some() && changed.contains(&number) && key_changed.is_none() {
             key_changed = Some(number);
         }
-        if let Some((_, end)) = &key_start
+        if let Some((start, end)) = &key_start
             && trimmed == end
         {
             if let Some(changed_line) = key_changed {
@@ -76,52 +48,52 @@ pub fn detect(text: &str, changed: &BTreeSet<u32>, cap: usize) -> (Vec<RuleFindi
                 }
                 found.push(RuleFinding {
                     line: changed_line,
+                    column: 1,
+                    end_line: number,
+                    end_column: last_column,
+                    span: *start..offset + line.len(),
                     rule: "private-key-marker",
-                    policy: "block",
                 });
             }
             key_start = None;
             key_changed = None;
         }
-        if !changed.contains(&number) {
-            continue;
-        }
-        let matched_pat = PAT.is_match(line);
-        if matched_pat {
-            if found.len() == cap {
-                return (found, true);
+        if changed.contains(&number) {
+            for matched in PAT.find_iter(line) {
+                if found.len() == cap {
+                    return (found, true);
+                }
+                found.push(RuleFinding {
+                    line: number,
+                    column: matched.start() as u32 + 1,
+                    end_line: number,
+                    end_column: matched.end() as u32 + 1,
+                    span: offset + matched.start()..offset + matched.end(),
+                    rule: "github-pat-shape",
+                });
             }
-            found.push(RuleFinding {
-                line: number,
-                rule: "github-pat-shape",
-                policy: "block",
-            });
         }
-        if !matched_pat
-            && let Some(captures) = ASSIGNMENT.captures(line)
-            && sensitive_key(&captures[1])
-        {
-            if found.len() == cap {
-                return (found, true);
-            }
-            found.push(RuleFinding {
-                line: number,
-                rule: "sensitive-assignment",
-                policy: "review",
-            });
-        }
+        offset += physical.len();
     }
-    // An unterminated private-key block is still a conservative marker warning.
-    if key_start.is_some() && key_changed.is_some_and(|n| n <= last_line) {
+    if let Some((start, _)) = key_start
+        && let Some(changed_line) = key_changed
+    {
         if found.len() == cap {
             return (found, true);
         }
         found.push(RuleFinding {
-            line: key_changed.expect("checked above"),
+            line: changed_line,
+            column: 1,
+            end_line: last_line,
+            end_column: last_column,
+            span: start..text.len(),
             rule: "private-key-marker",
-            policy: "block",
         });
     }
-    found.sort_by_key(|f| (f.line, f.rule));
+    found.sort_by_key(|f| (f.line, f.column, f.rule));
     (found, false)
+}
+
+pub(crate) fn redact_path_patterns(path: &str) -> String {
+    PAT.replace_all(path, "[REDACTED]").into_owned()
 }

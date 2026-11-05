@@ -9,7 +9,7 @@ The goal is a native offline credential-review CLI with an evaluated eight-dimen
 | Phase | Status | Dedicated branch | Planned lead commit |
 | --- | --- | --- | --- |
 | 0: evidence-backed planning | Complete baseline | main | Feat/Docs: Sources added |
-| 1: staged rule-only scanner | In progress; milestone 1A implemented | phase-one/staged-scanner | Feat/PhaseOne: Add staged scanner and programme roadmap |
+| 1: staged rule-only scanner | In progress; 1A and candidate/report slice implemented | phase-one/staged-scanner | Feat/PhaseOne: Add staged scanner and programme roadmap |
 | 2: eight-dimensional feature parity | Not started; depends on Phase 1 | phase-two/eight-dimensional-features | Feat/PhaseTwo: Add eight-dimensional feature parity |
 | 3: safe training corpus | Not started; depends on Phase 2 | phase-three/safe-training-corpus | Feat/PhaseThree: Add safe corpus and grouped splits |
 | 4: KNN research and evaluation | Not started; depends on Phase 3 | phase-four/knn-evaluation | Feat/PhaseFour: Add reproducible KNN evaluation |
@@ -45,12 +45,15 @@ Status: implemented in this branch, subject to recorded verification. This is a 
 
 ### Milestone 1B: candidate extraction and coverage contract
 
-- Implement the quoted-literal and unquoted-assignment candidate grammar from the [requirements](02-requirements-and-cli.md).
-- Extract bounded spans and safe occurrence IDs without serialising values; review unsupported or ambiguous expressions.
-- Expand tests for escaping, comments, CRLF, multiple candidates per line, multiline markers, Unicode and length boundaries.
-- Distinguish candidate counts from line-level rule findings. Finalise a report schema aligned with the illustrative example.
-- Review hostile Git metadata, alternate object stores, repository discovery and corruption handling; document the supported repository formats.
-- Decide and test safe handling of sensitive values embedded in filenames. Path escaping is not anonymisation.
+- [x] Implement quoted-literal and simple unquoted-assignment extraction.
+- [x] Track bounded spans and occurrence IDs without serialising values; keep ambiguous inputs as review.
+- [x] Cover escapes, comments, CRLF, repeated/multiple candidates, unsupported delimiters, Unicode and length boundaries.
+- [x] Separate candidate/finding budgets and protect blocking-warning priority.
+- [x] Align the report-v2 schema with an authored example and test its field contract.
+- [x] Test observed-value filename scrubbing, budget fallback and incomplete-scan path withholding.
+- [ ] Finish hostile Git metadata, alternate object store, discovery and corruption review; document/restrict supported repository formats.
+
+The [candidate/report contract](16-candidate-and-report-contract.md) records what is implemented and the limits of this lexical grammar. Milestone 1B remains open for the repository-format review; milestone 1C remains open for automated checks and deeper hardening.
 
 ### Milestone 1C: phase acceptance
 

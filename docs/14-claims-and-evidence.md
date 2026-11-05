@@ -1,6 +1,6 @@
 # Claims and evidence register
 
-Evidence revision: 5 November 2026. Milestone 1A has a rule-only implementation and a [regression record](15-phase-one.md). General candidate extraction, feature parity, training and benchmarks remain pending. This register governs README, documentation, demos and portfolio wording.
+Evidence revision: 5 November 2026. Milestone 1A has a rule-only implementation and a [regression record](15-phase-one.md). The candidate/report slice is now implemented and [specified](16-candidate-and-report-contract.md); repository-format review, feature parity, training and benchmarks remain pending. This register governs README, documentation, demos and portfolio wording.
 
 ## How to read the labels
 
