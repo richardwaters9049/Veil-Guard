@@ -12,7 +12,7 @@ Offline prioritisation of ambiguous credential candidates in staged Git text. Hu
 
 ## Method
 
-Exactly eight numeric coordinates; train-fitted standardisation; exact Euclidean KNN; inverse-distance vote with explicit zero-distance handling; review/abstention rules. Research inference is Python; native Rust inference and inference parity remain pending.
+Exactly eight numeric coordinates; train-fitted standardisation; exact Euclidean KNN; inverse-distance vote with explicit zero-distance handling; review/abstention rules. Research inference is Python; a native Rust inference library and synthetic parity check are implemented. Scanner integration remains pending.
 
 ## Training and evaluation
 
@@ -23,7 +23,7 @@ Binary partitions are balanced; this does not represent deployment prevalence. T
 k=3, inverse-distance weights, train-only population standardisation. Validation targets were unmet, so the policy reviews all candidates. Mean/scales and support bounds are in the [frozen export](../research/results/synthetic-v1/development/model.json).
 Model JSON SHA-256: `f836afa4775dc04c248200d7499c39409886a76dfadf152232aa879017905479`.
 Test macro Precision@20: 0.539286 versus entropy 0.500000; relative gain 7.857%. Paired absolute difference 95% exploratory interval: [-0.053846, 0.132173]. Full baseline/slice evidence is in the [results](../docs/21-phase-four-results.md). Classification coverage is zero; accepted metrics are undefined.
-Native/reference feature parity is implemented; model inference parity is pending.
+Native/reference feature parity is implemented; model inference parity is checked on eligible synthetic corpus vectors and authored toy cases.
 Supported distributions and platform workload: not validated.
 
 ## Limitations

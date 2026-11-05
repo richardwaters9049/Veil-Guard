@@ -2,7 +2,7 @@
 
 ## Explainable, offline credential triage for staged Git changes
 
-**Status: Phase Four research evaluated — 5 November 2026.** The staged scanner and repository hardening are implemented, with independent Rust/Python eight-feature extractors and golden parity checks. The synthetic corpus and frozen connected-group splits are now implemented; the unified acceptance command and per-commit CI verify this scope. A frozen research model and sealed synthetic evaluation exist; the KNN benefit gate failed and the model remains experimental. Native inference is pending. Veil Guard is a working project name; naming clearance is pending.
+**Status: Phase Five inference core in development — 5 November 2026.** The staged scanner and repository hardening are implemented, with independent Rust/Python eight-feature extractors and golden parity checks. The synthetic corpus and frozen connected-group splits are now implemented; the unified acceptance command and per-commit CI verify this scope. A frozen research model and sealed synthetic evaluation exist; the KNN benefit gate failed and the model remains experimental. A native inference library is implemented; scanner integration and CLI explanations remain pending. Veil Guard is a working project name; naming clearance is pending.
 
 Veil Guard will be a native command-line developer security tool. It will read the Git index, identify possible hard-coded credentials, and use an eight-dimensional k-nearest neighbours model to rank ambiguous candidates for review. It will explain decisions using redacted locations, numerical feature differences and curated example IDs. It will have no web server, browser UI, dashboard or cloud inference.
 
@@ -49,6 +49,8 @@ Start with the [annotated sources and professor profiles](docs/13-sources.md), i
 | [Repository formats and automation](docs/17-repository-and-automation.md) | Supported layouts, refusal reasons and local/CI acceptance |
 | [Phase Two feature parity](docs/18-phase-two-feature-parity.md) | Independent extractors, golden fixtures, distance contributions and reproduction |
 | [Phase Three corpus](docs/19-phase-three-corpus.md) | Synthetic recipes, frozen splits, assisted reviews and staged fixture repositories |
+| [Phase Four results](docs/21-phase-four-results.md) | Sealed synthetic evaluation and failed benefit gate |
+| [Phase Five inference](docs/22-phase-five-native-inference.md) | Native library, validation, parity and remaining integration |
 | [Research model card](models/MODEL_CARD.md) | Intended use, evidence and limitations |
 | [Data card](data/DATA_CARD.md) | Provenance, consent and split accounting |
 
@@ -74,7 +76,7 @@ cargo run --locked -- scan --staged --repo /absolute/path/to/owned-repository --
 
 Replace the example repository path with a directory you own or have permission to inspect. The current scanner detects two narrow patterns and reports quoted/unquoted lexical candidates for review; it is not a comprehensive scanner or language parser. Exit 0 can include review findings and does not establish safety. See [current scope and limits](docs/15-phase-one.md).
 
-Phase Two's [parity record](docs/18-phase-two-feature-parity.md) describes the implemented scope, locked environment and reproduction commands. The [Phase Three record](docs/19-phase-three-corpus.md) describes 6,200 synthetic examples, frozen splits and assisted review limits. The [Phase Four results](docs/21-phase-four-results.md) record the negative research outcome. Next is optional experimental native inference under the [delivery plan](docs/09-delivery-plan.md).
+Phase Two's [parity record](docs/18-phase-two-feature-parity.md) describes the implemented scope, locked environment and reproduction commands. The [Phase Three record](docs/19-phase-three-corpus.md) describes 6,200 synthetic examples, frozen splits and assisted review limits. The [Phase Four results](docs/21-phase-four-results.md) record the negative research outcome. The [Phase Five inference core](docs/22-phase-five-native-inference.md) is implemented; next is scanner and explanation integration under the [delivery plan](docs/09-delivery-plan.md).
 
 ### Run the current planning check
 
