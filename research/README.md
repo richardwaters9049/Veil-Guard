@@ -1,6 +1,6 @@
 # Offline research
 
-Phase Two implements the independent [Python feature reference](feature_reference.py), [shared authored fixtures](fixtures/features-v1.json) and [locked environment](uv.lock). Phase Three adds the [synthetic corpus and frozen splits](../docs/19-phase-three-corpus.md). No fitted scaler, model or measured accuracy exists yet. The [Phase Two record](../docs/18-phase-two-feature-parity.md) gives setup, hand calculations and verification scope.
+Phase Two implements the independent [Python feature reference](feature_reference.py), [shared authored fixtures](fixtures/features-v1.json) and [locked environment](uv.lock). Phase Three adds the [synthetic corpus and frozen splits](../docs/19-phase-three-corpus.md). Phase Four now includes a frozen train-only scaler/model and a sealed synthetic evaluation. The benefit gate failed; see the [results and reproduction record](../docs/21-phase-four-results.md). The [Phase Two record](../docs/18-phase-two-feature-parity.md) gives setup, hand calculations and verification scope.
 
 Entropy is grounded in [R06](../docs/13-sources.md#r06), edit distance in [R07](../docs/13-sources.md#r07), and environment locking in [R28](../docs/13-sources.md#r28). The exact eight-feature selection and lexical context remain project choices.
 

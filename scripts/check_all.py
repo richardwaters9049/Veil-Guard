@@ -35,6 +35,10 @@ def main():
          "python", "scripts/check_feature_parity.py", *cargo_extra],
         [uv, "run", "--locked", "--offline", "--project", "research", "--python", sys.executable,
          "python", "scripts/check_corpus.py"],
+        [uv, "run", "--locked", "--offline", "--project", "research/experiments", "--python", sys.executable,
+         "python", "-m", "unittest", "discover", "-s", "research/experiments/tests", "-v"],
+        [uv, "run", "--locked", "--offline", "--project", "research/experiments", "--python", sys.executable,
+         "python", "scripts/check_research.py"],
         [sys.executable, "scripts/check_plan.py"],
         [sys.executable, "scripts/smoke_scan.py"],
     ]
