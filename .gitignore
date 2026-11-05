@@ -1,0 +1,10 @@
+target/
+.venv/
+__pycache__/
+.pytest_cache/
+.DS_Store
+*.log
+findings*.json
+research/runs/
+data/private/
+models/local/

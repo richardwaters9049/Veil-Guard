@@ -1,0 +1,98 @@
+{
+  "schema_version": "veilguard.features.v1",
+  "dimension": 8,
+  "status": "proposed_not_implemented",
+  "candidate": {
+    "encoding": "printable_ascii_0x20_to_0x7e",
+    "min_length": 8,
+    "max_length": 256,
+    "unsupported": "review_without_vector"
+  },
+  "features": [
+    {
+      "name": "log_length",
+      "index": 0,
+      "formula": "ln(1+L)",
+      "minimum": 2.1972245773362196,
+      "maximum": 5.54907608489522
+    },
+    {
+      "name": "shannon_entropy",
+      "index": 1,
+      "formula": "-sum(p*log2(p))",
+      "minimum": 0,
+      "maximum": 6.569855608330948
+    },
+    {
+      "name": "digit_ratio",
+      "index": 2,
+      "formula": "count(0-9)/L",
+      "minimum": 0,
+      "maximum": 1
+    },
+    {
+      "name": "uppercase_ratio",
+      "index": 3,
+      "formula": "count(A-Z)/L",
+      "minimum": 0,
+      "maximum": 1
+    },
+    {
+      "name": "symbol_ratio",
+      "index": 4,
+      "formula": "count(non-alphanumeric printable ASCII)/L",
+      "minimum": 0,
+      "maximum": 1
+    },
+    {
+      "name": "keyword_proximity",
+      "index": 5,
+      "formula": "1/(1+d) if same-line keyword gap d<=80 else 0",
+      "minimum": 0,
+      "maximum": 1
+    },
+    {
+      "name": "sensitive_assignment",
+      "index": 6,
+      "formula": "1 if entire RHS of supported credential-key assignment else 0",
+      "minimum": 0,
+      "maximum": 1
+    },
+    {
+      "name": "placeholder_similarity",
+      "index": 7,
+      "formula": "max(1-Levenshtein(lower(v),p)/max(L,len(p)))",
+      "minimum": 0,
+      "maximum": 1
+    }
+  ],
+  "keyword_vocabulary": [
+    "password",
+    "passwd",
+    "secret",
+    "token",
+    "credential",
+    "apikey",
+    "privatekey"
+  ],
+  "placeholder_vocabulary": [
+    "changeme",
+    "password",
+    "example",
+    "placeholder",
+    "dummy",
+    "test",
+    "your_api_key_here",
+    "replace_me",
+    "not_a_real_secret"
+  ],
+  "preprocessing": {
+    "method": "StandardScaler",
+    "fit_scope": "training_groups_only",
+    "ddof": 0,
+    "zero_variance_scale": 1
+  },
+  "distance": "euclidean_on_standardised_vectors",
+  "model_output": "uncalibrated_vote_or_review",
+  "specification": "../docs/04-eight-dimensional-features.md"
+}

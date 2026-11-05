@@ -1,0 +1,30 @@
+{
+  "status": "illustrative_proposed_output_not_scanner_result",
+  "report_schema": "veilguard.report.v1",
+  "scan": {
+    "scope": "staged_index",
+    "coverage_complete": true,
+    "model_status": "illustrative"
+  },
+  "findings": [
+    {
+      "id": "finding-001",
+      "path": "fixtures/config.example",
+      "staged_line": 4,
+      "rule_id": "generic-candidate",
+      "policy": "review",
+      "value": "[REDACTED]",
+      "model": {
+        "schema": "veilguard.features.v1",
+        "status": "illustrative_vote",
+        "sensitive_vote": 0.75,
+        "score_interpretation": "uncalibrated similarity vote, not credential validity",
+        "neighbor_ids": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    }
+  ]
+}

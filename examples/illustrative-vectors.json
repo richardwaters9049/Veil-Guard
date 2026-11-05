@@ -1,0 +1,65 @@
+{
+  "purpose": "Fabricated standardised teaching vectors only; not extracted features or training data.",
+  "space": "R^8_after_hypothetical_standardisation",
+  "query": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "neighbors": [
+    {
+      "id": "A",
+      "label": "sensitive_candidate",
+      "vector": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "B",
+      "label": "sensitive_candidate",
+      "vector": [
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "C",
+      "label": "benign_fixture",
+      "vector": [
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "k": 3,
+  "expected_distances": [
+    1,
+    2,
+    2
+  ],
+  "expected_sensitive_vote": 0.75
+}
