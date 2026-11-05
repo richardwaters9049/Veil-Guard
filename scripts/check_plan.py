@@ -87,7 +87,9 @@ def main():
                     linked_ids.add(source_id)
                     doc_source_ids.add(source_id)
             checked += 1
-        if doc != bibliography:
+        # Root agent instructions define local workflow, not research claims.
+        # Keep link validation above, but do not require an academic citation.
+        if doc not in (bibliography, ROOT / "AGENTS.md"):
             assert doc_source_ids, (doc, "No linked source citation")
     assert linked_ids == set(ids), ("Uncited sources", set(ids) - linked_ids)
     print(f"Planning checks passed: 8 features, vote={vote}, {checked} local links/anchors, "

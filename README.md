@@ -2,7 +2,7 @@
 
 ## Explainable, offline credential triage for staged Git changes
 
-**Status: Phase Five experimental inference integrated — 5 November 2026.** The staged scanner and repository hardening are implemented, with independent Rust/Python eight-feature extractors and golden parity checks. The synthetic corpus and frozen connected-group splits are now implemented; the unified acceptance command and per-commit CI verify this scope. A frozen research model and sealed synthetic evaluation exist; the KNN benefit gate failed and the model remains experimental. Native inference, explicit model selection/fallback and redacted inspection/explanation commands are implemented. Veil Guard is a working project name; naming clearance is pending.
+**Status: Phase Six hardening in progress — 5 November 2026.** The staged scanner and repository hardening are implemented, with independent Rust/Python eight-feature extractors and golden parity checks. The synthetic corpus and frozen connected-group splits are now implemented; the unified acceptance command and per-commit CI verify this scope. A frozen research model and sealed synthetic evaluation exist; the KNN benefit gate failed and the model remains experimental. Native inference, explicit model selection/fallback and redacted inspection/explanation commands are implemented. Veil Guard is a working project name; naming clearance is pending.
 
 Veil Guard will be a native command-line developer security tool. It will read the Git index, identify possible hard-coded credentials, and use an eight-dimensional k-nearest neighbours model to rank ambiguous candidates for review. It will explain decisions using redacted locations, numerical feature differences and curated example IDs. It will have no web server, browser UI, dashboard or cloud inference.
 
@@ -51,6 +51,7 @@ Start with the [annotated sources and professor profiles](docs/13-sources.md), i
 | [Phase Three corpus](docs/19-phase-three-corpus.md) | Synthetic recipes, frozen splits, assisted reviews and staged fixture repositories |
 | [Phase Four results](docs/21-phase-four-results.md) | Sealed synthetic evaluation and failed benefit gate |
 | [Phase Five inference](docs/22-phase-five-native-inference.md) | Native inference, scanner integration, fallback and explanations |
+| [Phase Six hardening](docs/23-phase-six-hardening.md) | Explicit hook management, ownership and remaining release gates |
 | [Research model card](models/MODEL_CARD.md) | Intended use, evidence and limitations |
 | [Data card](data/DATA_CARD.md) | Provenance, consent and split accounting |
 
@@ -89,4 +90,4 @@ From this project directory:
 python3 scripts/check_plan.py
 ```
 
-Scan, explain and model inspection are runnable from source. Hook commands remain planned for Phase Six. No Git hooks are installed by scanning.
+Scan, explain, model inspection and explicit hook management are runnable from source. See [hook installation and limits](docs/23-phase-six-hardening.md). No Git hooks are installed by scanning.

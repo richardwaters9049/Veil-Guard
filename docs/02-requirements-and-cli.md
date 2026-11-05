@@ -2,7 +2,7 @@
 
 ## Functional requirements
 
-**Design status.** FR1–FR10 describe the target programme. The [Phase One record](15-phase-one.md) identifies the implemented scan subset and regression evidence; [Phase Five](22-phase-five-native-inference.md) implements experimental model integration; hook requirements remain pending. Git defines staged/index-versus-commit comparison ([R17](13-sources.md#r17)); git2 documents APIs that can implement it ([R18](13-sources.md#r18)). Tests must establish whether our implementation meets these requirements.
+**Design status.** FR1–FR10 describe the target programme. The [Phase One record](15-phase-one.md) identifies the implemented scan subset and regression evidence; [Phase Five](22-phase-five-native-inference.md) implements experimental model integration; [Phase Six](23-phase-six-hardening.md) now implements explicit hook management; broader release hardening remains pending. Git defines staged/index-versus-commit comparison ([R17](13-sources.md#r17)); git2 documents APIs that can implement it ([R18](13-sources.md#r18)). Tests must establish whether our implementation meets these requirements.
 
 - FR1: Default to an explicitly selected local repository, discovered from the current directory. No remote clone or network fetch.
 - FR2: Compare HEAD to the index; for an unborn branch compare the index to an empty tree. Read staged blob bytes, never substitute working-tree content.
@@ -31,7 +31,7 @@ Experimental model commands are implemented:
 veilguard explain --report findings.json --finding finding-00001
 veilguard model inspect ./models/release-model.json
 ```
-Hook install/uninstall commands remain Phase Six proposals.
+`veilguard hooks install --repo /path/to/owned-repository`, `hooks uninstall --repo ...` and `hooks manual` are implemented with strict ownership/custom-path refusal; see the [hook record](23-phase-six-hardening.md).
 
 Text-only reports are default; JSON output is explicit and contains no candidate value. Explain reads an existing redacted report, never an argument containing a secret. The current [report-v3 contract](22-phase-five-native-inference.md) includes explicit model status, optional scores/ranks and opt-in numerical neighbour details. No values or raw vectors are present. Use `scan --model /path/to/approved-model.json --explanations --format json --output findings.json` to retain explanation details.
 

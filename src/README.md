@@ -15,6 +15,7 @@ Git index semantics are documented in [R17](../docs/13-sources.md#r17); the git2
 | candidates.rs | Bounded lexical candidates, byte spans and unsupported-review reasons |
 | privacy.rs | Transient observed-value path scrubbing and incomplete-scan path withholding |
 | report.rs | Redacted data contract, coverage state, escaped path display and text output |
+| hooks.rs | Explicit owned hook installation/removal and manual integration; not called by scan |
 | local_input.rs | Bounded regular-file inputs with nonblocking/no-follow open on Unix |
 | explanation.rs | Saved-report numeric validation and source-free redacted explanations |
 | main.rs | CLI parsing, redacted errors, output files and exit handling |

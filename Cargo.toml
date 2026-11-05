@@ -1,6 +1,6 @@
 [package]
 name = "veilguard"
-version = "0.1.0-dev.5"
+version = "0.1.0-dev.6"
 edition = "2024"
 rust-version = "1.98"
 description = "Offline staged-Git credential review CLI"
