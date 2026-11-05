@@ -4,7 +4,7 @@
 
 **Mathematical sources.** Nearest-neighbour classification is established ([R03](13-sources.md#r03), [R04](13-sources.md#r04)). Matrix/norm notation follows standard linear algebra ([R05](13-sources.md#r05)); preprocessing follows StandardScaler ([R10](13-sources.md#r10)). The application-specific eight coordinates, abstention policy, tie rules and example below are our design/derivation. Classical asymptotic results are not a finite-sample guarantee for this corpus.
 
-KNN is supervised instance-based learning. It stores labelled reference vectors rather than learning neural-network weights through back-propagation. Training here consists of collecting and labelling safe examples, fitting preprocessing on training groups, selecting k/decision rules on validation groups and exporting reference vectors plus preprocessing parameters.
+KNN is supervised instance-based learning. It stores labelled reference vectors rather than learning neural-network weights through back-propagation. Training here consists of collecting and labelling safe examples, fitting preprocessing on training groups, selecting k by grouped training-fold validation and decision thresholds using the separate validation groups and exporting reference vectors plus preprocessing parameters.
 
 Each candidate is one point in an eight-dimensional vector space. Training data form X in R^(n×8); labels y in {sensitive_candidate, benign_fixture}^n. An uncertain label is never forced into either training class.
 
@@ -30,6 +30,8 @@ d(z,z_i) = ||z-z_i||_2 = sqrt((z-z_i)^T(z-z_i))
 No learned feature weights are used in the first experiment. Weinberger and Saul study learned metrics ([R08](13-sources.md#r08)); Weinberger's dissertation is further reading ([R09](13-sources.md#r09)), not a method implemented in v1. A later positive diagonal metric W would give sqrt((z-z_i)^T W(z-z_i)); any such change requires fresh grouped validation and a model-version change. Do not tune W on the test set.
 
 Find the k smallest distances using exact brute-force search. Sort equal distances by stable safe example ID so Python and Rust are deterministic. Candidate k values are 3,5,7,11,15, restricted to k ≤ the smallest training fold. k is the neighbour count; 8 is the dimensionality. They are different quantities.
+
+The [Phase Four protocol](20-phase-four-protocol.md) also compares uniform weighting during training-only model selection. The inverse-distance definition below applies when that weighting is selected.
 
 ## Inverse-distance vote
 

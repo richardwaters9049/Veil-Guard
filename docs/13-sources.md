@@ -323,6 +323,17 @@ Suggested order: R01 for the security problem; R02 for closely related work; R04
 - Limits: These controls do not establish an OS sandbox, corpus label quality or measured scanner recall.
 - Review scope: Initialisation options, GIT_CONFIG_GLOBAL/SYSTEM overrides, Git location variables and blob header/hash construction. Checked 2026-11-05.
 
+<a id="r30"></a>
+
+### R30: scikit-learn developers. LogisticRegression and precision/recall metric API documentation, 1.9.1.
+
+- Type: Official technical documentation.
+- [Logistic regression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html).
+- [Average precision](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.average_precision_score.html).
+- Supports: Parameters used by the prespecified baseline and threshold-weighted AP reporting.
+- Limits: APIs do not validate the corpus, prescribe the experiment grids or establish project performance.
+- Review scope: Solver/C/tolerance/iteration parameters, score output and AP definition. Checked 2026-11-05.
+
 ## Stack documentation
 
 These official pages describe component capabilities. They do not establish that our integration is secure or that one language/tool is superior. Phase One runtime versions are pinned in Cargo.lock and rust-toolchain.toml; the Phase Two research manifest and uv lockfile are committed; ML dependencies remain future work.
