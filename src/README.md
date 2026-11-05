@@ -1,5 +1,15 @@
 # Native implementation
 
-Reserved for the planned Rust CLI. Implementation has not begun. Start with the rule-only staged-index scanner in the [delivery plan](../docs/09-delivery-plan.md).
+Phase One milestone 1A is implemented. See the [implementation record](../docs/15-phase-one.md) for executable commands, scope and limitations, and the [delivery plan](../docs/09-delivery-plan.md) for all remaining phase gates.
 
-Git's staged semantics are documented in [R17](../docs/13-sources.md#r17); candidate APIs are documented in [git2, R18](../docs/13-sources.md#r18). Those references establish semantics/interfaces, not that a secure reader exists here. Meet the [requirements](../docs/02-requirements-and-cli.md) and [threat model](../docs/08-ethics-and-threat-model.md), then demonstrate them through tests.
+Git index semantics are documented in [R17](../docs/13-sources.md#r17); the git2 API is [R18](../docs/13-sources.md#r18). Those sources inform the design. The integration suite supplies the limited project evidence.
+
+| File | Responsibility |
+| --- | --- |
+| lib.rs | Scanner API |
+| git_index.rs | Index snapshot, bounded object reading and in-memory changed-line calculation |
+| rules.rs | Two blocking pattern rules and a sensitive-assignment review rule |
+| report.rs | Redacted data contract, coverage state, escaped path display and text output |
+| main.rs | CLI parsing, redacted errors, output files and exit handling |
+
+The runtime starts no subprocess, uses no provider-validation client and loads no model. There is no eight-feature extractor or KNN implementation yet. Networking features are disabled for the git2 dependency; this is not a complete audit of all dependency code or hostile repository behaviour.

@@ -1,43 +1,163 @@
-# Delivery plan
+# Programme delivery plan
 
-Estimate: 90–150 focused engineering hours, roughly 6–8 part-time weeks. Planning estimate only; revise after the first prototype. No calendar commitment or scheduled automation is created.
+Updated: 5 November 2026. Owner: Richard Waters. Programme: Veil Guard.
 
-| Phase | Effort | Deliverable | Acceptance / dependency |
+The goal is a native offline credential-review CLI with an evaluated eight-dimensional KNN component, reproducible evidence and a portfolio release. There is no web application or dashboard in this programme. All effort figures are planning estimates, not research findings or calendar commitments.
+
+## Phase status and branch policy
+
+| Phase | Status | Dedicated branch | Planned lead commit |
 | --- | --- | --- | --- |
-| 0 — planning baseline | This scaffold | Brief, contracts, ethics, research and roadmap | Plans consistent; no claim of implemented software |
-| 1 — rule-only native scanner | 18–28 h | Cargo project, staged object reader, bounded extraction, redacted text/JSON | Exact-index and privacy integration tests; no model needed |
-| 2 — 8D parity | 12–20 h | Rust and Python feature implementations, shared golden fixtures | Exact order/range agreement; unsupported inputs review |
-| 3 — safe corpus | 15–25 h | Versioned fixture generator, data card, leakage-resistant split manifest | Provenance/labels reviewed; independent groups sufficient |
-| 4 — KNN research | 15–25 h | Reference pipeline, baselines, validation, frozen test evaluation | Honest metrics/intervals; no test-driven tuning |
-| 5 — native inference | 12–20 h | Strict JSON loader, f64 KNN, abstention/explanations | Python/Rust parity; corrupted-model and limits tests |
-| 6 — integration and hardening | 12–20 h | Explicit hooks, packaging, performance and privacy verification | Existing hooks preserved; end-to-end flow correct |
-| 7 — portfolio release | 6–12 h | Tagged release, demo, case study, completed cards/results | Reproducible offline run; measured claims only |
+| 0: evidence-backed planning | Complete baseline | main | Feat/Docs: Sources added |
+| 1: staged rule-only scanner | In progress; milestone 1A implemented | phase-one/staged-scanner | Feat/PhaseOne: Add staged scanner and programme roadmap |
+| 2: eight-dimensional feature parity | Not started; depends on Phase 1 | phase-two/eight-dimensional-features | Feat/PhaseTwo: Add eight-dimensional feature parity |
+| 3: safe training corpus | Not started; depends on Phase 2 | phase-three/safe-training-corpus | Feat/PhaseThree: Add safe corpus and grouped splits |
+| 4: KNN research and evaluation | Not started; depends on Phase 3 | phase-four/knn-evaluation | Feat/PhaseFour: Add reproducible KNN evaluation |
+| 5: native model inference | Not started; depends on Phase 4 decision | phase-five/native-inference | Feat/PhaseFive: Add native KNN inference |
+| 6: hardening and packaging | Not started; depends on Phase 5 | phase-six/hardening-and-packaging | Feat/PhaseSix: Harden and package offline scanner |
+| 7: portfolio release | Not started; depends on Phase 6 | phase-seven/portfolio-release | Feat/PhaseSeven: Publish evaluated portfolio release |
 
-## Implementation order
+Each phase has its own branch and commits. Only Phase One is created now. Future branches start from the accepted preceding work; do not create branches with empty or placeholder commits. Keep main as the accepted baseline, review each phase diff and evidence, and merge before starting the next dependent phase. A phase may have several focused commits. Do not merge or tag a release merely because its branch exists.
 
-**Why these gates.** Git semantics need implementation tests ([R17](13-sources.md#r17)); ML preprocessing needs isolation ([R11](13-sources.md#r11)); published models need documented intended use and limitations ([R16](13-sources.md#r16)). The phase order and hour estimates are our planning judgements, not numbers taken from those sources.
+## Dependencies and effort
 
-The first useful slice is the rule-only staged scanner. Do not begin with a UI, model training or a broad regex catalogue. Prove Git semantics and redaction first. Then settle the eight-feature contract with fixtures, collect data, research KNN, export it and integrate native inference.
+Baseline estimate: 90–150 focused engineering hours, approximately 6–8 part-time weeks. Re-estimate after each gate. Phases 1–5 are sequential because each defines the inputs required by the next. Packaging preparation can begin earlier, but release approval requires the final integrated checks.
 
-## Milestone demonstrations
+Git staged semantics motivate the first gate ([R17](13-sources.md#r17)); preprocessing isolation motivates the experiment gates ([R11](13-sources.md#r11)); data/model reporting informs the evidence gates ([R15](13-sources.md#r15), [R16](13-sources.md#r16)). Specific scope, hour estimates and acceptance thresholds are project choices.
 
-M1: A partially staged fixture shows that only index content is inspected.
-M2: One supported candidate maps to exactly eight reproducible numbers in both languages.
-M3: A frozen grouped experiment reports whether KNN helps.
-M4: A packaged native binary explains a redacted finding with the Python environment absent.
+## Phase 1: rule-only native scanner
 
-## Go/no-go points
+Estimated effort: 18–28 hours. Goal: a useful scanner before ML exists.
 
-- If extraction misses too many supported cases, improve extraction before tuning KNN.
-- If data groups are too few or labels unclear, do not publish accuracy claims.
-- If KNN underperforms entropy/logistic regression, keep it experimental and report the result.
-- If benchmark limits fail, reduce workload or optimise exact search based on profiling; document tradeoffs.
-- Do not add model-based blocking, live provider checks, cloud inference or external training collection to meet a demo deadline.
+### Milestone 1A: staged-index foundation
 
-## Backlog after a measured first release
+- Create a Cargo binary/library with a committed dependency lockfile.
+- Read an index snapshot and Git objects; compare new bytes to HEAD bytes in memory.
+- Handle unborn HEAD, partial staging, staged deletions and conservative rename-as-add behaviour.
+- Detect GitHub-PAT-shaped strings and private-key markers as blocking pattern findings. Report sensitive-key assignments as unranked review.
+- Return redacted text/JSON reports, static error codes, escaped paths and coverage reasons.
+- Bound blob bytes, aggregate inspected bytes, findings and index entries; check a cooperative deadline.
+- Refuse conflicts; disclose binary/non-UTF-8 blobs, changed symlinks and submodules.
+- Write new report files privately without replacing existing files or symlinks.
+- Verify the above with integration fixtures. Current evidence and remaining limitations: [Phase One record](15-phase-one.md).
 
-Expanded syntax coverage with schema migration; narrow expiring suppressions; Linux packaging; reproducible signed model artefacts; independently authorised external evaluation. AST parsers, Windows, learned metrics and calibrated thresholds are later experiments, not MVP promises.
+Status: implemented in this branch, subject to recorded verification. This is a narrow rule-only milestone, not completion of the phase.
 
-## Project workflow
+### Milestone 1B: candidate extraction and coverage contract
 
-Use small reviewable commits in Richard's preferred form, for example “Feat/Scanner: Read staged blobs without working-tree fallback”. Commit lockfiles when implementation begins. Document a behaviour change and its evidence in the relevant design document. The planning repository was subsequently published at [richardwaters9049/Veil-Guard](https://github.com/richardwaters9049/Veil-Guard). This is a documentation baseline, not a scanner/model release. Implementation and release gates remain outstanding.
+- Implement the quoted-literal and unquoted-assignment candidate grammar from the [requirements](02-requirements-and-cli.md).
+- Extract bounded spans and safe occurrence IDs without serialising values; review unsupported or ambiguous expressions.
+- Expand tests for escaping, comments, CRLF, multiple candidates per line, multiline markers, Unicode and length boundaries.
+- Distinguish candidate counts from line-level rule findings. Finalise a report schema aligned with the illustrative example.
+- Review hostile Git metadata, alternate object stores, repository discovery and corruption handling; document the supported repository formats.
+- Decide and test safe handling of sensitive values embedded in filenames. Path escaping is not anonymisation.
+
+### Milestone 1C: phase acceptance
+
+- Add automated format/lint/test/documentation checks on the initial supported platform.
+- Exercise resource exhaustion, errors, panic redaction and report-file failures; retain findings when coverage is incomplete.
+- Demonstrate exact-index behaviour without changing index/worktree bytes or executing repository-defined commands.
+- Record supported rules, exclusions, residual risks and actual toolchain.
+- Gate: all Phase 1 tests/checks pass, generic extraction meets the declared grammar, and no AI is implied.
+
+Exit artefacts: source, lockfile, executable instructions, rule/report contracts, regression fixtures and evidence record. No hooks, model or research dataset required.
+
+## Phase 2: exactly eight features in Rust and Python
+
+Estimated effort: 12–20 hours. Entry: accepted Phase 1 extractor.
+
+- Implement the [ordered feature contract](04-eight-dimensional-features.md) independently in Rust and Python.
+- Cover length, empirical character entropy, character ratios, context proximity, sensitive assignment and placeholder edit similarity.
+- Add reviewed hand-worked fixtures for every coordinate and boundary, including distances 0/80/81.
+- Establish a locked Python environment with uv; commit its lockfile.
+- Validate finite values, exact order/ranges, unsupported inputs and schema versions.
+- Write feature-level distance explanation fixtures without printing candidate values.
+
+Gate: eight coordinates only; absolute cross-language error at most 1e-9 on golden fixtures; no context/label/filename leakage as hidden extra coordinates. This tolerance is a project target. Exit: independent extractors, fixtures, parity evidence and updated contract.
+
+## Phase 3: ethical synthetic corpus and split manifest
+
+Estimated effort: 15–25 hours. Entry: frozen feature semantics.
+
+- Build deterministic authored fixture generators; never collect live, leaked or user-repository credentials.
+- Define labels from fixture intent and review, not scanner outputs.
+- Add hard negatives, low-entropy positives, placeholders in sensitive assignments and unfamiliar contexts.
+- Record recipe, author/permission, licence, safe IDs, seeds, families and repository groups.
+- Connect related families, copied values and derivations into independent split groups; inspect deduplication.
+- Freeze a train/validation/test manifest and an unseen-format challenge set.
+- Complete the [data card](../data/DATA_CARD.md), including composition, intended use, exclusions and maintenance.
+
+Collection goals: 5,000–10,000 candidates, at least 50 families and 20 fixture repositories. These are provisional targets, not a proven sufficient sample size.
+
+Gate: approved nonfunctional corpus, reviewed label sample, adequate independent groups and no split overlap. If groups collapse or labels are ambiguous, revise the corpus before training. Exit: recipes, manifest, reviewed data card and aggregate counts; no private source.
+
+## Phase 4: KNN research and measured evaluation
+
+Estimated effort: 15–25 hours. Entry: frozen Phase 3 corpus/test groups.
+
+- Fit means/scales only on training folds; keep eight-dimensional matrix operations explicit.
+- Compare rules, entropy ranking, standardised logistic regression, raw KNN and standardised KNN.
+- Tune k on grouped training folds; select abstention thresholds using validation groups.
+- Implement deterministic tie ordering, inverse-distance voting and the project's all-zero-distance rule.
+- Freeze configuration, then evaluate the held-out groups once for the release decision.
+- Report end-to-end extraction misses separately from candidate ranking.
+- Publish exact metric definitions, sample sizes, group counts, prevalence, intervals, abstention and failures.
+- Compare a pinned Gitleaks release with scope/configuration differences stated.
+- Complete the experiment report and initial [model card](../models/MODEL_CARD.md).
+
+Gate: reproducible results, no test-driven tuning, and an explicit pass/fail/unproven decision against the [evaluation contract](07-evaluation-and-acceptance.md). The proposed 10% Precision@20 target is not a promised result.
+
+If KNN fails to improve ranking, retain optional experimental status and report that result. Do not replace it with an invented success. Exit: scripts, environment, frozen configs, results and model export specification.
+
+## Phase 5: native inference and explanations
+
+Estimated effort: 12–20 hours. Entry: documented Phase 4 decision and a frozen export.
+
+- Export bounded JSON containing only approved reference vectors, labels, safe IDs and preprocessing/configuration.
+- Implement strict schema, shape, finite-number, scale, k, size and version validation.
+- Implement exact f64 standardisation, distance search, ties, voting and abstention in Rust.
+- Keep deterministic rule findings authoritative and generic reviews visible.
+- Implement model inspection and explanation commands with redacted reports.
+- Support absent/corrupt models with usable rule-only scanning and explicit AI status.
+- Verify reference/native neighbours, votes, zero distances and explanation contributions.
+
+Gate: feature parity, deterministic inference parity and adversarial bundle tests pass. No pickle/joblib runtime or online learning. No model-based blocking. Exit: native inference, schema/exporter, completed parity record and updated report examples.
+
+## Phase 6: integration, hardening and supported packages
+
+Estimated effort: 12–20 hours. Entry: integrated Phase 5 candidate scanner.
+
+- Add explicit hook installation/uninstallation that preserves existing hooks and supports manual integration.
+- Validate end-to-end CLI, model degradation, report retention and remediation wording.
+- Audit dependency/security/licence status and lockfiles; assess supply-chain and model distribution integrity.
+- Benchmark cold/warm latency and peak memory on recorded hardware and workload.
+- Test no-network operation and repository-defined-command non-execution; inspect crash/error/report paths.
+- Package macOS arm64 first, then add Linux x86_64 CI and compatibility tests before claiming support.
+- Document build/install/uninstall, upgrades, model provenance and release verification.
+- Keep Windows, broad syntax expansion and automatic model updates out of this initial release.
+
+Gate: all release checks pass and the [threat model](08-ethics-and-threat-model.md) reflects residual risk. Proposed 2s p95 / 150 MiB targets require actual measurements. Exit: packages, reproducible build/CI evidence, benchmark results and user guide.
+
+## Phase 7: measured portfolio release
+
+Estimated effort: 6–12 hours. Entry: accepted packages and evidence.
+
+- Review all [claims](14-claims-and-evidence.md) against measured release evidence and source scope.
+- Complete data/model cards and document negative findings.
+- Confirm release naming/licence, supported platforms and distribution integrity.
+- Record a 90–120 second demonstration using disposable nonfunctional fixtures.
+- Show partial staging, redacted findings, eight-dimensional mathematics, inference and real benchmark limitations.
+- Publish build/reproduction instructions and a case study with links to sources, code and evidence.
+- Create the versioned release after the gates are satisfied; do not present a planning branch as finished software.
+
+Gate: a fresh supported machine can reproduce an offline scan and the published experiment. Synthetic-only evidence supports synthetic-only claims. Exit: tagged native release, honest case study, demonstration and maintenance backlog.
+
+## Definition of programme completion
+
+All seven phase gates are recorded as passed or explicitly constrained; installation and offline staged scanning work on the claimed platforms; model results and limitations are reproducible; deterministic findings remain visible; no actual credentials enter demos/training; and the released claims match evidence.
+
+AI benefit is an experimental outcome, not a mandatory positive finding. The programme can complete with a useful rule scanner and optional experimental KNN if the research result is negative. It cannot complete by omitting that result.
+
+## Maintenance after release
+
+Track supported syntax/rules, dependencies, reported regressions and model/schema compatibility. Every model change needs curated provenance and fresh independent validation. External evaluation requires permission and a privacy review. Expansion to Windows, AST parsing, learned metrics, calibrated probabilities or model blocking is a new scoped decision, not an unfulfilled requirement of this initial programme.

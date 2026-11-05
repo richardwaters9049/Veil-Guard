@@ -36,7 +36,7 @@ No accuracy, time saving, false-positive reduction, leak-prevention rate or runt
 | Gitleaks | Existing CLI and pre-commit integration ([R22](13-sources.md#r22)) | Pin exact release/configuration, report supported-pattern and scope differences |
 | Entropy-only ranking | Uses a statistic grounded in Shannon entropy ([R06](13-sources.md#r06)) | Our simple heuristic baseline; entropy is not ground truth |
 | Standardised logistic regression | Proposed simple alternative model | Same group split and features; record actual configuration |
-| Veil Guard KNN | Proposed eight-feature, offline ranking | No implemented scanner/model or demonstrated benefit yet |
+| Veil Guard KNN | Proposed eight-feature, offline ranking | Rule-only prototype exists; no KNN implementation or demonstrated AI benefit yet |
 
 Do not describe Gitleaks or GitHub as inferior on the strength of documentation. Do not label our different scanning scope a detection improvement. Pin versions before benchmarking rather than relying on a moving README or product page.
 

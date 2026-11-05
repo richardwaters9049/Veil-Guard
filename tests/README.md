@@ -1,7 +1,9 @@
-# Planned verification
+# Verification
 
-Reserved for Git-index, privacy, feature parity and model parity integration tests. The [planning checker](../scripts/check_plan.py) validates local documentation links, R-number citations, source metadata, eight-dimensional metadata and the fabricated arithmetic. It does not test scanner functionality or model performance.
+The [integration suite](staged_scan.rs) exercises the Phase One staged scanner using disposable, authored, nonfunctional fixtures. No credential is sent to a provider. See the [implementation record](../docs/15-phase-one.md) for the exact scope and current check record.
 
-Future tests must cover the [evaluation gates](../docs/07-evaluation-and-acceptance.md). Staged-index semantics are grounded in [R17](../docs/13-sources.md#r17); preprocessing isolation in [R11](../docs/13-sources.md#r11). Tests need independent fixtures and expected outcomes rather than assertions copied from the implementation.
+Git staged semantics are sourced to [R17](../docs/13-sources.md#r17). Future ML preprocessing isolation follows [R11](../docs/13-sources.md#r11); it is not yet implemented.
 
-Manual source review remains necessary: a working link is not proof a claim is supported. The source register records limited review scopes, including theses whose full experiments were not assessed.
+Run cargo test --locked for scanner regressions. Run [check_plan.py](../scripts/check_plan.py) for documentation links, source citations and the fabricated eight-dimensional arithmetic. These checks answer different questions; neither establishes real-world detection accuracy, AI benefit or external source entailment.
+
+Future suites must add candidate grammar, Rust/Python feature parity, model parity, adversarial model bundles, no-network instrumentation and supported-platform tests as their phases begin. Keep unsupported scenarios visible rather than silently treating them as clean.

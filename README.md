@@ -2,7 +2,7 @@
 
 ## Explainable, offline credential triage for staged Git changes
 
-**Status: planning baseline — 5 November 2026.** No scanner, trained model or measured detection results exist yet. Veil Guard is a working project name; naming clearance is pending.
+**Status: Phase One development — 5 November 2026.** The staged rule-only scanner milestone is implemented; Phase One remains in progress. No feature extractor, trained model or measured detection-accuracy results exist yet. Veil Guard is a working project name; naming clearance is pending.
 
 Veil Guard will be a native command-line developer security tool. It will read the Git index, identify possible hard-coded credentials, and use an eight-dimensional k-nearest neighbours model to rank ambiguous candidates for review. It will explain decisions using redacted locations, numerical feature differences and curated example IDs. It will have no web server, browser UI, dashboard or cloud inference.
 
@@ -22,7 +22,7 @@ Rust for the shipped CLI and inference; Python, NumPy and scikit-learn for offli
 
 ### Evidence and academic foundation
 
-Nearest-neighbour classification and distance-based learning are established methods ([R03](docs/13-sources.md#r03), [R04](docs/13-sources.md#r04)); vector/matrix notation follows standard linear algebra ([R05](docs/13-sources.md#r05)). Exactly eight features, offline operation and ranking-only policy are project choices. No scanner, training corpus, trained model or benchmark result exists yet.
+Nearest-neighbour classification and distance-based learning are established methods ([R03](docs/13-sources.md#r03), [R04](docs/13-sources.md#r04)); vector/matrix notation follows standard linear algebra ([R05](docs/13-sources.md#r05)). Exactly eight features, offline operation and ranking-only policy are project choices. A narrow rule-only scanner now exists; the eight-feature extractor, training corpus, model and benchmark results remain pending.
 
 Start with the [annotated sources and professor profiles](docs/13-sources.md), including the RIT master's thesis and Weinberger's doctoral dissertation, then the [claims and evidence register](docs/14-claims-and-evidence.md). Each entry records its relevance, review scope and limits. University links are attribution, not endorsement.
 
@@ -44,6 +44,7 @@ Start with the [annotated sources and professor profiles](docs/13-sources.md), i
 | [Decisions and risks](docs/12-decisions-and-risks.md) | Rationale, uncertainties and mitigations |
 | [Sources and academic reading](docs/13-sources.md) | Annotated references, professors, theses, dissertations and reading order |
 | [Claims and evidence](docs/14-claims-and-evidence.md) | External evidence, choices, hypotheses, targets and pending results |
+| [Phase One implementation](docs/15-phase-one.md) | Executable commands, milestone evidence and remaining work |
 | [Model card template](models/MODEL_CARD.md) | Intended use, evidence and limitations |
 | [Data card template](data/DATA_CARD.md) | Provenance, consent and split accounting |
 
@@ -53,11 +54,22 @@ Start with the [annotated sources and professor profiles](docs/13-sources.md), i
 `examples/illustrative-vectors.json` contains fabricated vectors to explain the mathematics, not training data.
 `examples/finding.example.json` shows a fully redacted proposed output.
 `scripts/check_plan.py` validates planning links, source citations and illustrative mathematics using Python's standard library. `docs/references.json` holds the structured source register. These checks do not verify source entailment, external link uptime or model performance.
-`src/`, `research/` and `tests/` reserve implementation locations.
+`src/` contains the first Rust scanner; `tests/staged_scan.rs` exercises it. `research/` remains reserved for the offline ML pipeline.
 
-### First build task
+### Build and run Phase One
 
-Implement Rust reading of staged Git blobs, including partially staged files, and a rule-only redacted report. Validate that no working-tree-only changes are scanned. Only then implement feature parity and training.
+From `/Users/richy/Documents/Github/veilguard`:
+
+```sh
+cargo build --locked
+cargo test --locked
+cargo run --locked -- scan --staged --repo /absolute/path/to/owned-repository
+cargo run --locked -- scan --staged --repo /absolute/path/to/owned-repository --format json
+```
+
+Replace the example repository path with a directory you own or have permission to inspect. The current rules detect two narrow patterns and sensitive-key assignments; they are not a comprehensive scanner. Exit 0 can include review findings and does not establish safety. See [current scope and limits](docs/15-phase-one.md).
+
+Next: finish general bounded candidate extraction and Phase One acceptance before starting feature parity or training.
 
 ### Run the current planning check
 
@@ -66,4 +78,4 @@ From this project directory:
 python3 scripts/check_plan.py
 ```
 
-The CLI commands shown in the plans are interface proposals. They are not installed or runnable yet. No Git hooks are installed by this planning scaffold.
+The scan command is runnable from source. Explain, model inspection and hook commands remain proposals for later phases. No Git hooks are installed by scanning.

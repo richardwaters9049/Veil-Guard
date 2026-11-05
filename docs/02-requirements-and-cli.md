@@ -2,7 +2,7 @@
 
 ## Functional requirements
 
-**Design status.** FR1–FR10, exit codes, budgets and hook policy are project requirements, not externally validated capabilities. Git defines staged/index-versus-commit comparison ([R17](13-sources.md#r17)); git2 documents APIs that can implement it ([R18](13-sources.md#r18)). Tests must establish whether our implementation meets these requirements.
+**Design status.** FR1–FR10 describe the target programme. The [Phase One record](15-phase-one.md) identifies the implemented scan subset and regression evidence; model and hook requirements remain pending. Git defines staged/index-versus-commit comparison ([R17](13-sources.md#r17)); git2 documents APIs that can implement it ([R18](13-sources.md#r18)). Tests must establish whether our implementation meets these requirements.
 
 - FR1: Default to an explicitly selected local repository, discovered from the current directory. No remote clone or network fetch.
 - FR2: Compare HEAD to the index; for an unborn branch compare the index to an empty tree. Read staged blob bytes, never substitute working-tree content.
@@ -15,11 +15,19 @@
 - FR9: Explicit hook installation only. Preserve an existing hook and refuse to overwrite it; provide manual integration instructions.
 - FR10: No automatic source changes, credential validation, network calls or online learning.
 
-## Proposed commands — not implemented
+## Commands and implementation status
+
+The first three scan forms work in the Phase One source build; use `cargo run --locked --` before `scan` until installed:
 
 ```sh
 veilguard scan --staged
+veilguard scan --staged --repo /absolute/path/to/owned-repository
 veilguard scan --staged --format json --output findings.json
+```
+
+The following commands remain proposals for Phases 5 and 6:
+
+```sh
 veilguard explain --report findings.json --finding finding-001
 veilguard model inspect ./models/release-model.json
 veilguard hooks install
@@ -42,7 +50,7 @@ Priority is 3 > 2 > 1 > 0; incomplete scans with findings return 2 and retain th
 
 Supported generic candidates: printable ASCII strings of 8–256 characters. Extract quoted string spans and unquoted assignment values using bounded parsers for simple source/config lines. A credential-labelled assignment shorter than 8 or longer than 256 is emitted as unranked review. Multi-line private keys use independent rules. Unicode literals, concatenation, generated values, encoded/nested payloads and archives are unsupported by generic inference.
 
-Budget proposals: 1 MiB per text blob, 20 MiB aggregate staged bytes, 10,000 candidates and 10 seconds wall time. Exceeding any limit reports incompleteness; do not silently truncate and report success. Binary blobs are skipped and reported, not interpreted as clean. Refuse unresolved index conflicts. Dependency locks/vendor/generated paths are not auto-suppressed; explicit user exclusions appear in the coverage summary.
+Target budgets: 1 MiB per blob, 20 MiB aggregate inspected bytes, 10,000 candidates and a 10-second deadline. Milestone 1A currently counts old and staged bytes together and caps line/rule findings rather than general candidates; its deadline is cooperative, not a hard interruption. These implementation limits are detailed in the [Phase One record](15-phase-one.md). Exceeding any limit reports incompleteness; do not silently truncate and report success. Binary blobs are skipped and reported, not interpreted as clean. Refuse unresolved index conflicts. Dependency locks/vendor/generated paths are not auto-suppressed; explicit user exclusions appear in the coverage summary.
 
 ## Reporting and remediation
 
