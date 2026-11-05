@@ -12,6 +12,8 @@ Inference standardises queries with exported means/scales and accumulates square
 
 Abstention priority matches the frozen Python reference: review-all policy, exact conflict, outside raw training support, nearest-distance limit, then vote margin. The frozen standardised model retains review-all because validation targets failed. Diagnostic output exposes at most k approved example IDs with squared coordinate contributions; all exact matches still affect the score. Contributions explain distance, not causal importance or credential validity.
 
+Phase Six replaces a full reference sort with exact partial selection under the same total order, then sorts the selected k. Every distance and zero-match vote is still computed. [Performance evidence](24-phase-six-evidence.md) retains the original baseline and records unchanged parity.
+
 JSON parsing enables `serde_json`'s `float_roundtrip` feature to preserve exported f64 values. Initial corpus parity found an exact-match conflict mismatch without this feature. This corrects native loading only; the frozen Python implementation and sealed results are unchanged.
 
 ## Verification

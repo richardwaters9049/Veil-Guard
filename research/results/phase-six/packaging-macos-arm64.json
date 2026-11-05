@@ -1,0 +1,21 @@
+{
+  "archive": "veilguard-0.1.0-dev.6-aarch64-apple-darwin-development.tar.gz",
+  "archive_bytes": 1549431,
+  "assembly_reproducible_same_inputs": true,
+  "binary_sha256": "c667b4e475d50c1c6d4e600747f707c75955d3c09d85cf55346c4fab021152d0",
+  "binary_version": "veilguard 0.1.0-dev.6",
+  "fresh_prefix_scan_explain_hooks_passed": true,
+  "host": {
+    "logical_cpus": 10,
+    "machine": "arm64",
+    "python": "3.14.5",
+    "release": "25.6.0",
+    "system": "Darwin"
+  },
+  "limits": "Same-binary archive assembly reproducibility, not independent compiler build reproducibility. Fresh prefix on existing host, not a fresh OS. No release licence approval, signature, notarization or remote platform result implied.",
+  "model_or_corpus_distributed": false,
+  "recorded_at": "2026-11-05T16:52:53.916720+00:00",
+  "schema": "veilguard.packaging-evidence.v1",
+  "sha256": "07c47604e5f6963da172cf61eb6e0e1a92037943d22e472d3f9c701eb01b4942",
+  "target": "aarch64-apple-darwin"
+}

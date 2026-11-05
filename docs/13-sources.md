@@ -354,3 +354,40 @@ Before adding a factual claim, record its source, the relevant section, the scop
 Prefer publisher, university, author or official project pages. Keep author/title/year and DOI where available so a moved link can be repaired. For changing API/product pages, recheck at implementation and pin the version used in experiments. Do not copy third-party papers or datasets into this repository without permission/licence review.
 
 The planning checker verifies local links, R-number anchors and source-register consistency. It does not validate external availability, research quality, source entailment or model performance. External pages were reviewed through the research browser; no blanket claim that every DOI resolves in every environment is made.
+
+## Phase Six dependency and packaging references
+
+<a id="r31"></a>
+### R31 — RustSec advisory database and cargo-audit
+
+[Primary source](https://rustsec.org/). Checked 5 November 2026. Reviewed: Tool purpose and known-advisory coverage. Supports: Dated lockfile advisory scans. Limits: A clean advisory scan does not establish coverage of every C component, operating-system backport or unknown vulnerability.
+
+<a id="r32"></a>
+### R32 — Cargo metadata command reference
+
+[Primary source](https://doc.rust-lang.org/cargo/commands/cargo-metadata.html). Checked 5 November 2026. Reviewed: Resolved package graph, declared licence and feature fields. Supports: Machine-readable host dependency inventory. Limits: Manifest declarations are not legal approval or complete native component licensing.
+
+<a id="r33"></a>
+### R33 — GitHub-hosted runner reference
+
+[Primary source](https://docs.github.com/en/actions/reference/runners/github-hosted-runners). Checked 5 November 2026. Reviewed: Standard runner labels and CPU architectures. Supports: Planned native macOS arm64 and Linux x86_64 CI package checks. Limits: Documentation is not evidence that this project workflow ran successfully.
+
+<a id="r34"></a>
+### R34 — PyPA pip-audit project documentation
+
+[Primary source](https://pypi.org/project/pip-audit/). Checked 5 November 2026. Reviewed: Known-vulnerability requirements-file checks and PyPI service. Supports: Dated research-environment advisory checks using pinned names and versions. Limits: Not a complete audit of native wheel payloads or unknown vulnerabilities.
+
+<a id="r35"></a>
+### R35 — libgit2 v1.9.7 COPYING
+
+[Primary source](https://raw.githubusercontent.com/libgit2/libgit2/v1.9.7/COPYING). Checked 5 November 2026. Reviewed: Licence text and linking exception; not a legal compatibility determination. Supports: Preserving upstream libgit2 notices distinct from Rust wrapper metadata. Limits: Application redistribution and licence approval remain owner/release decisions.
+
+<a id="r36"></a>
+### R36 — zlib upstream release and security information
+
+[Primary source](https://www.zlib.net/). Checked 5 November 2026. Reviewed: Version 1.4 release date and listed security fixes as accessed 5 November 2026. Supports: Native-library patch applicability review beyond Cargo advisories. Limits: Upstream version strings do not determine Apple or distribution backport status.
+
+<a id="r37"></a>
+### R37 — libgit2 security information
+
+[Primary source](https://libgit2.org/security/). Checked 5 November 2026. Reviewed: Published security information and previous security releases. Supports: Separate upstream native dependency review. Limits: The published list is not a comprehensive guarantee for bundled or OS libraries.

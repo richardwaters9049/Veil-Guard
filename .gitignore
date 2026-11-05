@@ -9,3 +9,4 @@ research/runs/
 data/private/
 models/local/
 data/generated/
+dist/

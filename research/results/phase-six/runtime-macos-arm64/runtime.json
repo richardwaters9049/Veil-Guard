@@ -1,0 +1,79 @@
+{
+  "binary_sha256": "c667b4e475d50c1c6d4e600747f707c75955d3c09d85cf55346c4fab021152d0",
+  "cases": [
+    {
+      "coverage_complete": true,
+      "exit_code": 1,
+      "model_enabled": false,
+      "sandbox_replay_passed": true,
+      "selected_api_attempts": {}
+    },
+    {
+      "coverage_complete": true,
+      "exit_code": 1,
+      "model_enabled": true,
+      "sandbox_replay_passed": true,
+      "selected_api_attempts": {}
+    }
+  ],
+  "host": {
+    "logical_cpus": 10,
+    "machine": "arm64",
+    "python": "3.14.5",
+    "release": "25.6.0",
+    "system": "Darwin"
+  },
+  "limits": "Dynamic interposition observes selected libc APIs, not every syscall or OS service. macOS sandbox blocks covered network/process operations but is not a source-completeness proof. Linux syscall/network-namespace enforcement remains pending unless separately recorded.",
+  "model_sha256": "f836afa4775dc04c248200d7499c39409886a76dfadf152232aa879017905479",
+  "positive_control_events": {
+    "connect": 1,
+    "execve": 1,
+    "fork": 1,
+    "getaddrinfo": 1,
+    "posix_spawn": 1,
+    "posix_spawnp": 1,
+    "sendto": 1,
+    "socket": 1,
+    "vfork": 1
+  },
+  "recorded_at": "2026-11-05T16:49:24.194647+00:00",
+  "repository_command_tripwires": "filters, diff/textconv, fsmonitor and pre-commit; none executed",
+  "sandbox": "macOS deny network/fork and foreign exec, positive controlled connect/fork denied",
+  "schema": "veilguard.runtime-evidence.v1",
+  "source_identity": {
+    ".github/workflows/phase-one.yml": "f66e7b9c0fa5e53d2623aced1bbd5b8faf9ca2d51ed1a4c673385412b599c791",
+    "Cargo.lock": "49905fb4e3873846b2c34edb5631e1989f00cea2e080677e84d7f9d797e66813",
+    "Cargo.toml": "b869ec7d5813def30df62b0150eb310740007fdafae9aa5387f740cf72650f02",
+    "rust-toolchain.toml": "c910997cb152c6dc8ed13b1fdf9fa28a4ed30d6776123e27dd6170e5c66067a0",
+    "scripts/benchmark_scan.py": "61b4e2d2752092bea9b64b4eac54f068b9a9bf6c2e7230f37822190816c73f67",
+    "scripts/check_all.py": "61094ae1c5063e20f762f13f1ce676e7accaa650b237477dab92ec4601f7aeef",
+    "scripts/check_corpus.py": "331191cd4f19ce05722439cc885468780d9f5e54657f11f460f59cb197328099",
+    "scripts/check_feature_parity.py": "008105dc521c1de991aa75cc744f7ed0507367aca157bb1c70a19dde169f7774",
+    "scripts/check_model_parity.py": "709d16f955d23bd307276424a38bf2f7a8c4847c0912f02bba6bfb31527c78fe",
+    "scripts/check_packaging.py": "29d30dcbe9c20dde0252c4c601748ff913753b0799d434a4c05c4e31eea12636",
+    "scripts/check_plan.py": "b6958e50124b71813a50200d1a80bd3129942076b7a3623a94fcd7dd89ea7757",
+    "scripts/check_research.py": "f5c95fcc65b076829db9b7213c92b5c53b98229334be1df2838f2229d97149d0",
+    "scripts/check_runtime.py": "dd941c2f1e26e72802b165ad387a7a20ac6974f0e6f998fe6ad8d787b4545216",
+    "scripts/package_development.py": "9248dc499708f90905c86f516700ba460eb8b1a2d5955c7a0d485400aab3446d",
+    "scripts/python_inventory.py": "d3cbd3304ac6e0c99b1f1d28bf24cb93ac66057b533393788434c293aabb9ff7",
+    "scripts/release_support.py": "5da6a056e177e8463a07783aa1b1fbdcff32ff0adefe7927f37d1aaadc59f9dd",
+    "scripts/review_dependencies.py": "23d7fac2bea7268cc6a293bd1f2505c59799fbc54090af2e4b8fde4614d09ca4",
+    "scripts/runtime/guard.c": "d3f6822d125b468a2e53b8074f51e8c61a8128635d62503bcd84569a710ca773",
+    "scripts/runtime/probe.c": "17ea0ac6dc96b68cc41498c0c4f2e83fe6e1d0446d60c3d0bb3a8dcd59d834ae",
+    "scripts/smoke_scan.py": "26fa1fe34889cc2c5ef1f6b44a2c8a2f53a92ef87a17aa3004774820499e02ff",
+    "src/candidates.rs": "736ccc4df81ce630409ead6f0d82cfa6abf36e81be376d04252bb1f95217ae50",
+    "src/explanation.rs": "55f30050cf5e0456fee1a989a3ecac3d2d00c51e2cf5261c3c1629cfeaba2144",
+    "src/features.rs": "ee9f88a1d50012fee09a1b154fbd1f9f7ee693378d77a48edefa4a82a3dea9a3",
+    "src/git_index.rs": "e3b01f8b33f7be9cc3c20a332e1a0f86e13e9beab146746370cd3a57dbbbed4f",
+    "src/hooks.rs": "ed9c41cb67f9101bf6c26b2361a472f31c29c9e7d25479fd4c22a33b6a136574",
+    "src/lib.rs": "c257819b8dc1ae91359c9a4d6dff821c63c61259736de362053af818386fdcb2",
+    "src/local_input.rs": "8898062e1ac2739ca01551a7f3ca7c59d2c9a0b760fd7dfa8172f791a6f90ac4",
+    "src/main.rs": "84b9c799191e3d5a5752c1b2d6abf592f1156bf276617c568e7a2df9b115cb63",
+    "src/model.rs": "77f88a0502d3ac1cc565288d98f51b55f7bcac22f9da49ad6dffd06efaaf072b",
+    "src/privacy.rs": "916e87372263b1e38747266b0c1f3351710c774791f9fea8ef069018a79ea9f3",
+    "src/report.rs": "b4f2f67e88f9ffcbd3fe921fd2b9203c4e8b088a9dc54938afc4c2a1fd46756b",
+    "src/repository.rs": "5150cc1bf415126585619fde8f5ced1a6ae19919394542063ec95d921ecaedc0",
+    "src/rules.rs": "0b81bb678c0cc4ac8e16ad537e1540711a7d7583f460583d6e0cc2b5ecd2365f"
+  },
+  "uninstrumented_probe_refused": true
+}

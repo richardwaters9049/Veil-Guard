@@ -28,6 +28,8 @@ Adversaries: malicious repository authors, tampered model distributors, accident
 | Supply-chain compromise | Lock dependencies, audit licences/security, versioned release manifests; signatures before trusted automatic model updates |
 | Report exposes sensitive paths | Relative escaped paths; explicit output, restrictive permissions and documented retention |
 
+The [Phase Six runtime record](24-phase-six-evidence.md) adds selected-API positive controls, macOS network/process denial and repository-command tripwires. These are scoped local tests, not complete syscall coverage. Development archives exclude models/corpus; licensing, native/OS patch status, trusted signatures and remote platform evidence remain release gates.
+
 ## Privacy commitments
 
 No runtime telemetry, analytics, remote model calls, provider validation, content upload or hidden training ingestion. No secret hashes as identifiers. Current filename displays scrub observed candidate values and withhold all paths when a scan is incomplete; see the [candidate/report privacy contract](16-candidate-and-report-contract.md). This is not anonymisation. Numerical features are not guaranteed anonymisation; default model reports contain score/distance summaries, with coordinate contributions only on explicit opt-in. Reference aliases identify positions in the explicitly selected artifact; loading does not authenticate its provenance.

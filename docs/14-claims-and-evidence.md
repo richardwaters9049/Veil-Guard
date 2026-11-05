@@ -9,7 +9,7 @@ Evidence revision: 5 November 2026. Milestone 1A has a rule-only implementation 
 - **Design:** behaviour or policy we intend to implement.
 - **Hypothesis:** a benefit we need to test.
 - **Target:** an acceptance threshold or estimate chosen for planning.
-- **Measured:** requires a reproducible project result. Corpus counts and engineering checks are recorded; synthetic ranking results are recorded with their population limits.
+- **Measured:** requires a reproducible project result. Corpus counts and engineering checks are recorded; synthetic ranking and local runtime results are recorded with their population/workload limits.
 
 University profiles identify people; they are not evidence of endorsement. Papers about a method do not validate our implementation or selected features. Sources are indexed in [13-sources.md](13-sources.md).
 
@@ -32,7 +32,7 @@ University profiles identify people; they are not evidence of endorsement. Paper
 | C13 | Offline/redacted operation will protect source privacy — design goal | [Threat model](08-ethics-and-threat-model.md); relevant logging guidance [R20](13-sources.md#r20) | Capture outputs, instrument network/process behaviour, disclose local residual risk; no absolute guarantee |
 | C14 | KNN will reduce review effort/false positives — hypothesis | [Synthetic result](21-phase-four-results.md) failed the ranking benefit gate | No demonstrated review-time saving; a separate consenting-user study is required for time-saving claims |
 | C15 | 5,000–10,000 rows, 50 families, 20 repositories — collection targets | [Data plan](06-data-and-training.md) | Prototype has 6,200 rows, 130 families and 70 fixture repositories; no academic sample-size guarantee |
-| C16 | 10% Precision@20 improvement, 2s p95, 150 MiB RSS — release targets | [Evaluation plan](07-evaluation-and-acceptance.md) | No achievement claimed; publish actual workload/hardware and intervals |
+| C16 | 10% Precision@20 improvement, 2s p95, 150 MiB RSS — release targets | [Evaluation plan](07-evaluation-and-acceptance.md) | Ranking target failed; [local M4 runtime/RSS targets](24-phase-six-evidence.md) passed on declared synthetic workloads after exact selection; wider platform/workload validation remains open |
 | C17 | 90–150 hours / 6–8 part-time weeks — estimate | [Delivery plan](09-delivery-plan.md) | Planning judgement; no literature-derived productivity claim |
 | C18 | Existing scanners already address this space — external evidence | [R21](13-sources.md#r21), [R22](13-sources.md#r22) | No novelty or replacement claim; comparisons need pinned versions |
 | C19 | Data/model documentation should record intended use and limits — framework adaptation | [R15](13-sources.md#r15), [R16](13-sources.md#r16) | Data card records actual composition and pending review/licensing; model card records the failed synthetic benefit gate; neither is a certification |

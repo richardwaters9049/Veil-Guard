@@ -1,0 +1,90 @@
+{
+  "dependencies": [
+    {
+      "name": "cloudpickle",
+      "version": "3.1.2",
+      "vulns": []
+    },
+    {
+      "name": "contourpy",
+      "version": "1.4.0",
+      "vulns": []
+    },
+    {
+      "name": "cycler",
+      "version": "0.12.1",
+      "vulns": []
+    },
+    {
+      "name": "fonttools",
+      "version": "4.68.0",
+      "vulns": []
+    },
+    {
+      "name": "joblib",
+      "version": "1.6.0",
+      "vulns": []
+    },
+    {
+      "name": "kiwisolver",
+      "version": "1.5.1",
+      "vulns": []
+    },
+    {
+      "name": "matplotlib",
+      "version": "3.11.2",
+      "vulns": []
+    },
+    {
+      "name": "narwhals",
+      "version": "2.28.0",
+      "vulns": []
+    },
+    {
+      "name": "numpy",
+      "version": "2.5.4",
+      "vulns": []
+    },
+    {
+      "name": "packaging",
+      "version": "26.3",
+      "vulns": []
+    },
+    {
+      "name": "pillow",
+      "version": "13.0.0",
+      "vulns": []
+    },
+    {
+      "name": "pyparsing",
+      "version": "3.3.3",
+      "vulns": []
+    },
+    {
+      "name": "python-dateutil",
+      "version": "4.0.0",
+      "vulns": []
+    },
+    {
+      "name": "scikit-learn",
+      "version": "1.9.1",
+      "vulns": []
+    },
+    {
+      "name": "scipy",
+      "version": "1.18.1",
+      "vulns": []
+    },
+    {
+      "name": "threadpoolctl",
+      "version": "3.8.0",
+      "vulns": []
+    },
+    {
+      "name": "tzdata",
+      "version": "2026.6",
+      "vulns": []
+    }
+  ],
+  "fixes": []
+}
