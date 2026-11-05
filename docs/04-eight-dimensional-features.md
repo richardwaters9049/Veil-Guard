@@ -1,10 +1,10 @@
 # Eight-dimensional feature contract
 
-Schema: veilguard.features.v1. Exactly eight coordinates, fixed order. This is a proposed contract to implement identically in Rust and Python.
+Schema: veilguard.features.v1. Exactly eight coordinates, fixed order. Implemented independently in Rust and Python; the [Phase Two record](18-phase-two-feature-parity.md) defines the fixture evidence and limits.
 
 ## Input and candidate boundaries
 
-**Provenance.** Discrete entropy has an established mathematical definition ([R06](13-sources.md#r06)); insertion/deletion/substitution edit distance is established ([R07](13-sources.md#r07)). The eight-feature selection, context grammar, dictionaries, normalisation and limits below are our proposed engineering choices. No cited thesis or professor has validated this exact representation.
+**Provenance.** Discrete entropy has an established mathematical definition ([R06](13-sources.md#r06)); insertion/deletion/substitution edit distance is established ([R07](13-sources.md#r07)). The eight-feature selection, context grammar, dictionaries, normalisation and limits below are our engineering choices. No cited thesis or professor has validated this exact representation.
 
 For generic inference, v is a literal printable ASCII value of length L with 8 ≤ L ≤ 256. Strip only one recognised enclosing quote pair during candidate extraction. Do not trim, case-fold, decode escapes/base64, concatenate or Unicode-normalise v. Keep the original staged byte span for locating context. Unsupported inputs get review, never an imputed vector.
 
@@ -30,11 +30,13 @@ Spaces count as symbols if they occur inside v. Lowercase letters are deliberate
 ## Precise context rules
 
 Credential keyword vocabulary: password, passwd, secret, token, credential, apikey, privatekey.
-Tokenise ASCII identifiers by underscores, hyphens and camel-case boundaries; case-fold tokens. Also compare concatenated adjacent tokens so api_key and privateKey match apikey and privatekey. Do not use arbitrary substring matches (tokeniser is not token).
+Take maximal ASCII alphanumeric runs, splitting additionally between an ASCII lowercase letter and a following uppercase letter. Every non-ASCII-alphanumeric byte is a separator, including underscores, hyphens, periods, whitespace and punctuation. Case-fold tokens; uppercase runs are not split internally. Compare single tokens and concatenated adjacent token pairs, retaining the span from the first token start to the second token end, including intervening separators. Thus api_key and privateKey match apikey/privatekey; tokenizer is not token. The same tokenisation is used for assignment keys.
+
+For proximity, tokenise the entire physical line, including other literals and comments, then discard keyword spans that overlap v. Do not clip a token at the value boundary or join across an overlapping value. Coordinates describe lexical context, without AST/semantic ownership.
 
 For x6, find keyword spans outside the candidate span on the same physical line. d is the count of source bytes strictly between the end of the earlier span and start of the later span; adjacent spans give d=0. The nearest qualifying span wins. Newlines stop the search.
 
-For x7, support simple full-line forms identifier = literal and identifier : literal with optional indentation, optional identifier quotes, optional terminal comma/semicolon and optional trailing comment outside the literal. The key may contain periods and underscores. Environment-style assignments are included. Nested expressions, calls, concatenation and multi-line strings yield x7=0 or unsupported review where extraction is ambiguous. Version and test the exact parser grammar before training.
+For x7, support simple full-line forms identifier = literal and identifier : literal with optional indentation, optional identifier quotes, optional terminal comma/semicolon and optional trailing comment outside the literal. The key may contain periods and underscores. Environment-style assignments are included. Nested expressions, calls, concatenation and multi-line strings yield x7=0 or unsupported review where extraction is ambiguous. The versioned candidate grammar and shared parity fixtures define the supported parser before training.
 
 For x8, P is the literal dictionary:
 changeme, password, example, placeholder, dummy, test, your_api_key_here, replace_me, not_a_real_secret.

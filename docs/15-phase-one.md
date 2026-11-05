@@ -4,7 +4,7 @@ Updated: 5 November 2026. Branch: phase-one/staged-scanner. Status: milestones 1
 
 Git's staged/index semantics are grounded in [R17](13-sources.md#r17), with object/index interfaces in [R18](13-sources.md#r18). Project evidence comes from this repository's regression fixtures, not those references. This is a development scanner with narrow patterns, lexical candidate reviews and no AI model.
 
-## Current implementation
+## Phase One implementation
 
 | Area | Behaviour |
 | --- | --- |
@@ -91,4 +91,4 @@ Tests use disposable, authored, nonfunctional fixtures. APFS-invalid byte names 
 
 ## Remaining work
 
-The scoped Phase One engineering gate is implemented and verified locally; acceptance requires the passing CI run linked from the repository/automation record. Phase Two can implement independent Rust/Python eight-feature parity after this branch is accepted. Phase Six still owns release packaging, dependency/licence audit, measured workload benchmarks and expanded operational verification.
+The scoped Phase One engineering gate passed locally and in CI at dc47235. Its successor branch implements [Phase Two feature parity](18-phase-two-feature-parity.md). Phase Six still owns release packaging, dependency/licence audit, measured workload benchmarks and expanded operational verification.

@@ -1,0 +1,865 @@
+{
+  "schema": "veilguard.feature-fixtures.v1",
+  "feature_schema": "veilguard.features.v1",
+  "tolerance": 1e-09,
+  "provenance": "Authored synthetic values only. Expected vectors use hand-worked frequencies, ratios, spans and edit matches; no model, corpus or real credentials.",
+  "cases": [
+    {
+      "id": "placeholder_no_context",
+      "kind": "features",
+      "line": "\"password\"",
+      "start": 1,
+      "end": 9,
+      "expected": [
+        2.1972245773362196,
+        2.75,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "uppercase_placeholder",
+      "kind": "features",
+      "line": "\"PASSWORD\"",
+      "start": 1,
+      "end": 9,
+      "expected": [
+        2.1972245773362196,
+        2.75,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "other_quote_and_placeholder",
+      "kind": "features",
+      "line": "'changeme'",
+      "start": 1,
+      "end": 9,
+      "expected": [
+        2.1972245773362196,
+        2.75,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "sensitive_assignment",
+      "kind": "features",
+      "line": "password = \"password\"",
+      "start": 12,
+      "end": 20,
+      "expected": [
+        2.1972245773362196,
+        2.75,
+        0,
+        0,
+        0,
+        0.2,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "quoted_key",
+      "kind": "features",
+      "line": "\"secret\": \"PASSWORD\", // token",
+      "start": 11,
+      "end": 19,
+      "expected": [
+        2.1972245773362196,
+        2.75,
+        0,
+        1,
+        0,
+        0.2,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "snake_key",
+      "kind": "features",
+      "line": "api_key='password';",
+      "start": 9,
+      "end": 17,
+      "expected": [
+        2.1972245773362196,
+        2.75,
+        0,
+        0,
+        0,
+        0.3333333333333333,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "camel_key",
+      "kind": "features",
+      "line": "privateKey: \"password\"",
+      "start": 13,
+      "end": 21,
+      "expected": [
+        2.1972245773362196,
+        2.75,
+        0,
+        0,
+        0,
+        0.25,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "hyphen_key",
+      "kind": "features",
+      "line": "api-key = password",
+      "start": 10,
+      "end": 18,
+      "expected": [
+        2.1972245773362196,
+        2.75,
+        0,
+        0,
+        0,
+        0.25,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "uppercase_bare",
+      "kind": "features",
+      "line": "TOKEN = password",
+      "start": 8,
+      "end": 16,
+      "expected": [
+        2.1972245773362196,
+        2.75,
+        0,
+        0,
+        0,
+        0.25,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "no_substring_key",
+      "kind": "features",
+      "line": "tokenizer = \"password\"",
+      "start": 13,
+      "end": 21,
+      "expected": [
+        2.1972245773362196,
+        2.75,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "comment_context",
+      "kind": "features",
+      "line": "print(\"password\") // token",
+      "start": 7,
+      "end": 15,
+      "expected": [
+        2.1972245773362196,
+        2.75,
+        0,
+        0,
+        0,
+        0.14285714285714285,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "repeated_lower",
+      "kind": "features",
+      "line": "\"aaaaaaaa\"",
+      "start": 1,
+      "end": 9,
+      "expected": [
+        2.1972245773362196,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0.125
+      ]
+    },
+    {
+      "id": "repeated_upper",
+      "kind": "features",
+      "line": "\"AAAAAAAA\"",
+      "start": 1,
+      "end": 9,
+      "expected": [
+        2.1972245773362196,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0.125
+      ]
+    },
+    {
+      "id": "digits",
+      "kind": "features",
+      "line": "\"12345678\"",
+      "start": 1,
+      "end": 9,
+      "expected": [
+        2.1972245773362196,
+        3,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "symbols",
+      "kind": "features",
+      "line": "\"!!!!!!!!\"",
+      "start": 1,
+      "end": 9,
+      "expected": [
+        2.1972245773362196,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "spaces_preserved",
+      "kind": "features",
+      "line": "\"        \"",
+      "start": 1,
+      "end": 9,
+      "expected": [
+        2.1972245773362196,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "mixed_classes",
+      "kind": "features",
+      "line": "\"Aa1!Aa1!\"",
+      "start": 1,
+      "end": 9,
+      "expected": [
+        2.1972245773362196,
+        2,
+        0.25,
+        0.25,
+        0.25,
+        0,
+        0,
+        0.125
+      ]
+    },
+    {
+      "id": "inner_spaces",
+      "kind": "features",
+      "line": "\" password \"",
+      "start": 1,
+      "end": 11,
+      "expected": [
+        2.3978952727983707,
+        2.9219280948873623,
+        0,
+        0,
+        0.2,
+        0,
+        0,
+        0.8
+      ]
+    },
+    {
+      "id": "maximum_length",
+      "kind": "features",
+      "line": "\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"",
+      "start": 1,
+      "end": 257,
+      "expected": [
+        5.54907608489522,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0.0078125
+      ]
+    },
+    {
+      "id": "placeholder_symbol",
+      "kind": "features",
+      "line": "\"replace_me\"",
+      "start": 1,
+      "end": 11,
+      "expected": [
+        2.3978952727983707,
+        2.8464393446710154,
+        0,
+        0,
+        0.1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "quoted_bare_punctuation",
+      "kind": "features",
+      "line": "other = password; # comment",
+      "start": 8,
+      "end": 16,
+      "expected": [
+        2.1972245773362196,
+        2.75,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "unicode_context",
+      "kind": "features",
+      "line": "é(\"password\") token",
+      "start": 4,
+      "end": 12,
+      "expected": [
+        2.1972245773362196,
+        2.75,
+        0,
+        0,
+        0,
+        0.25,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "repeated_occurrence",
+      "kind": "features",
+      "line": "print(\"password\", \"password\")",
+      "start": 19,
+      "end": 27,
+      "expected": [
+        2.1972245773362196,
+        2.75,
+        0,
+        0,
+        0,
+        0.2,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "comparison_is_generic",
+      "kind": "features",
+      "line": "token == \"password\"",
+      "start": 10,
+      "end": 18,
+      "expected": [
+        2.1972245773362196,
+        2.75,
+        0,
+        0,
+        0,
+        0.16666666666666666,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "candidate_gap_79",
+      "kind": "features",
+      "line": "\"password\"                                                                              token",
+      "start": 1,
+      "end": 9,
+      "expected": [
+        2.1972245773362196,
+        2.75,
+        0,
+        0,
+        0,
+        0.0125,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "candidate_gap_80",
+      "kind": "features",
+      "line": "\"password\"                                                                               token",
+      "start": 1,
+      "end": 9,
+      "expected": [
+        2.1972245773362196,
+        2.75,
+        0,
+        0,
+        0,
+        0.012345679012345678,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "candidate_gap_81",
+      "kind": "features",
+      "line": "\"password\"                                                                                token",
+      "start": 1,
+      "end": 9,
+      "expected": [
+        2.1972245773362196,
+        2.75,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "geometry_before_0",
+      "kind": "proximity",
+      "line": "secretABCDEFGH",
+      "start": 6,
+      "end": 14,
+      "expected": 1
+    },
+    {
+      "id": "geometry_after_0",
+      "kind": "proximity",
+      "line": "abcdefghToken",
+      "start": 0,
+      "end": 8,
+      "expected": 1
+    },
+    {
+      "id": "geometry_before_1",
+      "kind": "proximity",
+      "line": "secret ABCDEFGH",
+      "start": 7,
+      "end": 15,
+      "expected": 0.5
+    },
+    {
+      "id": "geometry_after_1",
+      "kind": "proximity",
+      "line": "abcdefgh Token",
+      "start": 0,
+      "end": 8,
+      "expected": 0.5
+    },
+    {
+      "id": "geometry_before_80",
+      "kind": "proximity",
+      "line": "secret                                                                                ABCDEFGH",
+      "start": 86,
+      "end": 94,
+      "expected": 0.012345679012345678
+    },
+    {
+      "id": "geometry_after_80",
+      "kind": "proximity",
+      "line": "abcdefgh                                                                                Token",
+      "start": 0,
+      "end": 8,
+      "expected": 0.012345679012345678
+    },
+    {
+      "id": "geometry_before_81",
+      "kind": "proximity",
+      "line": "secret                                                                                 ABCDEFGH",
+      "start": 87,
+      "end": 95,
+      "expected": 0
+    },
+    {
+      "id": "geometry_after_81",
+      "kind": "proximity",
+      "line": "abcdefgh                                                                                 Token",
+      "start": 0,
+      "end": 8,
+      "expected": 0
+    },
+    {
+      "id": "too_short",
+      "kind": "features",
+      "line": "token = \"aaaaaaa\"",
+      "start": 9,
+      "end": 16,
+      "expected": null
+    },
+    {
+      "id": "too_long",
+      "kind": "features",
+      "line": "\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"",
+      "start": 1,
+      "end": 258,
+      "expected": null
+    },
+    {
+      "id": "unicode_literal",
+      "kind": "features",
+      "line": "token = \"caféxxxx\"",
+      "start": 9,
+      "end": 18,
+      "expected": null
+    },
+    {
+      "id": "escaped_literal",
+      "kind": "features",
+      "line": "token = \"abcd\\nxxxx\"",
+      "start": 9,
+      "end": 19,
+      "expected": null
+    },
+    {
+      "id": "concatenation",
+      "kind": "features",
+      "line": "token = \"password\" + suffix",
+      "start": 9,
+      "end": 17,
+      "expected": null
+    },
+    {
+      "id": "function_assignment",
+      "kind": "features",
+      "line": "token = call(\"password\")",
+      "start": 14,
+      "end": 22,
+      "expected": null
+    },
+    {
+      "id": "template",
+      "kind": "features",
+      "line": "token = `password`",
+      "start": 9,
+      "end": 17,
+      "expected": null
+    },
+    {
+      "id": "triple",
+      "kind": "features",
+      "line": "token = \"\"\"password\"\"\"",
+      "start": 11,
+      "end": 19,
+      "expected": null
+    },
+    {
+      "id": "unterminated",
+      "kind": "features",
+      "line": "token = \"password",
+      "start": 9,
+      "end": 17,
+      "expected": null
+    },
+    {
+      "id": "slice_not_occurrence",
+      "kind": "features",
+      "line": "\"password\"",
+      "start": 2,
+      "end": 9,
+      "expected": null
+    },
+    {
+      "id": "comment_not_candidate",
+      "kind": "features",
+      "line": "# \"password\"",
+      "start": 3,
+      "end": 11,
+      "expected": null
+    },
+    {
+      "id": "generic_concat",
+      "kind": "features",
+      "line": "call(\"password\" + suffix)",
+      "start": 6,
+      "end": 14,
+      "expected": null
+    },
+    {
+      "id": "invalid_byte_boundary",
+      "kind": "features",
+      "line": "é(\"password\")",
+      "start": 1,
+      "end": 10,
+      "expected": null
+    },
+    {
+      "id": "newline_context",
+      "kind": "features",
+      "line": "\"password\"\n",
+      "start": 1,
+      "end": 9,
+      "expected": null
+    },
+    {
+      "id": "substitution",
+      "kind": "features",
+      "line": "\"passw0rd\"",
+      "start": 1,
+      "end": 9,
+      "expected": [
+        2.1972245773362196,
+        2.75,
+        0.125,
+        0,
+        0,
+        0,
+        0,
+        0.875
+      ]
+    },
+    {
+      "id": "insertion",
+      "kind": "features",
+      "line": "\"passworrd\"",
+      "start": 1,
+      "end": 10,
+      "expected": [
+        2.302585092994046,
+        2.7254805569978675,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0.8888888888888888
+      ]
+    },
+    {
+      "id": "deletion",
+      "kind": "features",
+      "line": "\"placeholde\"",
+      "start": 1,
+      "end": 11,
+      "expected": [
+        2.3978952727983707,
+        2.9219280948873623,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0.9090909090909091
+      ]
+    },
+    {
+      "id": "control_before_key",
+      "kind": "features",
+      "line": "\u001ctoken=\"password\"",
+      "start": 8,
+      "end": 16,
+      "expected": [
+        2.1972245773362196,
+        2.75,
+        0,
+        0,
+        0,
+        0.3333333333333333,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "vertical_tab_comment",
+      "kind": "features",
+      "line": "token=password\u000b# tail",
+      "start": 6,
+      "end": 14,
+      "expected": null
+    },
+    {
+      "id": "nbsp_comment",
+      "kind": "features",
+      "line": "token=password # tail",
+      "start": 6,
+      "end": 14,
+      "expected": null
+    },
+    {
+      "id": "control_after_quote",
+      "kind": "features",
+      "line": "token=\"password\"\u001c",
+      "start": 7,
+      "end": 15,
+      "expected": null
+    }
+  ],
+  "distance_cases": [
+    {
+      "id": "diagonal_scaling",
+      "values": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "means": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "scales": [
+        1,
+        2,
+        4,
+        0.5,
+        1,
+        2,
+        4,
+        0.5
+      ],
+      "expected_standardised": [
+        2,
+        1,
+        0.5,
+        4,
+        2,
+        1,
+        0.5,
+        4
+      ],
+      "neighbour": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_contributions": [
+        4,
+        1,
+        0.25,
+        16,
+        4,
+        1,
+        0.25,
+        16
+      ],
+      "expected_squared_distance": 42.5
+    },
+    {
+      "id": "identity_zero_distance",
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "means": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "scales": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "expected_standardised": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "neighbour": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_contributions": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected_squared_distance": 0
+    }
+  ]
+}

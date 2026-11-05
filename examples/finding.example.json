@@ -1,7 +1,7 @@
 {
   "report_schema": "veilguard.report.v2",
   "scope": "staged_index",
-  "scanner_version": "0.1.0-dev.3",
+  "scanner_version": "0.1.0-dev.4",
   "candidate_grammar": "veilguard.candidates.v1",
   "model_status": "not_implemented",
   "path_status": "escaped",

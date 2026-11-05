@@ -302,6 +302,17 @@
       "limits": "A defined workflow or available runner is not a passing CI result; verify the per-commit run.",
       "doi": null,
       "checked_on": "2026-11-05"
+    },
+    {
+      "id": "R28",
+      "citation": "Astral. uv project guide and locking/syncing documentation.",
+      "type": "Official technical documentation",
+      "url": "https://docs.astral.sh/uv/concepts/projects/sync/",
+      "additional_url": "https://docs.astral.sh/uv/guides/projects/",
+      "reviewed": "Project manifest/environment structure; locked mode and lockfile consistency checks",
+      "supports": "Using a uv project and committed lockfile; locked mode refuses automatic lock updates.",
+      "limits": "A dependency lock does not pin the Python interpreter, prove offline execution or validate numerical parity.",
+      "checked_on": "2026-11-05"
     }
   ]
 }

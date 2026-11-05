@@ -2,7 +2,7 @@
 
 ## Explainable, offline credential triage for staged Git changes
 
-**Status: Phase One development — 5 November 2026.** The staged scanner, candidate/report contract and repository/automation hardening are implemented. The Phase One acceptance command and per-commit CI verify this scope. No feature extractor, trained model or measured detection-accuracy results exist yet. Veil Guard is a working project name; naming clearance is pending.
+**Status: Phase Two development — 5 November 2026.** The staged scanner and repository hardening are implemented, with independent Rust/Python eight-feature extractors and golden parity checks. The unified acceptance command and per-commit CI verify this scope. No trained model, ranking or measured detection-accuracy results exist yet. Veil Guard is a working project name; naming clearance is pending.
 
 Veil Guard will be a native command-line developer security tool. It will read the Git index, identify possible hard-coded credentials, and use an eight-dimensional k-nearest neighbours model to rank ambiguous candidates for review. It will explain decisions using redacted locations, numerical feature differences and curated example IDs. It will have no web server, browser UI, dashboard or cloud inference.
 
@@ -22,7 +22,7 @@ Rust for the shipped CLI and inference; Python, NumPy and scikit-learn for offli
 
 ### Evidence and academic foundation
 
-Nearest-neighbour classification and distance-based learning are established methods ([R03](docs/13-sources.md#r03), [R04](docs/13-sources.md#r04)); vector/matrix notation follows standard linear algebra ([R05](docs/13-sources.md#r05)). Exactly eight features, offline operation and ranking-only policy are project choices. A narrow rule-only scanner now exists; the eight-feature extractor, training corpus, model and benchmark results remain pending.
+Nearest-neighbour classification and distance-based learning are established methods ([R03](docs/13-sources.md#r03), [R04](docs/13-sources.md#r04)); vector/matrix notation follows standard linear algebra ([R05](docs/13-sources.md#r05)). Exactly eight features, offline operation and ranking-only policy are project choices. A narrow rule-only scanner now exists; independent eight-feature extraction and fixture parity are implemented. Training data, the model and benchmark results remain pending.
 
 Start with the [annotated sources and professor profiles](docs/13-sources.md), including the RIT master's thesis and Weinberger's doctoral dissertation, then the [claims and evidence register](docs/14-claims-and-evidence.md). Each entry records its relevance, review scope and limits. University links are attribution, not endorsement.
 
@@ -47,6 +47,7 @@ Start with the [annotated sources and professor profiles](docs/13-sources.md), i
 | [Phase One implementation](docs/15-phase-one.md) | Executable commands, milestone evidence and remaining work |
 | [Candidate/report contract](docs/16-candidate-and-report-contract.md) | Implemented lexical grammar, byte spans, report v2 and filename policy |
 | [Repository formats and automation](docs/17-repository-and-automation.md) | Supported layouts, refusal reasons and local/CI acceptance |
+| [Phase Two feature parity](docs/18-phase-two-feature-parity.md) | Independent extractors, golden fixtures, distance contributions and reproduction |
 | [Model card template](models/MODEL_CARD.md) | Intended use, evidence and limitations |
 | [Data card template](data/DATA_CARD.md) | Provenance, consent and split accounting |
 
@@ -56,13 +57,15 @@ Start with the [annotated sources and professor profiles](docs/13-sources.md), i
 `examples/illustrative-vectors.json` contains fabricated vectors to explain the mathematics, not training data.
 `examples/finding.example.json` is an authored example of the current report-v2 contract; `schemas/report-v2.json` defines its JSON shape.
 `scripts/check_plan.py` validates planning links, source citations and illustrative mathematics using Python's standard library. `docs/references.json` holds the structured source register. These checks do not verify source entailment, external link uptime or model performance.
-`src/` contains the first Rust scanner; `tests/staged_scan.rs` exercises it. `research/` remains reserved for the offline ML pipeline.
+`src/` contains the first Rust scanner; `tests/staged_scan.rs` exercises it. `research/` contains the independent Python reference, authored parity fixtures and locked environment; the ML pipeline remains future work.
 
-### Build and run Phase One
+### Build and run
 
 From `/Users/richy/Documents/Github/veilguard`:
 
 ```sh
+python3 -m venv .venv
+.venv/bin/python -m pip install --only-binary=:all: uv==0.13.7
 python3 scripts/check_all.py
 cargo run --locked -- scan --staged --repo /absolute/path/to/owned-repository
 cargo run --locked -- scan --staged --repo /absolute/path/to/owned-repository --format json
@@ -70,7 +73,7 @@ cargo run --locked -- scan --staged --repo /absolute/path/to/owned-repository --
 
 Replace the example repository path with a directory you own or have permission to inspect. The current scanner detects two narrow patterns and reports quoted/unquoted lexical candidates for review; it is not a comprehensive scanner or language parser. Exit 0 can include review findings and does not establish safety. See [current scope and limits](docs/15-phase-one.md).
 
-Next: Phase Two's independent Rust/Python eight-dimensional feature parity, after accepting this phase branch. See [repository scope and automated checks](docs/17-repository-and-automation.md).
+Phase Two's [parity record](docs/18-phase-two-feature-parity.md) describes the implemented scope, locked environment and reproduction commands. The next phase is the safe synthetic corpus and grouped splits; see the [delivery plan](docs/09-delivery-plan.md).
 
 ### Run the current planning check
 

@@ -10,14 +10,14 @@ The goal is a native offline credential-review CLI with an evaluated eight-dimen
 | --- | --- | --- | --- |
 | 0: evidence-backed planning | Complete baseline | main | Feat/Docs: Sources added |
 | 1: staged rule-only scanner | Implemented; per-commit acceptance gate | phase-one/staged-scanner | Feat/PhaseOne: Add staged scanner and programme roadmap |
-| 2: eight-dimensional feature parity | Not started; depends on Phase 1 | phase-two/eight-dimensional-features | Feat/PhaseTwo: Add eight-dimensional feature parity |
+| 2: eight-dimensional feature parity | Implemented; per-commit parity/acceptance gate | phase-two/eight-dimensional-features | Feat/PhaseTwo: Add eight-dimensional feature parity |
 | 3: safe training corpus | Not started; depends on Phase 2 | phase-three/safe-training-corpus | Feat/PhaseThree: Add safe corpus and grouped splits |
 | 4: KNN research and evaluation | Not started; depends on Phase 3 | phase-four/knn-evaluation | Feat/PhaseFour: Add reproducible KNN evaluation |
 | 5: native model inference | Not started; depends on Phase 4 decision | phase-five/native-inference | Feat/PhaseFive: Add native KNN inference |
 | 6: hardening and packaging | Not started; depends on Phase 5 | phase-six/hardening-and-packaging | Feat/PhaseSix: Harden and package offline scanner |
 | 7: portfolio release | Not started; depends on Phase 6 | phase-seven/portfolio-release | Feat/PhaseSeven: Publish evaluated portfolio release |
 
-Each phase has its own branch and commits. Only Phase One is created now. Future branches start from the accepted preceding work; do not create branches with empty or placeholder commits. Keep main as the accepted baseline, review each phase diff and evidence, and merge before starting the next dependent phase. A phase may have several focused commits. Do not merge or tag a release merely because its branch exists.
+Each phase has its own branch and commits. Phase Two is stacked on the passing Phase One tip dc4723515043046b94a8daecba3a464be5af553d. Future branches start from the accepted preceding work; do not create empty or placeholder commits. Review each phase diff and evidence before integration into main. A phase may have several focused commits. Do not merge or tag a release merely because its branch exists.
 
 ## Dependencies and effort
 
@@ -69,14 +69,14 @@ Exit artefacts: source, lockfile, executable instructions, rule/report contracts
 
 ## Phase 2: exactly eight features in Rust and Python
 
-Estimated effort: 12–20 hours. Entry: accepted Phase 1 extractor.
+Estimated effort: 12–20 hours. Entry: accepted Phase 1 extractor. Implementation/evidence: [Phase Two record](18-phase-two-feature-parity.md).
 
-- Implement the [ordered feature contract](04-eight-dimensional-features.md) independently in Rust and Python.
-- Cover length, empirical character entropy, character ratios, context proximity, sensitive assignment and placeholder edit similarity.
-- Add reviewed hand-worked fixtures for every coordinate and boundary, including distances 0/80/81.
-- Establish a locked Python environment with uv; commit its lockfile.
-- Validate finite values, exact order/ranges, unsupported inputs and schema versions.
-- Write feature-level distance explanation fixtures without printing candidate values.
+- [x] Implement the [ordered feature contract](04-eight-dimensional-features.md) independently in Rust and Python.
+- [x] Cover length, empirical character entropy, character ratios, context proximity, sensitive assignment and placeholder edit similarity.
+- [x] Add reviewed hand-worked fixtures for every coordinate and boundary, including distances 0/80/81.
+- [x] Establish a locked Python environment with uv; commit its lockfile.
+- [x] Validate finite values, exact order/ranges, unsupported inputs and schema versions.
+- [x] Write feature-level distance explanation fixtures without printing candidate values.
 
 Gate: eight coordinates only; absolute cross-language error at most 1e-9 on golden fixtures; no context/label/filename leakage as hidden extra coordinates. This tolerance is a project target. Exit: independent extractors, fixtures, parity evidence and updated contract.
 

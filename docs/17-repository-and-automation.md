@@ -84,13 +84,15 @@ From /Users/richy/Documents/Github/veilguard:
 python3 scripts/check_all.py
 ~~~
 
+Phase Two also requires uv 0.13.7 and Python 3.12 or newer; follow the [environment setup](18-phase-two-feature-parity.md#reproduce).
+
 With the pinned toolchain and dependencies already installed, cached-Cargo operation is available:
 
 ~~~sh
 python3 scripts/check_all.py --offline
 ~~~
 
-The script runs whitespace checks, rustfmt, Clippy with warnings denied, all Rust tests, the optimized build, source/link/arithmetic documentation checks and an optimized scan smoke fixture.
+The script runs whitespace checks, rustfmt, Clippy with warnings denied, all Rust tests, the optimized build, source/link/arithmetic documentation checks an optimized scan smoke fixture, Python reference/gate tests and eight-dimensional parity.
 
 The smoke fixture stages an authored nonfunctional token shape, changes the worktree, and verifies that the binary still reads the staged bytes. It then reverses the arrangement. It checks output redaction and unchanged index/worktree bytes. No provider request or real credential is involved.
 
@@ -98,7 +100,7 @@ rust-toolchain.toml pins Rust 1.98.1 with rustfmt/Clippy. Cargo.lock pins depend
 
 ## GitHub Actions
 
-The [workflow](../.github/workflows/phase-one.yml) runs the same acceptance script on macos-15 and ubuntu-24.04 for main/Phase One pushes and pull requests to main. Runner environments are recorded in the logs; labels are documented by GitHub ([R27](13-sources.md#r27)).
+The [workflow](../.github/workflows/phase-one.yml) runs the same acceptance script on macos-15 and ubuntu-24.04 for main/Phase One/Phase Two pushes and pull requests to main. Runner environments are recorded in the logs; labels are documented by GitHub ([R27](13-sources.md#r27)).
 
 The workflow uses read-only contents permission, disables persisted checkout credentials, pins official checkout/setup-python actions to reviewed commit SHAs, and gives each job a 15-minute timeout. It builds/tests source; it does not grant release/deployment permissions.
 
@@ -106,8 +108,8 @@ The workflow uses read-only contents permission, disables persisted checkout cre
 
 ## Acceptance record and scope
 
-Local acceptance passes 62 Rust tests: 41 staged/candidate/report integration tests, 16 repository/output-scope integration tests, three library tests and two panic-guard tests. The repository/configuration matrix includes 21 refusal cases within one integration test. Tests also cover supported packed storage, index v3/v4, detached HEAD, corrupt baseline trees, metadata changes, special files, missing output parents, broken stdout and panic-payload/backtrace redaction.
+At the Phase One tip, local acceptance passed 62 Rust tests: 41 staged/candidate/report integration tests, 16 repository/output-scope integration tests, three library tests and two panic-guard tests. The repository/configuration matrix includes 21 refusal cases within one integration test. Tests also cover supported packed storage, index v3/v4, detached HEAD, corrupt baseline trees, metadata changes, special files, missing output parents, broken stdout and panic-payload/backtrace redaction.
 
 The Rust panic child is a test-only subprocess; no panic-injection environment option exists in the shipped binary. Production error writes tolerate a broken stderr without formatting private panic payloads.
 
-Milestones 1A/1B/1C now have implemented checks for the declared Phase One scope. The current branch must pass the local command and its CI run before acceptance. Feature extraction/parity, training, KNN, inference, hooks and packaged releases remain later phases. There is no measured real-world accuracy, AI benefit, calibrated probability or sandbox-security claim.
+Milestones 1A/1B/1C now have implemented checks for the declared Phase One scope. The current branch must pass the local command and its CI run before acceptance. [Phase Two](18-phase-two-feature-parity.md) adds feature extraction/parity; training, KNN, inference, hooks and packaged releases remain later phases. There is no measured real-world accuracy, AI benefit, calibrated probability or sandbox-security claim.

@@ -300,9 +300,20 @@ Suggested order: R01 for the security problem; R02 for closely related work; R04
 - Limits: A defined workflow or available runner is not a passing CI result; verify the per-commit run.
 - Review scope: Push/pull-request workflow configuration, permissions, matrix/timeout controls and supported runner labels. Checked 2026-11-05.
 
+<a id="r28"></a>
+
+### R28: Astral. uv project guide and locking/syncing documentation.
+
+- Type: Official technical documentation.
+- [Primary source](https://docs.astral.sh/uv/concepts/projects/sync/).
+- [Project guide](https://docs.astral.sh/uv/guides/projects/).
+- Supports: Project manifests/environments, committed lockfiles and locked mode that refuses automatic lock changes.
+- Limits: A dependency lock does not pin the interpreter, establish network isolation or validate feature parity.
+- Review scope: Project structure and locked-mode consistency checks. Checked 2026-11-05.
+
 ## Stack documentation
 
-These official pages describe component capabilities. They do not establish that our integration is secure or that one language/tool is superior. Phase One runtime versions are pinned in Cargo.lock and rust-toolchain.toml; research dependencies remain future work.
+These official pages describe component capabilities. They do not establish that our integration is secure or that one language/tool is superior. Phase One runtime versions are pinned in Cargo.lock and rust-toolchain.toml; the Phase Two research manifest and uv lockfile are committed; ML dependencies remain future work.
 
 | Component | Primary documentation | Use in this plan |
 | --- | --- | --- |

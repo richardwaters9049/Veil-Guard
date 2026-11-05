@@ -6,7 +6,8 @@ Git index semantics are documented in [R17](../docs/13-sources.md#r17); the git2
 
 | File | Responsibility |
 | --- | --- |
-| lib.rs | Scanner API |
+| lib.rs | Scanner and feature APIs |
+| features.rs | Exactly eight validated coordinates, shared keyword spans, supplied-scaler arithmetic and distance contributions |
 | git_index.rs | Index snapshot, bounded object reading and in-memory changed-line calculation |
 | repository.rs | Preflight layout/configuration policy, bounded metadata, corrupt-baseline handling and control snapshots |
 | rules.rs | Independent blocking pattern occurrences |
@@ -15,4 +16,4 @@ Git index semantics are documented in [R17](../docs/13-sources.md#r17); the git2
 | report.rs | Redacted data contract, coverage state, escaped path display and text output |
 | main.rs | CLI parsing, redacted errors, output files and exit handling |
 
-The runtime starts no subprocess, uses no provider-validation client and loads no model. There is no eight-feature extractor or KNN implementation yet. The reviewed libgit2 is vendored and networking features are disabled for the git2 dependency; this is not a complete audit of all dependency code or hostile repository behaviour.
+The runtime starts no subprocess, uses no provider-validation client and loads no model. The separately tested [Phase Two extractor](../docs/18-phase-two-feature-parity.md) exists; scan does not compute vectors or use KNN yet. The reviewed libgit2 is vendored and networking features are disabled for the git2 dependency; this is not a complete audit of all dependency code or hostile repository behaviour.
