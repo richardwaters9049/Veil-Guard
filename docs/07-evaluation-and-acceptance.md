@@ -1,20 +1,26 @@
 # Evaluation and acceptance
+
 All numbers below are proposed targets. No benchmark has been run and no metric has been achieved.
 
 ## Two separate questions
+
+**Evidence basis.** Precision/recall analysis is motivated by research on imbalanced classification ([R13](13-sources.md#r13)); test isolation by leakage research ([R14](13-sources.md#r14)). Our top-20 metric, grouped bootstrap protocol, workload, tolerances and 10% benefit gate are project proposals. No cited paper supplies those numerical targets.
+
 1. Does candidate extraction plus deterministic scanning surface the fixture credentials in staged changes?
 2. Among extracted generic candidates, does KNN put useful reviews earlier than baselines?
 
 Report end-to-end misses separately from candidate-level classification. A classifier cannot recover a credential the extractor never emits. Model gains must not be inferred from prefiltered candidate-only results.
 
 ## Comparisons
+
 Use the same staged fixtures and candidate set for rules-only generic severity ordering, entropy ranking, standardised logistic regression and standardised KNN. Also run a pinned Gitleaks release as an external scanner reference, with safe fixtures and documented configuration. It is not an identical scope comparison; report coverage differences and versions rather than a misleading single winner.
 
 ## Metrics and experiments
+
 | Area | Evidence |
 | --- | --- |
 | End-to-end detection | Fixture credential recall, rule/generic split, miss reasons, false alerts per repository and per 1,000 changed lines |
-| Ranking | Precision@20 and Recall@20 per eligible repo, average precision/PR-AUC, review ordering with score ties handled deterministically |
+| Ranking | Precision@20 and Recall@20 per eligible repo, average precision (AP), separately labelled trapezoidal PR-AUC if used, review ordering with score ties handled deterministically |
 | Classification | Precision/recall/F1 on non-abstained predictions, confusion matrix, class support |
 | Abstention | Coverage, abstention rate and error rate among accepted predictions; report errors at fixed coverage |
 | Generalisation | Unseen family/repository results and hard-negative/low-entropy slices |
@@ -23,9 +29,10 @@ Use the same staged fixtures and candidate set for rules-only generic severity o
 | Privacy | Adversarial fixture output captures show zero exact candidate values or source lines across text/JSON/errors |
 | Native parity | Feature, neighbour/vote and distance-contribution agreement against reference fixtures |
 
-For repositories with fewer than 20 candidates, use all candidates and report their count; publish that slice separately. Bootstrap repositories/independent groups, not correlated rows. Report 95% intervals and denominators. Do not call weighted KNN votes calibrated probabilities; calibration needs a separate study.
+For repositories with fewer than 20 candidates, use m=min(20,n) and label the metric Precision@m/Recall@m, reporting m and n; publish that slice separately from eligible n≥20 repositories. Define precision denominator as m and recall denominator as all labelled sensitive candidates in the stated scope. Candidate-only recall must not be presented as end-to-end recall. AP and trapezoidal PR-AUC are different summaries ([R24](13-sources.md#r24)); state which implementation is used. When n=0, mark precision/recall/AP undefined. When n>0 but no positive labels exist in the metric scope, precision is 0 for m>0, while recall/AP are undefined under this prespecified policy. Report undefined-metric repository counts and exclude them from that metric's macro-average. Report false-alert counts on all-negative repositories separately. Bootstrap repositories/independent groups, not correlated rows. Report 95% intervals, resampling method, seeds, independent-group counts and denominators. Treat intervals from very few independent groups as exploratory, not strong evidence. Do not call weighted KNN votes calibrated probabilities; calibration needs a separate study.
 
 ## Proposed release gates
+
 - Every deterministic positive in the supported locked regression suite remains visible with AI enabled or disabled.
 - No changes to source, index or existing hooks during scans.
 - Every partial scan or skip is disclosed; exit-code tests match policy.
@@ -39,7 +46,9 @@ For repositories with fewer than 20 candidates, use all candidates and report th
 MVP may ship a useful rule scanner with experimental optional ranking if the AI benefit gate fails. It must not advertise a successful AI improvement. No model-based blocking in MVP.
 
 ## Important test cases
+
 Unborn HEAD, partial staging, staged rename, filenames with newlines/ANSI escapes, deleted files, symlink/submodule entries, merge conflicts, inaccessible blobs, binary/oversized blobs, resource limits, missing/corrupt model, zero-variance scaling, identical vectors with conflicting labels, exact ties, out-of-distribution candidates, empty candidate list and paths outside scope.
 
 ## Required evaluation report
+
 Record actual corpus sizes, splits, exact configs, hardware and dependency versions; show confusion tables and grouped intervals; include missed cases and representational collisions. Publish a blank results template until experiments are complete. Do not replace missing measurements with estimates.

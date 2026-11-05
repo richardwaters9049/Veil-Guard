@@ -1,11 +1,17 @@
 # Portfolio demonstration and case study
 
 ## One-sentence description
-“Veil Guard is a native offline security CLI that uses an explainable eight-dimensional KNN model to prioritise possible credentials in staged Git changes.”
+
+**Publication rule.** Support background claims with the [source register](13-sources.md) and performance claims with actual [evaluation evidence](07-evaluation-and-acceptance.md). Model cards describe intended uses and limitations ([R16](13-sources.md#r16)); a portfolio description should keep that distinction visible.
+
+Current planning-stage wording: “Veil Guard is a planned native offline security CLI exploring explainable eight-dimensional KNN ranking of possible credentials in staged Git changes.”
+
+After an implemented and evaluated release, the case study may describe demonstrated behaviour using the measured release/version.
 
 Add “experimental” to the model description until it passes the evaluation gates.
 
 ## Planned safe terminal story, 90–120 seconds
+
 1. Show a disposable authored fixture repository with a fake secret-shaped value, placeholder and checksum. All are nonfunctional.
 2. Stage the fixture, then alter only the working-tree copy. Explain why the index is the content that would be committed.
 3. Run the planned staged scan. Show a redacted rule warning, ranked generic review and completeness summary.
@@ -18,6 +24,7 @@ Add “experimental” to the model description until it passes the evaluation g
 The scanner and commands are not implemented at planning stage. Do not record this as a completed software demonstration yet.
 
 ## Evidence to include on the portfolio
+
 - Downloadable native binary for supported platforms and build instructions.
 - Architecture illustration without any web UI.
 - Threat model and no-network design.
@@ -28,7 +35,9 @@ The scanner and commands are not implemented at planning stage. Do not record th
 - Links to the eventual source repository, release and complete docs.
 
 ## Case study structure
+
 Problem and target developer workflow; the narrow hypothesis; native architecture; eight-dimensional representation; safe data and leakage controls; findings versus baselines; privacy/security decisions; limitations and lessons.
 
 ## Claims to avoid
+
 “AI proves credentials are valid”, “zero false positives”, “prevents every leak”, “trained on real credentials”, “unique first secret scanner” or any percentage without its benchmark denominator. Existing scanners remain relevant; explain the specific experiment honestly.

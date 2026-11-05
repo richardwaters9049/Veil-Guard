@@ -1,6 +1,9 @@
 # Decisions, assumptions and risk register
 
 ## Decisions
+
+**Evidence status.** This register records project decisions and qualitative risk judgements. Likelihood/impact labels are not empirical estimates. Git semantics inform D02 ([R17](13-sources.md#r17)); established KNN/scaling informs D05 ([R04](13-sources.md#r04), [R10](13-sources.md#r10)); persistence guidance informs D08 ([R19](13-sources.md#r19)). The user requirement determines D01/D04; these are not research findings.
+
 | ID | Decision | Rationale |
 | --- | --- | --- |
 | D01 | Native CLI, no web UI | Fits the requested software format and developer workflow |
@@ -15,6 +18,7 @@
 | D10 | Working name, licence undecided | Do not imply brand clearance or an unchosen licence |
 
 ## Risks and responses
+
 | Risk | Likelihood / impact | Planned response |
 | --- | --- | --- |
 | Eight features cannot separate classes | High / high | Measure collisions/ablations; keep claims narrow; publish failure |
@@ -26,10 +30,14 @@
 | Error path leaks source bytes | Medium / high | Central redaction, captured-output tests and minimal diagnostics |
 | Existing scanners outperform the project | High / medium | Treat as baseline result and learning; avoid novelty claims |
 | Developers infer “safe” from low rank | Medium / high | Review language, all findings visible, no model clearance |
-| Distribution/brand conflict | Unknown / medium | Check naming and decide licence before publication |
+| Distribution/brand conflict | Unknown / medium | Check naming and decide licence before distributing a software/model release |
 
 ## Assumptions to revisit
+
 The first user is a consenting developer working in a local Git repository. macOS arm64 is the first platform. Candidate triage is useful enough to test, but adoption is unproven. No need for server infrastructure, native GUI, LLM integration or a database has been established.
 
+Repository name resolved: **Veil-Guard**, with **Veil Guard** in documentation. [Published planning repository](https://github.com/richardwaters9049/Veil-Guard). Naming/trademark clearance is not implied.
+
 ## Open decisions
-Licence and public repository name; exact dependency versions; final grammar/rule set; achievable corpus independence; optimal k/abstention thresholds; whether measured ranking improvement justifies shipping AI by default. Do not fill these gaps with invented results.
+
+Licence; exact dependency versions; final grammar/rule set; achievable corpus independence; optimal k/abstention thresholds; whether measured ranking improvement justifies shipping AI by default. Do not fill these gaps with invented results.
