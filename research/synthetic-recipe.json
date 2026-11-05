@@ -1,0 +1,28 @@
+{
+  "schema": "veilguard.corpus-recipe.v1",
+  "recipe_version": "synthetic-v1",
+  "seed": "veil-guard-offline-lab-2026-11-05-v1",
+  "repositories": 60,
+  "variants_per_family": 50,
+  "challenge_variants": 20,
+  "provenance": {
+    "origin": "Project-authored synthetic examples generated at the user's direction",
+    "external_data": false,
+    "provider_validation": false,
+    "licence": "NOASSERTION",
+    "licence_note": "No third-party corpus is used. A redistribution licence for the corpus remains an owner/release decision."
+  },
+  "split": {
+    "train_groups": 30,
+    "validation_groups": 10,
+    "test_groups": 10,
+    "challenge_groups": 10
+  },
+  "policy": {
+    "minimum_canonical_candidates": 5000,
+    "maximum_canonical_candidates": 10000,
+    "minimum_families": 50,
+    "minimum_repositories": 20,
+    "minimum_train_groups": 5
+  }
+}

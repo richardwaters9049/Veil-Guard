@@ -1,0 +1,273 @@
+{
+  "entries": [
+    {
+      "decision": "consistent_with_authored_intent",
+      "id": "vg-000926ad9c9a72bc4e0394ae",
+      "label": "sensitive_candidate",
+      "rationale": "Opaque strings are shared across the two authored intent classes; appearance alone does not establish sensitivity. Credential use is intentionally simulated for developer review.",
+      "source_sha256": "30767db886b68fe28667ee80e70a3b234a0eacf4cd513bc3f5aa5a8f62a96253",
+      "value_kind": "opaque"
+    },
+    {
+      "decision": "consistent_with_authored_intent",
+      "id": "vg-0011717658e209f73477ed0e",
+      "label": "benign_fixture",
+      "rationale": "Repeated lab-only patterns deliberately retain low-entropy cases; low entropy does not establish harmlessness. The authored identifier/example use is intentionally benign test data.",
+      "source_sha256": "ea267b9623354a12f6ba91721fe652e4e86522fa53748069cd02c671de10402e",
+      "value_kind": "repeated"
+    },
+    {
+      "decision": "consistent_with_authored_intent",
+      "id": "vg-00433173ba56b26ade2c27f1",
+      "label": "benign_fixture",
+      "rationale": "UUID-shaped strings are deterministic lab data; the scenario supplies intended credential versus identifier use. The authored identifier/example use is intentionally benign test data.",
+      "source_sha256": "24d0c6fd3251fc79b8b05d2cbef1e7707067d201278d6bce5d0c3c301bd89bfb",
+      "value_kind": "uuid"
+    },
+    {
+      "decision": "consistent_with_authored_intent",
+      "id": "vg-0060af13a7aeb4d7031de4fe",
+      "label": "sensitive_candidate",
+      "rationale": "Lab-authored word sequences exercise prose-like values without collecting any user text. Credential use is intentionally simulated for developer review.",
+      "source_sha256": "0f706d571e384bb1df4647d4dc95600815c49b17bf2f028b3c1c820499cd9a4e",
+      "value_kind": "prose"
+    },
+    {
+      "decision": "consistent_with_authored_intent",
+      "id": "vg-007bd5b6b3a84f3d14cbde41",
+      "label": "sensitive_candidate",
+      "rationale": "Repeated lab-only patterns deliberately retain low-entropy cases; low entropy does not establish harmlessness. Credential use is intentionally simulated for developer review.",
+      "source_sha256": "845348215e2e093f111ab5ccb21346b2ef81a0f9ceddd6b5e560b31bd507b7f1",
+      "value_kind": "repeated"
+    },
+    {
+      "decision": "consistent_with_authored_intent",
+      "id": "vg-009df56a404642ef2dd6a18d",
+      "label": "sensitive_candidate",
+      "rationale": "Base64url encodes a lab-generated digest; encoding shape does not establish credential validity. Credential use is intentionally simulated for developer review.",
+      "source_sha256": "a06fe3c814fc20e84b862a44caf8b69b31f77e36f2b9c3dd0045802b29f9d81c",
+      "value_kind": "encoded_looking"
+    },
+    {
+      "decision": "consistent_with_authored_intent",
+      "id": "vg-00a3de88fe8cb4cb96fed492",
+      "label": "sensitive_candidate",
+      "rationale": "The same hexadecimal recipe supports checksum hard negatives and simulated credential positives; label follows the scenario. Credential use is intentionally simulated for developer review.",
+      "source_sha256": "1c6937a0d9ada16bde084d971ecadc65acc08282219a3cf904d21bb6f4a7f78f",
+      "value_kind": "hex"
+    },
+    {
+      "decision": "consistent_with_authored_intent",
+      "id": "vg-00b7ba3bb0651eb077eb7f1d",
+      "label": "benign_fixture",
+      "rationale": "Base64url encodes a lab-generated digest; encoding shape does not establish credential validity. The authored identifier/example use is intentionally benign test data.",
+      "source_sha256": "75c1388b3154e3af44e5f71137fd8a5586e5d1e52a4741bb2a0688fdb070fdbd",
+      "value_kind": "encoded_looking"
+    },
+    {
+      "decision": "consistent_with_authored_intent",
+      "id": "vg-00ea28b851a9351ba7937f2e",
+      "label": "sensitive_candidate",
+      "rationale": "UUID-shaped strings are deterministic lab data; the scenario supplies intended credential versus identifier use. Credential use is intentionally simulated for developer review.",
+      "source_sha256": "354f4a4e115c0872d6e69be892d446409edbb99b4e04a2c9eecc85772ec19eca",
+      "value_kind": "uuid"
+    },
+    {
+      "decision": "consistent_with_authored_intent",
+      "id": "vg-015403efd21be052d7199585",
+      "label": "benign_fixture",
+      "rationale": "Numeric identifiers and simulated access codes share a recipe; length or entropy is not used as the label oracle. The authored identifier/example use is intentionally benign test data.",
+      "source_sha256": "fed5e0da7521aa7058c1beb317791be8e138711aa334e8fb1f0ace491e84eac6",
+      "value_kind": "numeric"
+    },
+    {
+      "decision": "retain_uncertain",
+      "id": "vg-017487a590608f0ba299fd20",
+      "label": "uncertain",
+      "rationale": "Syntactically eligible, but this challenge intentionally has no reliable credential class; retain uncertainty.",
+      "source_sha256": "8e050bdc7ff97e754147634397b98b01f14cfd79d57b67b258b9e664ddc8cda9",
+      "value_kind": "unfamiliar_key"
+    },
+    {
+      "decision": "consistent_with_authored_intent",
+      "id": "vg-0180f455df9e0d09a6c28be4",
+      "label": "benign_fixture",
+      "rationale": "Lab-authored word sequences exercise prose-like values without collecting any user text. The authored identifier/example use is intentionally benign test data.",
+      "source_sha256": "395900bcee12cc304bbf1eb371749aa145a66be50164582053a5e48973f8b084",
+      "value_kind": "prose"
+    },
+    {
+      "decision": "consistent_with_authored_intent",
+      "id": "vg-018dbcfab279d072c6a334ee",
+      "label": "sensitive_candidate",
+      "rationale": "The visible demo marker occurs in both classes and is not a label-exclusive prefix. Credential use is intentionally simulated for developer review.",
+      "source_sha256": "3b9c8dac56baf58eabb0c4fb732d61513850fb13cb92fce96831e2e39f26e880",
+      "value_kind": "marked_demo"
+    },
+    {
+      "decision": "consistent_with_authored_intent",
+      "id": "vg-019d7720c567f8e38ebcda6a",
+      "label": "benign_fixture",
+      "rationale": "The visible demo marker occurs in both classes and is not a label-exclusive prefix. The authored identifier/example use is intentionally benign test data.",
+      "source_sha256": "d3317ac1aeeccc3b83473933e712cae9bbad6f1ae1a917be0dc9985ecdbc6285",
+      "value_kind": "marked_demo"
+    },
+    {
+      "decision": "consistent_with_authored_intent",
+      "id": "vg-01a5b811eb64444a762a232a",
+      "label": "benign_fixture",
+      "rationale": "Placeholder-like appearances occur in both classes; the authored scenario supplies the label. The authored identifier/example use is intentionally benign test data.",
+      "source_sha256": "25a548d825fdfd617cbb5f74e14e1f1c9f7b2772782226132c20b4e352eb006a",
+      "value_kind": "placeholder_like"
+    },
+    {
+      "decision": "consistent_with_authored_intent",
+      "id": "vg-02044bb8ee45040ec255750c",
+      "label": "benign_fixture",
+      "rationale": "The same hexadecimal recipe supports checksum hard negatives and simulated credential positives; label follows the scenario. The authored identifier/example use is intentionally benign test data.",
+      "source_sha256": "c9f1daa278f4621ed1cb1a2b78c88a91bbf1d2047ef5505328988738eddebf0d",
+      "value_kind": "hex"
+    },
+    {
+      "decision": "consistent_with_authored_intent",
+      "id": "vg-020df74c0be887694e6163c3",
+      "label": "benign_fixture",
+      "rationale": "Opaque strings are shared across the two authored intent classes; appearance alone does not establish sensitivity. The authored identifier/example use is intentionally benign test data.",
+      "source_sha256": "0a027b723d94ef8e63f653bf4a9d7249525a9ffc8f3a9f3b57826bb89dd15811",
+      "value_kind": "opaque"
+    },
+    {
+      "decision": "retain_uncertain",
+      "id": "vg-02d2ee6e0fe5b4cccef3f670",
+      "label": "uncertain",
+      "rationale": "This authored format is outside the eight-feature input contract; retain uncertainty and no imputed vector.",
+      "source_sha256": "dae34cee1527301d318ae992b46406078eb7c4a13074fb453b2344d7d4679e13",
+      "value_kind": "short"
+    },
+    {
+      "decision": "consistent_with_authored_intent",
+      "id": "vg-032328ffd1f6b1486d667e82",
+      "label": "sensitive_candidate",
+      "rationale": "Placeholder-like appearances occur in both classes; the authored scenario supplies the label. Credential use is intentionally simulated for developer review.",
+      "source_sha256": "08dfc416fa46e24ae8c33adc18cd5adb1d4f008621364d5477d24e5f99ed56c6",
+      "value_kind": "placeholder_like"
+    },
+    {
+      "decision": "consistent_with_authored_intent",
+      "id": "vg-03ca3dd491b75faebc74855c",
+      "label": "benign_fixture",
+      "rationale": "Authored word combinations are unprovisioned; label follows the simulated use rather than character statistics. The authored identifier/example use is intentionally benign test data.",
+      "source_sha256": "53eb85e3be560e7c54daf1128d266cd5cea2378bad24eabd70cd42334815e76c",
+      "value_kind": "passphrase"
+    },
+    {
+      "decision": "consistent_with_authored_intent",
+      "id": "vg-03f86e16a2802b935182b105",
+      "label": "sensitive_candidate",
+      "rationale": "Authored word combinations are unprovisioned; label follows the simulated use rather than character statistics. Credential use is intentionally simulated for developer review.",
+      "source_sha256": "9cd5716b41c943f99f65e0d4608f959678866e972b7e0522f1ab91203e66f5db",
+      "value_kind": "passphrase"
+    },
+    {
+      "decision": "consistent_with_authored_intent",
+      "id": "vg-0432f493ae06932a7d3eb8c2",
+      "label": "sensitive_candidate",
+      "rationale": "Numeric identifiers and simulated access codes share a recipe; length or entropy is not used as the label oracle. Credential use is intentionally simulated for developer review.",
+      "source_sha256": "6b8166884be45130334d86e1bb4b916c75cfd0ed67ed18c61a713e5a18e348be",
+      "value_kind": "numeric"
+    },
+    {
+      "decision": "retain_uncertain",
+      "id": "vg-046e8c43f36b761a11c0a638",
+      "label": "uncertain",
+      "rationale": "This authored format is outside the eight-feature input contract; retain uncertainty and no imputed vector.",
+      "source_sha256": "7138c1e9cf7d89020a26c62688f6634b32001e47263172317a3a2b04e39c13ea",
+      "value_kind": "long"
+    },
+    {
+      "decision": "retain_uncertain",
+      "id": "vg-04ea4467214ed52a8e9402c5",
+      "label": "uncertain",
+      "rationale": "Syntactically eligible, but this challenge intentionally has no reliable credential class; retain uncertainty.",
+      "source_sha256": "878ee05776176339f5a55ad670b7d0e939c5280e3d431b84494de325013f4210",
+      "value_kind": "named_argument"
+    },
+    {
+      "decision": "retain_uncertain",
+      "id": "vg-0538c7fa1147a9168b3fffde",
+      "label": "uncertain",
+      "rationale": "This authored format is outside the eight-feature input contract; retain uncertainty and no imputed vector.",
+      "source_sha256": "a0bcc6ac5a59eed9df431d965635cfba320da05260834dda26c807c6dff32de0",
+      "value_kind": "multiline"
+    },
+    {
+      "decision": "retain_uncertain",
+      "id": "vg-05ce0eb753bbecd507f7de1b",
+      "label": "uncertain",
+      "rationale": "This authored format is outside the eight-feature input contract; retain uncertainty and no imputed vector.",
+      "source_sha256": "8177f784a2462c418f1f3453e5ba98c2db23c630969ef470cf881ffe3ba6788e",
+      "value_kind": "escape"
+    },
+    {
+      "decision": "retain_uncertain",
+      "id": "vg-08174208511582c9d2cb53f1",
+      "label": "uncertain",
+      "rationale": "This authored format is outside the eight-feature input contract; retain uncertainty and no imputed vector.",
+      "source_sha256": "285ca7df67f8fe7f8b6f4604fc9a3fdf6ca7efbbfac3579306294d7bbd185cfb",
+      "value_kind": "template"
+    },
+    {
+      "decision": "retain_uncertain",
+      "id": "vg-0911e5929aada8fa5deda967",
+      "label": "uncertain",
+      "rationale": "This authored format is outside the eight-feature input contract; retain uncertainty and no imputed vector.",
+      "source_sha256": "8d7089c16c1652868d22924ba49e1f3f24012f8bce6769df4e8e72cdf5775ce7",
+      "value_kind": "unicode"
+    },
+    {
+      "decision": "retain_uncertain",
+      "id": "vg-1005911331ea9c71bc0dda56",
+      "label": "uncertain",
+      "rationale": "This authored format is outside the eight-feature input contract; retain uncertainty and no imputed vector.",
+      "source_sha256": "ded22759432d715f9ac46a31348b6e8d485927909c0ca192074147ff3a1f2973",
+      "value_kind": "concatenation"
+    },
+    {
+      "decision": "retain_uncertain",
+      "id": "vg-225c8fe7411a7afff84fedf3",
+      "label": "uncertain",
+      "rationale": "Syntactically eligible, but this challenge intentionally has no reliable credential class; retain uncertainty.",
+      "source_sha256": "8ab8cdffbc8bba2396f38cda93da32b740e491fa02e493c0ae9a47c449e9c346",
+      "value_kind": "array_context"
+    },
+    {
+      "decision": "consistent_with_authored_intent",
+      "id": "vg-3ac817624e998f230f8da04a",
+      "label": "benign_fixture",
+      "rationale": "The exact placeholder is intentionally nonsecret in its authored fixture context. The authored identifier/example use is intentionally benign test data.",
+      "source_sha256": "1580eb7db2985f7b1f627273c8fb97e6c1502bfa0cdee2ef7ff201eb91293892",
+      "value_kind": "exact_placeholder"
+    },
+    {
+      "decision": "consistent_with_authored_intent",
+      "id": "vg-e2d19cf70ccf03815275413d",
+      "label": "sensitive_candidate",
+      "rationale": "The all-zero literal intentionally simulates credential use in the gateway scenario. Keep sensitive_candidate despite zero entropy; nothing is provisioned.",
+      "source_sha256": "9e6b3074f35f72e1bc285358482d1423a0c4fd16a7d9bce10f91b1d77d38f3a9",
+      "value_kind": "repeated"
+    }
+  ],
+  "generation_corrections": [
+    "Before freezing, repeated-pattern derivations were revised after accidental value copies collapsed the intended independent groups.",
+    "The multiline challenge was revised to contain an actual triple-quoted value with a newline, not two independent assignment lines."
+  ],
+  "label_corrections": [],
+  "remaining_review": [
+    "Independent human label adjudication is pending.",
+    "The corpus redistribution licence is NOASSERTION pending an owner/release decision."
+  ],
+  "reviewed_on": "2026-11-05",
+  "reviewer": "Codex assisted review; not independent human adjudication",
+  "schema": "veilguard.label-review.v1",
+  "selection": "Lowest opaque ID per label/value-kind/eligibility stratum, plus one targeted all-zero simulated credential; selected before fitting."
+}

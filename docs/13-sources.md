@@ -311,6 +311,18 @@ Suggested order: R01 for the security problem; R02 for closely related work; R04
 - Limits: A dependency lock does not pin the interpreter, establish network isolation or validate feature parity.
 - Review scope: Project structure and locked-mode consistency checks. Checked 2026-11-05.
 
+<a id="r29"></a>
+
+### R29: Git project. git-init, Git environment variables and Pro Git: Git Objects.
+
+- Type: Official technical documentation.
+- [Initialisation reference](https://git-scm.com/docs/git-init).
+- [Environment reference](https://git-scm.com/docs/git).
+- [Object storage and hashing](https://git-scm.com/book/en/v2/Git-Internals-Git-Objects).
+- Supports: Explicit templates/SHA-1 object format, configuration overrides and header-plus-content blob identity used by authored fixture verification.
+- Limits: These controls do not establish an OS sandbox, corpus label quality or measured scanner recall.
+- Review scope: Initialisation options, GIT_CONFIG_GLOBAL/SYSTEM overrides, Git location variables and blob header/hash construction. Checked 2026-11-05.
+
 ## Stack documentation
 
 These official pages describe component capabilities. They do not establish that our integration is secure or that one language/tool is superior. Phase One runtime versions are pinned in Cargo.lock and rust-toolchain.toml; the Phase Two research manifest and uv lockfile are committed; ML dependencies remain future work.

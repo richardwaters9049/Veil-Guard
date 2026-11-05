@@ -1,0 +1,77 @@
+{
+  "canonical_records": 6200,
+  "core_groups": 50,
+  "distinct_values": 3195,
+  "exact_duplicates_removed": 120,
+  "families": 130,
+  "feature_names": [
+    "log_length",
+    "shannon_entropy",
+    "digit_ratio",
+    "uppercase_ratio",
+    "symbol_ratio",
+    "keyword_proximity",
+    "sensitive_assignment",
+    "placeholder_similarity"
+  ],
+  "feature_schema": "veilguard.features.v1",
+  "groups": 60,
+  "labels": {
+    "benign_fixture": 3000,
+    "sensitive_candidate": 3000,
+    "uncertain": 200
+  },
+  "partitions": {
+    "challenge": {
+      "feature_status": {
+        "eligible": 60,
+        "unsupported": 140
+      },
+      "groups": 10,
+      "labels": {
+        "uncertain": 200
+      },
+      "records": 200
+    },
+    "test": {
+      "feature_status": {
+        "eligible": 1400
+      },
+      "groups": 10,
+      "labels": {
+        "benign_fixture": 700,
+        "sensitive_candidate": 700
+      },
+      "records": 1400
+    },
+    "train": {
+      "feature_status": {
+        "eligible": 3500
+      },
+      "groups": 30,
+      "labels": {
+        "benign_fixture": 1750,
+        "sensitive_candidate": 1750
+      },
+      "records": 3500
+    },
+    "validation": {
+      "feature_status": {
+        "eligible": 1100
+      },
+      "groups": 10,
+      "labels": {
+        "benign_fixture": 550,
+        "sensitive_candidate": 550
+      },
+      "records": 1100
+    }
+  },
+  "raw_records": 6320,
+  "repositories": 70,
+  "schema": "veilguard.corpus-summary.v1",
+  "synthetic_skewed_test_labels": {
+    "benign_fixture": 700,
+    "sensitive_candidate": 66
+  }
+}

@@ -2,7 +2,7 @@ name: Acceptance checks
 
 on:
   push:
-    branches: [main, "phase-one/**", "phase-two/**"]
+    branches: [main, "phase-one/**", "phase-two/**", "phase-three/**"]
   pull_request:
     branches: [main]
   workflow_dispatch:

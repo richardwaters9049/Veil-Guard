@@ -33,6 +33,8 @@ def main():
          "python", "-m", "unittest", "discover", "-s", "research/tests", "-v"],
         [uv, "run", "--locked", "--offline", "--project", "research", "--python", sys.executable,
          "python", "scripts/check_feature_parity.py", *cargo_extra],
+        [uv, "run", "--locked", "--offline", "--project", "research", "--python", sys.executable,
+         "python", "scripts/check_corpus.py"],
         [sys.executable, "scripts/check_plan.py"],
         [sys.executable, "scripts/smoke_scan.py"],
     ]
