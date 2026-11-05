@@ -268,9 +268,41 @@ Suggested order: R01 for the security problem; R02 for closely related work; R04
 - Limits: Does not prescribe our top-k policy or establish project performance.
 - Review scope: AP definition and comparison with trapezoidal integration. Checked 2026-11-05.
 
+<a id="r25"></a>
+
+### R25: Git project. gitrepository-layout documentation.
+
+- Type: Official technical documentation.
+- [Primary source](https://git-scm.com/docs/gitrepository-layout).
+- Supports: Git supports multiple metadata and object-storage layouts.
+- Limits: Veil Guard's refusal policy is narrower and project-specific; Git compatibility does not establish confinement.
+- Review scope: Repository structure, Git files, common directories, objects/alternates and repository-format description. Checked 2026-11-05.
+
+<a id="r26"></a>
+
+### R26: libgit2 maintainers. git_repository_open_ext reference and repository implementation, v1.9.7.
+
+- Type: Official technical documentation and primary source code.
+- [Primary source](https://libgit2.org/docs/reference/v1.9.7/repository/git_repository_open_ext.html).
+- [Pinned implementation](https://github.com/libgit2/libgit2/blob/v1.9.7/src/libgit2/repository.c).
+- Supports: Explicit open flags control discovery/environment use; the implementation distinguishes normal versus environment-driven opening.
+- Limits: Library opening can read standard global/system config; the project's preflight and local-config attachment are not a filesystem sandbox.
+- Review scope: Explicit open flags; pinned crate source for config loading and environment-dependent object/index paths. Upstream tag corroborated through GitHub API.. Checked 2026-11-05.
+
+<a id="r27"></a>
+
+### R27: GitHub. Workflow syntax and GitHub-hosted runners reference.
+
+- Type: Official technical documentation.
+- [Primary source](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax).
+- [Additional official page](https://docs.github.com/en/actions/reference/runners/github-hosted-runners).
+- Supports: Official workflow configuration and hosted-runner labels used by the acceptance pipeline.
+- Limits: A defined workflow or available runner is not a passing CI result; verify the per-commit run.
+- Review scope: Push/pull-request workflow configuration, permissions, matrix/timeout controls and supported runner labels. Checked 2026-11-05.
+
 ## Stack documentation
 
-These official pages describe component capabilities. They do not establish that our integration is secure or that one language/tool is superior. Versions will be pinned when implementation begins.
+These official pages describe component capabilities. They do not establish that our integration is secure or that one language/tool is superior. Phase One runtime versions are pinned in Cargo.lock and rust-toolchain.toml; research dependencies remain future work.
 
 | Component | Primary documentation | Use in this plan |
 | --- | --- | --- |

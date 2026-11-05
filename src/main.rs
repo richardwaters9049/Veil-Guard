@@ -4,6 +4,12 @@ use std::path::{Path, PathBuf};
 use std::process::ExitCode;
 use veilguard::{ScanLimits, scan};
 
+macro_rules! safe_error {
+    ($($argument:tt)*) => {{
+        let _ = writeln!(io::stderr(), $($argument)*);
+    }};
+}
+
 #[derive(Parser)]
 #[command(
     name = "veilguard",
@@ -66,7 +72,7 @@ fn run() -> u8 {
         }
         Err(_) => {
             // Parser errors may contain argument values. Never display the original.
-            eprintln!("Veil Guard: invalid arguments; use veilguard --help.");
+            safe_error!("Veil Guard: invalid arguments; use veilguard --help.");
             return 2;
         }
     };
@@ -79,7 +85,7 @@ fn run() -> u8 {
     let report = match scan(&repo, &ScanLimits::default()) {
         Ok(report) => report,
         Err(code) => {
-            eprintln!("Veil Guard: scan failed [{code}].");
+            safe_error!("Veil Guard: scan failed [{code}].");
             return 2;
         }
     };
@@ -88,7 +94,7 @@ fn run() -> u8 {
         Format::Json => match serde_json::to_string_pretty(&report) {
             Ok(json) => json + "\n",
             Err(_) => {
-                eprintln!("Veil Guard: report serialisation failed.");
+                safe_error!("Veil Guard: report serialisation failed.");
                 return 3;
             }
         },
@@ -97,20 +103,51 @@ fn run() -> u8 {
     if let Some(output) = output {
         if save_new(&output, content.as_bytes()).is_err() {
             let _ = io::stdout().write_all(content.as_bytes());
-            eprintln!("Veil Guard: report file unavailable; existing files are never replaced.");
+            safe_error!("Veil Guard: report file unavailable; existing files are never replaced.");
             return 2;
         }
     } else if io::stdout().write_all(content.as_bytes()).is_err() {
-        eprintln!("Veil Guard: report output failed.");
+        safe_error!("Veil Guard: report output failed.");
         return 2;
     }
     code
 }
 
-fn main() -> ExitCode {
+fn guarded_run(operation: impl FnOnce() -> u8 + std::panic::UnwindSafe) -> u8 {
     std::panic::set_hook(Box::new(|_| {
-        eprintln!("Veil Guard: internal failure; input details withheld.");
+        safe_error!("Veil Guard: internal failure; input details withheld.");
     }));
-    let code = std::panic::catch_unwind(run).unwrap_or(3);
-    ExitCode::from(code)
+    std::panic::catch_unwind(operation).unwrap_or(3)
+}
+
+fn main() -> ExitCode {
+    ExitCode::from(guarded_run(run))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn panic_probe_child() {
+        if let Ok(value) = std::env::var("VEILGUARD_PANIC_FIXTURE") {
+            std::process::exit(i32::from(guarded_run(|| panic!("{value}"))));
+        }
+    }
+
+    #[test]
+    fn panic_guard_returns_three_and_does_not_log_payload_or_backtrace() {
+        let sentinel = "authored-private-panic-sentinel";
+        let output = std::process::Command::new(std::env::current_exe().unwrap())
+            .args(["--exact", "tests::panic_probe_child", "--nocapture"])
+            .env("VEILGUARD_PANIC_FIXTURE", sentinel)
+            .env("RUST_BACKTRACE", "1")
+            .output()
+            .unwrap();
+        assert_eq!(output.status.code(), Some(3));
+        let rendered = String::from_utf8([output.stdout, output.stderr].concat()).unwrap();
+        assert!(rendered.contains("input details withheld"));
+        assert!(!rendered.contains(sentinel));
+        assert!(!rendered.contains("stack backtrace"));
+    }
 }

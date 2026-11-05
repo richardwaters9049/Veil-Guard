@@ -2,7 +2,7 @@
 
 ## Explainable, offline credential triage for staged Git changes
 
-**Status: Phase One development — 5 November 2026.** The staged scanner and candidate/report slice are implemented; Phase One remains in progress. No feature extractor, trained model or measured detection-accuracy results exist yet. Veil Guard is a working project name; naming clearance is pending.
+**Status: Phase One development — 5 November 2026.** The staged scanner, candidate/report contract and repository/automation hardening are implemented. The Phase One acceptance command and per-commit CI verify this scope. No feature extractor, trained model or measured detection-accuracy results exist yet. Veil Guard is a working project name; naming clearance is pending.
 
 Veil Guard will be a native command-line developer security tool. It will read the Git index, identify possible hard-coded credentials, and use an eight-dimensional k-nearest neighbours model to rank ambiguous candidates for review. It will explain decisions using redacted locations, numerical feature differences and curated example IDs. It will have no web server, browser UI, dashboard or cloud inference.
 
@@ -46,6 +46,7 @@ Start with the [annotated sources and professor profiles](docs/13-sources.md), i
 | [Claims and evidence](docs/14-claims-and-evidence.md) | External evidence, choices, hypotheses, targets and pending results |
 | [Phase One implementation](docs/15-phase-one.md) | Executable commands, milestone evidence and remaining work |
 | [Candidate/report contract](docs/16-candidate-and-report-contract.md) | Implemented lexical grammar, byte spans, report v2 and filename policy |
+| [Repository formats and automation](docs/17-repository-and-automation.md) | Supported layouts, refusal reasons and local/CI acceptance |
 | [Model card template](models/MODEL_CARD.md) | Intended use, evidence and limitations |
 | [Data card template](data/DATA_CARD.md) | Provenance, consent and split accounting |
 
@@ -62,15 +63,14 @@ Start with the [annotated sources and professor profiles](docs/13-sources.md), i
 From `/Users/richy/Documents/Github/veilguard`:
 
 ```sh
-cargo build --locked
-cargo test --locked
+python3 scripts/check_all.py
 cargo run --locked -- scan --staged --repo /absolute/path/to/owned-repository
 cargo run --locked -- scan --staged --repo /absolute/path/to/owned-repository --format json
 ```
 
 Replace the example repository path with a directory you own or have permission to inspect. The current scanner detects two narrow patterns and reports quoted/unquoted lexical candidates for review; it is not a comprehensive scanner or language parser. Exit 0 can include review findings and does not establish safety. See [current scope and limits](docs/15-phase-one.md).
 
-Next: finish repository-format/alternate-object-store review and Phase One hardening/acceptance before feature parity or training.
+Next: Phase Two's independent Rust/Python eight-dimensional feature parity, after accepting this phase branch. See [repository scope and automated checks](docs/17-repository-and-automation.md).
 
 ### Run the current planning check
 

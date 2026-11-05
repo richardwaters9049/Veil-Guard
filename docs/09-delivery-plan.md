@@ -9,7 +9,7 @@ The goal is a native offline credential-review CLI with an evaluated eight-dimen
 | Phase | Status | Dedicated branch | Planned lead commit |
 | --- | --- | --- | --- |
 | 0: evidence-backed planning | Complete baseline | main | Feat/Docs: Sources added |
-| 1: staged rule-only scanner | In progress; 1A and candidate/report slice implemented | phase-one/staged-scanner | Feat/PhaseOne: Add staged scanner and programme roadmap |
+| 1: staged rule-only scanner | Implemented; per-commit acceptance gate | phase-one/staged-scanner | Feat/PhaseOne: Add staged scanner and programme roadmap |
 | 2: eight-dimensional feature parity | Not started; depends on Phase 1 | phase-two/eight-dimensional-features | Feat/PhaseTwo: Add eight-dimensional feature parity |
 | 3: safe training corpus | Not started; depends on Phase 2 | phase-three/safe-training-corpus | Feat/PhaseThree: Add safe corpus and grouped splits |
 | 4: KNN research and evaluation | Not started; depends on Phase 3 | phase-four/knn-evaluation | Feat/PhaseFour: Add reproducible KNN evaluation |
@@ -51,17 +51,19 @@ Status: implemented in this branch, subject to recorded verification. This is a 
 - [x] Separate candidate/finding budgets and protect blocking-warning priority.
 - [x] Align the report-v2 schema with an authored example and test its field contract.
 - [x] Test observed-value filename scrubbing, budget fallback and incomplete-scan path withholding.
-- [ ] Finish hostile Git metadata, alternate object store, discovery and corruption review; document/restrict supported repository formats.
+- [x] Review and restrict repository layouts, metadata redirects and corrupt baselines; record supported formats and residual race/resource limits.
 
-The [candidate/report contract](16-candidate-and-report-contract.md) records what is implemented and the limits of this lexical grammar. Milestone 1B remains open for the repository-format review; milestone 1C remains open for automated checks and deeper hardening.
+The [candidate/report contract](16-candidate-and-report-contract.md) records what is implemented and the limits of this lexical grammar. The [repository/automation record](17-repository-and-automation.md) completes the scoped layout review and records the acceptance pipeline. Milestones 1B and 1C are implemented; the per-commit checks remain the acceptance gate.
 
 ### Milestone 1C: phase acceptance
 
-- Add automated format/lint/test/documentation checks on the initial supported platform.
-- Exercise resource exhaustion, errors, panic redaction and report-file failures; retain findings when coverage is incomplete.
-- Demonstrate exact-index behaviour without changing index/worktree bytes or executing repository-defined commands.
-- Record supported rules, exclusions, residual risks and actual toolchain.
-- Gate: all Phase 1 tests/checks pass, generic extraction meets the declared grammar, and no AI is implied.
+- [x] Automate format/lint/test/documentation/release-smoke checks locally and in a macOS/Linux CI matrix.
+- [x] Exercise input budgets, invalid metadata, panic-payload redaction, broken stdout and report-file failures.
+- [x] Verify exact-index behaviour and no repository hook/filter/diff/fsmonitor execution in authored fixtures.
+- [x] Record supported layouts, rules, exclusions, residual risks and the pinned toolchain/library.
+- [x] Local Phase One checks pass for the declared scope; require a passing CI run for the accepted commit. No AI is implied.
+
+The gate is complete for the documented prototype scope when local and CI checks pass. Packaging, strict process isolation, benchmarks and all ML gates remain later work; this is not a claim of complete protection against an active local attacker.
 
 Exit artefacts: source, lockfile, executable instructions, rule/report contracts, regression fixtures and evidence record. No hooks, model or research dataset required.
 

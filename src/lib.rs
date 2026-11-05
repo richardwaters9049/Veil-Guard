@@ -4,6 +4,7 @@ mod candidates;
 pub mod git_index;
 mod privacy;
 pub mod report;
+mod repository;
 mod rules;
 
 pub use git_index::{ScanLimits, scan};

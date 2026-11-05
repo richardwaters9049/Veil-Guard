@@ -9,7 +9,7 @@ Defensive analysis of local repositories the user owns or has explicit permissio
 ## Assets and adversaries
 
 Assets: source bytes, possible credentials, repository paths, developer decisions, training integrity and release trust.
-Adversaries: malicious repository authors, tampered model distributors, accidental logging, poisoned examples, unsafe hook installation and a locally compromised machine. Host compromise is outside what this tool can solve.
+Adversaries: malicious repository authors, tampered model distributors, accidental logging, poisoned examples, unsafe hook installation and a locally compromised machine. Host compromise is outside what this tool can solve. The [repository/automation policy](17-repository-and-automation.md) records the implemented preflight restrictions and explains why metadata checks are not race-proof filesystem confinement.
 
 ## Threats and mitigations
 

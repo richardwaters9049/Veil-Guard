@@ -82,6 +82,6 @@ Withholding an incomplete scan's paths avoids relying on a redaction dictionary 
 
 This is not anonymisation. Complete scans can still reveal ordinary directory names and unrecognised sensitive metadata; the scanner has no knowledge of arbitrary secrets that were not recognised within its declared scope. A recognised source value may coincide with a static metadata word; no claim of universal substring secrecy is made.
 
-## Remaining Phase One gate
+## Phase One acceptance
 
-General candidate extraction, occurrence columns, independent budgets, current schema/example alignment and the tested filename policy are implemented. Review of hostile repository metadata/alternate object stores and automated CI/resource/error-path hardening remains open. Phase One is not marked complete, and no feature extractor, training data or AI inference is claimed.
+General candidate extraction, occurrence columns, independent budgets, current schema/example alignment and the tested filename policy are implemented. The [repository/automation gate](17-repository-and-automation.md) now defines refused layouts, corrupt-baseline handling, control-file change detection and automated acceptance. No feature extractor, training data or AI inference is claimed.
