@@ -1,0 +1,26 @@
+{
+  "binary_sha256": "c667b4e475d50c1c6d4e600747f707c75955d3c09d85cf55346c4fab021152d0",
+  "finding": "Upstream zlib 1.4 published 2026-11-04 includes security fixes. Apple/distro backport status and affected-call reachability are unresolved; no vulnerability absence or affected status is inferred from version strings.",
+  "host": {
+    "architecture": "arm64",
+    "build": "25G83",
+    "platform": "macOS",
+    "product_version": "26.6.2"
+  },
+  "limits": "Source header/build-script review, OS version query and dynamic-link metadata only; not a complete native source audit or exploitability assessment.",
+  "observed_components": {
+    "bundled_llhttp": "9.2.1",
+    "bundled_pcre2": "10.47",
+    "crate_zlib_source": "1.3.2",
+    "linked_apple_zlib_reported_version": "1.2.12",
+    "vendored_libgit2": "1.9.7"
+  },
+  "recorded_at": "2026-11-05T16:52:51.872046+00:00",
+  "release_status": "blocked_pending_native_os_patch_and_notice_obligation_review",
+  "schema": "veilguard.native-review.v1",
+  "upstream_sources_reviewed": [
+    "https://libgit2.org/security/",
+    "https://raw.githubusercontent.com/libgit2/libgit2/v1.9.7/COPYING",
+    "https://www.zlib.net/"
+  ]
+}

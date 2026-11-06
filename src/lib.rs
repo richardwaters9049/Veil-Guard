@@ -4,6 +4,7 @@ mod candidates;
 pub mod explanation;
 pub mod features;
 pub mod git_index;
+pub mod hooks;
 pub mod local_input;
 pub mod model;
 mod privacy;

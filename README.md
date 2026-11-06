@@ -2,7 +2,7 @@
 
 ## Explainable, offline credential triage for staged Git changes
 
-**Status: Phase Five experimental inference integrated — 5 November 2026.** The staged scanner and repository hardening are implemented, with independent Rust/Python eight-feature extractors and golden parity checks. The synthetic corpus and frozen connected-group splits are now implemented; the unified acceptance command and per-commit CI verify this scope. A frozen research model and sealed synthetic evaluation exist; the KNN benefit gate failed and the model remains experimental. Native inference, explicit model selection/fallback and redacted inspection/explanation commands are implemented. Veil Guard is a working project name; naming clearance is pending.
+**Status: Phase Six hardening in progress — 5 November 2026.** The staged scanner and repository hardening are implemented, with independent Rust/Python eight-feature extractors and golden parity checks. The synthetic corpus and frozen connected-group splits are now implemented; the unified acceptance command and per-commit CI verify this scope. A frozen research model and sealed synthetic evaluation exist; the KNN benefit gate failed and the model remains experimental. Native inference, explicit model selection/fallback and redacted inspection/explanation commands are implemented. Veil Guard is a working project name; naming clearance is pending.
 
 Veil Guard will be a native command-line developer security tool. It will read the Git index, identify possible hard-coded credentials, and use an eight-dimensional k-nearest neighbours model to rank ambiguous candidates for review. It will explain decisions using redacted locations, numerical feature differences and curated example IDs. It will have no web server, browser UI, dashboard or cloud inference.
 
@@ -51,6 +51,9 @@ Start with the [annotated sources and professor profiles](docs/13-sources.md), i
 | [Phase Three corpus](docs/19-phase-three-corpus.md) | Synthetic recipes, frozen splits, assisted reviews and staged fixture repositories |
 | [Phase Four results](docs/21-phase-four-results.md) | Sealed synthetic evaluation and failed benefit gate |
 | [Phase Five inference](docs/22-phase-five-native-inference.md) | Native inference, scanner integration, fallback and explanations |
+| [Phase Six hardening](docs/23-phase-six-hardening.md) | Explicit hook management, ownership and remaining release gates |
+| [Phase Six evidence](docs/24-phase-six-evidence.md) | Dependency review, measurements, runtime controls and development bundles |
+| [Install and verification](docs/25-install-and-verification.md) | Private development build, verification, upgrade and removal |
 | [Research model card](models/MODEL_CARD.md) | Intended use, evidence and limitations |
 | [Data card](data/DATA_CARD.md) | Provenance, consent and split accounting |
 
@@ -80,7 +83,7 @@ cargo run --locked -- model inspect research/results/synthetic-v1/development/mo
 
 Replace the example repository path with a directory you own or have permission to inspect. The current scanner detects two narrow patterns and reports quoted/unquoted lexical candidates for review; it is not a comprehensive scanner or language parser. Exit 0 can include review findings and does not establish safety. See [current scope and limits](docs/15-phase-one.md).
 
-Phase Two's [parity record](docs/18-phase-two-feature-parity.md) describes the implemented scope, locked environment and reproduction commands. The [Phase Three record](docs/19-phase-three-corpus.md) describes 6,200 synthetic examples, frozen splits and assisted review limits. The [Phase Four results](docs/21-phase-four-results.md) record the negative research outcome. The [Phase Five integration](docs/22-phase-five-native-inference.md) is implemented; release hardening and packaging are next under the [delivery plan](docs/09-delivery-plan.md).
+Phase Two's [parity record](docs/18-phase-two-feature-parity.md) describes the implemented scope, locked environment and reproduction commands. The [Phase Three record](docs/19-phase-three-corpus.md) describes 6,200 synthetic examples, frozen splits and assisted review limits. The [Phase Four results](docs/21-phase-four-results.md) record the negative research outcome. The [Phase Five integration](docs/22-phase-five-native-inference.md) is implemented; [Phase Six local evidence and development packaging](docs/24-phase-six-evidence.md) are recorded, with native/OS patch, licence and remote-platform release gates still open under the [delivery plan](docs/09-delivery-plan.md).
 
 ### Run the current planning check
 
@@ -89,4 +92,4 @@ From this project directory:
 python3 scripts/check_plan.py
 ```
 
-Scan, explain and model inspection are runnable from source. Hook commands remain planned for Phase Six. No Git hooks are installed by scanning.
+Scan, explain, model inspection and explicit hook management are runnable from source. See [hook installation and limits](docs/23-phase-six-hardening.md). No Git hooks are installed by scanning.

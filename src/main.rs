@@ -51,6 +51,11 @@ enum Command {
         #[arg(long, value_enum, default_value = "text")]
         format: Format,
     },
+    /// Explicit hook management; never invoked by scanning.
+    Hooks {
+        #[command(subcommand)]
+        command: HookCommand,
+    },
     /// Inspect a local experimental model without printing its reference vectors.
     Model {
         #[command(subcommand)]
@@ -61,6 +66,19 @@ enum Command {
 #[derive(Subcommand)]
 enum ModelCommand {
     Inspect { path: PathBuf },
+}
+
+#[derive(Subcommand)]
+enum HookCommand {
+    Install {
+        #[arg(long, default_value = ".")]
+        repo: PathBuf,
+    },
+    Uninstall {
+        #[arg(long, default_value = ".")]
+        repo: PathBuf,
+    },
+    Manual,
 }
 
 #[derive(Clone, Copy, ValueEnum)]
@@ -103,6 +121,30 @@ fn run() -> u8 {
         }
     };
     let (repo, format, output, model, explanations) = match cli.command {
+        Command::Hooks { command } => {
+            let result = match command {
+                HookCommand::Manual => Ok(veilguard::hooks::MANUAL),
+                HookCommand::Install { repo } => std::env::current_exe()
+                    .map_err(|_| "hook_executable_unavailable")
+                    .and_then(|exe| veilguard::hooks::install(&repo, &exe)),
+                HookCommand::Uninstall { repo } => veilguard::hooks::uninstall(&repo),
+            };
+            return match result {
+                Ok(message) => {
+                    if writeln!(io::stdout(), "{message}").is_ok() {
+                        0
+                    } else {
+                        2
+                    }
+                }
+                Err(code) => {
+                    safe_error!(
+                        "Veil Guard: hook operation failed or refused [{code}]; use hooks manual."
+                    );
+                    2
+                }
+            };
+        }
         Command::Explain {
             report,
             finding,

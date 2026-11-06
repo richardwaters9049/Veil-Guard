@@ -28,13 +28,17 @@ Adversaries: malicious repository authors, tampered model distributors, accident
 | Supply-chain compromise | Lock dependencies, audit licences/security, versioned release manifests; signatures before trusted automatic model updates |
 | Report exposes sensitive paths | Relative escaped paths; explicit output, restrictive permissions and documented retention |
 
+The [Phase Six runtime record](24-phase-six-evidence.md) adds selected-API positive controls, macOS network/process denial and repository-command tripwires. These are scoped local tests, not complete syscall coverage. Development archives exclude models/corpus; licensing, native/OS patch status, trusted signatures and remote platform evidence remain release gates.
+
 ## Privacy commitments
 
-No runtime telemetry, analytics, remote model calls, provider validation, content upload or hidden training ingestion. No secret hashes as identifiers. Current filename displays scrub observed candidate values and withhold all paths when a scan is incomplete; see the [candidate/report privacy contract](16-candidate-and-report-contract.md). This is not anonymisation. Numerical features are not guaranteed anonymisation; default reports show distance contributions rather than raw vectors. Safe exemplar IDs refer only to the approved lab corpus.
+No runtime telemetry, analytics, remote model calls, provider validation, content upload or hidden training ingestion. No secret hashes as identifiers. Current filename displays scrub observed candidate values and withhold all paths when a scan is incomplete; see the [candidate/report privacy contract](16-candidate-and-report-contract.md). This is not anonymisation. Numerical features are not guaranteed anonymisation; default model reports contain score/distance summaries, with coordinate contributions only on explicit opt-in. Reference aliases identify positions in the explicitly selected artifact; loading does not authenticate its provenance.
 
 No plaintext source copied into diagnostic archives. Error reporting must not include input buffers. Avoid logging environment variables. Do not scan the user's whole home directory or unrelated repositories.
 
 ## Human control and policy
+
+The [implemented hook management](23-phase-six-hardening.md) uses exact-content ownership checks and refuses existing/modified hooks, custom hook paths and alternate commit indexes. Its lock/preflight checks are not protection against concurrent malicious filesystem edits.
 
 Hook install/uninstall is a deliberate command, never a side effect of scan. It must preserve existing hooks and track only what Veil Guard installed. Local execution cannot enforce organisation-wide policy against a determined developer; hooking is convenience, not tamper-proof enforcement.
 

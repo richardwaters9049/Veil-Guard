@@ -185,3 +185,41 @@ fn frozen_export_loads_without_training_or_policy_changes() {
         Some("validation_policy_unmet")
     );
 }
+
+#[test]
+fn exact_partial_selection_matches_full_sort_for_small_and_all_reference_k() {
+    let mut b = bundle();
+    b["references"] = json!(
+        (0..100)
+            .map(|i| {
+                let vector: Vec<f64> = (0..8)
+                    .map(|c| ((i * 37 + c * 17) % 101) as f64 / 10.0)
+                    .collect();
+                json!({"id":format!("reference-{:03}",99-i),"label":i%2,"vector":vector})
+            })
+            .collect::<Vec<_>>()
+    );
+    let mut expected: Vec<_> = b["references"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|r| {
+            let squared = r["vector"].as_array().unwrap().iter().fold(0.0, |sum, v| {
+                let n = v.as_f64().unwrap();
+                sum + n * n
+            });
+            (r["id"].as_str().unwrap().to_owned(), squared.sqrt())
+        })
+        .collect();
+    expected.sort_by(|a, b| a.1.total_cmp(&b.1).then_with(|| a.0.cmp(&b.0)));
+    for k in [1, 3, 15, 100] {
+        b["k"] = json!(k);
+        let model = load(&b);
+        let result = model.predict(&[0.0; 8]).unwrap();
+        assert_eq!(result.neighbours.len(), k);
+        for (actual, (id, distance)) in result.neighbours.iter().zip(&expected) {
+            assert_eq!(actual.id, id);
+            assert_eq!(actual.distance, *distance);
+        }
+    }
+}

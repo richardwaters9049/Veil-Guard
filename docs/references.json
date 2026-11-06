@@ -15,7 +15,7 @@
     },
     {
       "id": "R02",
-      "citation": "Jesse Burdick-Pless (2025). Beyond RegEx – Heuristic-based Secret Detection. MS thesis, Rochester Institute of Technology.",
+      "citation": "Jesse Burdick-Pless (2025). Beyond RegEx \u2013 Heuristic-based Secret Detection. MS thesis, Rochester Institute of Technology.",
       "type": "Master's thesis",
       "url": "https://repository.rit.edu/theses/12111/",
       "reviewed": "Institutional record and abstract",
@@ -26,7 +26,7 @@
     },
     {
       "id": "R03",
-      "citation": "Thomas M. Cover and Peter E. Hart (1967). Nearest Neighbor Pattern Classification. IEEE Transactions on Information Theory 13(1), 21–27.",
+      "citation": "Thomas M. Cover and Peter E. Hart (1967). Nearest Neighbor Pattern Classification. IEEE Transactions on Information Theory 13(1), 21\u201327.",
       "type": "Peer-reviewed journal paper",
       "url": "https://isl.stanford.edu/~cover/papers/transIT/0021cove.pdf",
       "reviewed": "Original paper, introductory definitions and stated asymptotic result",
@@ -59,7 +59,7 @@
     },
     {
       "id": "R06",
-      "citation": "Claude E. Shannon (1948). A Mathematical Theory of Communication. Bell System Technical Journal 27, 379–423 and 623–656.",
+      "citation": "Claude E. Shannon (1948). A Mathematical Theory of Communication. Bell System Technical Journal 27, 379\u2013423 and 623\u2013656.",
       "type": "Foundational research paper",
       "url": "https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf",
       "reviewed": "Original paper, discrete entropy formulation",
@@ -70,7 +70,7 @@
     },
     {
       "id": "R07",
-      "citation": "Robert A. Wagner and Michael J. Fischer (1974). The String-to-String Correction Problem. Journal of the ACM 21(1), 168–173.",
+      "citation": "Robert A. Wagner and Michael J. Fischer (1974). The String-to-String Correction Problem. Journal of the ACM 21(1), 168\u2013173.",
       "type": "Peer-reviewed journal paper",
       "url": "https://computingbiology.github.io/docs/wagner1974.pdf",
       "reviewed": "Original article, abstract and edit-distance definition",
@@ -81,7 +81,7 @@
     },
     {
       "id": "R08",
-      "citation": "Kilian Q. Weinberger and Lawrence K. Saul (2009). Distance Metric Learning for Large Margin Nearest Neighbor Classification. JMLR 10, 207–244.",
+      "citation": "Kilian Q. Weinberger and Lawrence K. Saul (2009). Distance Metric Learning for Large Margin Nearest Neighbor Classification. JMLR 10, 207\u2013244.",
       "type": "Peer-reviewed journal paper",
       "url": "https://jmlr.org/papers/v10/weinberger09a.html",
       "reviewed": "Journal abstract and author publication record",
@@ -335,6 +335,76 @@
       "reviewed": "LogisticRegression parameters and score outputs; AP threshold weighting and distinction from trapezoidal PR area",
       "supports": "API choices for the prespecified logistic baseline and correctly named average precision metric.",
       "limits": "Library documentation does not validate this corpus, prescribe the grids or establish project performance.",
+      "checked_on": "2026-11-05"
+    },
+    {
+      "id": "R31",
+      "citation": "RustSec advisory database and cargo-audit",
+      "type": "Official project documentation",
+      "url": "https://rustsec.org/",
+      "reviewed": "Tool purpose and known-advisory coverage.",
+      "supports": "Dated lockfile advisory scans.",
+      "limits": "A clean advisory scan does not establish coverage of every C component, operating-system backport or unknown vulnerability.",
+      "checked_on": "2026-11-05"
+    },
+    {
+      "id": "R32",
+      "citation": "Cargo metadata command reference",
+      "type": "Official project documentation",
+      "url": "https://doc.rust-lang.org/cargo/commands/cargo-metadata.html",
+      "reviewed": "Resolved package graph, declared licence and feature fields.",
+      "supports": "Machine-readable host dependency inventory.",
+      "limits": "Manifest declarations are not legal approval or complete native component licensing.",
+      "checked_on": "2026-11-05"
+    },
+    {
+      "id": "R33",
+      "citation": "GitHub-hosted runner reference",
+      "type": "Official project documentation",
+      "url": "https://docs.github.com/en/actions/reference/runners/github-hosted-runners",
+      "reviewed": "Standard runner labels and CPU architectures.",
+      "supports": "Planned native macOS arm64 and Linux x86_64 CI package checks.",
+      "limits": "Documentation is not evidence that this project workflow ran successfully.",
+      "checked_on": "2026-11-05"
+    },
+    {
+      "id": "R34",
+      "citation": "PyPA pip-audit project documentation",
+      "type": "Official project documentation",
+      "url": "https://pypi.org/project/pip-audit/",
+      "reviewed": "Known-vulnerability requirements-file checks and PyPI service.",
+      "supports": "Dated research-environment advisory checks using pinned names and versions.",
+      "limits": "Not a complete audit of native wheel payloads or unknown vulnerabilities.",
+      "checked_on": "2026-11-05"
+    },
+    {
+      "id": "R35",
+      "citation": "libgit2 v1.9.7 COPYING",
+      "type": "Official project documentation",
+      "url": "https://raw.githubusercontent.com/libgit2/libgit2/v1.9.7/COPYING",
+      "reviewed": "Licence text and linking exception; not a legal compatibility determination.",
+      "supports": "Preserving upstream libgit2 notices distinct from Rust wrapper metadata.",
+      "limits": "Application redistribution and licence approval remain owner/release decisions.",
+      "checked_on": "2026-11-05"
+    },
+    {
+      "id": "R36",
+      "citation": "zlib upstream release and security information",
+      "type": "Official project documentation",
+      "url": "https://www.zlib.net/",
+      "reviewed": "Version 1.4 release date and listed security fixes as accessed 5 November 2026.",
+      "supports": "Native-library patch applicability review beyond Cargo advisories.",
+      "limits": "Upstream version strings do not determine Apple or distribution backport status.",
+      "checked_on": "2026-11-05"
+    },
+    {
+      "id": "R37",
+      "citation": "libgit2 security information",
+      "type": "Official project documentation",
+      "url": "https://libgit2.org/security/",
+      "reviewed": "Published security information and previous security releases.",
+      "supports": "Separate upstream native dependency review.",
+      "limits": "The published list is not a comprehensive guarantee for bundled or OS libraries.",
       "checked_on": "2026-11-05"
     }
   ]

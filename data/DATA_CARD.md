@@ -62,4 +62,4 @@ Synthetic labels describe authored intent. Templates share low-level string mech
 | Independent human label adjudication | Pending |
 | Corpus redistribution licence | Owner/release decision pending |
 | Synthetic-only limitations | Recorded |
-| Detection/AI benefit measurements | Not performed |
+| Detection/AI benefit measurements | [Synthetic evaluation](../docs/21-phase-four-results.md) recorded; AI benefit gate failed |

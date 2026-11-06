@@ -217,12 +217,18 @@ impl Model {
                 contributions,
             });
         }
-        ordered.sort_by(|a, b| {
+        let order = |a: &Neighbour<'_>, b: &Neighbour<'_>| {
             a.distance
                 .total_cmp(&b.distance)
                 .then_with(|| a.id.cmp(b.id))
-        });
+        };
+        // Every distance and zero-match vote is still computed above. Partition
+        // by the same total order, then sort only the selected exact k rows.
+        if b.k < ordered.len() {
+            ordered.select_nth_unstable_by(b.k - 1, order);
+        }
         ordered.truncate(b.k);
+        ordered.sort_unstable_by(order);
         let nearest = ordered[0].distance;
         let score = if zero_count > 0 {
             zero_positive as f64 / zero_count as f64

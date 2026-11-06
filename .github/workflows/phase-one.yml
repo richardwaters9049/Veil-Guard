@@ -2,7 +2,7 @@ name: Acceptance checks
 
 on:
   push:
-    branches: [main, "phase-one/**", "phase-two/**", "phase-three/**", "phase-four/**", "codex/**"]
+    branches: [main, "phase-one/**", "phase-two/**", "phase-three/**", "phase-four/**", "phase-five/**", "phase-six/**", "phase-seven/**"]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -46,3 +46,7 @@ jobs:
           uv sync --locked --project research/experiments --python 3.12
       - name: Run acceptance checks
         run: python scripts/check_all.py
+      - name: Instrument runtime network and process boundaries
+        run: python scripts/check_runtime.py --output "$RUNNER_TEMP/veilguard-runtime-check"
+      - name: Verify native development package and fresh-prefix install
+        run: python scripts/check_packaging.py --output "$RUNNER_TEMP/veilguard-package-check"
