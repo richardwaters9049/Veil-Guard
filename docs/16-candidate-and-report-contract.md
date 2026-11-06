@@ -2,6 +2,8 @@
 
 Updated: 5 November 2026. Grammar: veilguard.candidates.v1. Report: veilguard.report.v2. Development build: 0.1.0-dev.2.
 
+Historical v2 report scope: current scans use [report v3 and Phase Five integration](22-phase-five-native-inference.md); the lexical grammar remains unchanged.
+
 This is our implemented lexical contract, not a language parser or trained model. Git staged semantics are sourced to [R17](13-sources.md#r17); index/object interfaces to [R18](13-sources.md#r18). The grammar and limits below are project decisions verified by authored regression fixtures. The [eight-feature contract](04-eight-dimensional-features.md) is now implemented independently for research; [Phase Two](18-phase-two-feature-parity.md) records parity and its limits.
 
 ## Extraction scope

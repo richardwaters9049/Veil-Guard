@@ -171,7 +171,7 @@ fn generic_sensitive_assignment_is_visible_but_does_not_block() {
     assert_eq!(report.findings[0].rule_id, "sensitive-assignment");
     assert_eq!(report.exit_code(), 0);
     assert!(!report.text().contains("authored-fixture-only"));
-    assert_eq!(report.model_status, "not_implemented");
+    assert_eq!(report.model_status, "not_requested");
 }
 
 #[test]
@@ -715,14 +715,14 @@ fn incomplete_scan_withholds_all_paths_but_retains_findings_and_issue_codes() {
 }
 
 #[test]
-fn v2_report_and_example_have_the_same_contract_and_no_value_fields() {
+fn v3_report_and_example_have_the_same_contract_and_no_value_fields() {
     let fixture = Fixture::new();
     fixture.stage("config.txt", "token = 'abcdefgh'\n");
     let report = fixture.report();
     let json = serde_json::to_value(report).unwrap();
     let example: serde_json::Value =
-        serde_json::from_str(include_str!("../examples/finding.example.json")).unwrap();
-    assert_eq!(json["report_schema"], "veilguard.report.v2");
+        serde_json::from_str(include_str!("../examples/finding-v3.example.json")).unwrap();
+    assert_eq!(json["report_schema"], "veilguard.report.v3");
     assert_eq!(json["candidate_grammar"], "veilguard.candidates.v1");
     assert_eq!(
         json.as_object().unwrap().keys().collect::<Vec<_>>(),

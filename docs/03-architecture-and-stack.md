@@ -47,7 +47,7 @@ Exact dependency versions must be selected, audited and locked at implementation
 - research/: corpus recipe, training pipeline, evaluation and model exporter.
 - tests/: staged-index integration, privacy and parity fixtures.
 
-Milestone 1A implements `lib.rs`, `main.rs`, `git_index.rs`, `rules.rs` and `report.rs`. The index reader compares bounded object buffers in memory. `candidates.rs` now extracts bounded lexical spans and `privacy.rs` protects displayed paths. Eight-feature, model and KNN modules remain pending. See the [implementation record](15-phase-one.md) for the narrower current scope.
+Milestone 1A implements `lib.rs`, `main.rs`, `git_index.rs`, `rules.rs` and `report.rs`. The index reader compares bounded object buffers in memory. `candidates.rs` now extracts bounded lexical spans and `privacy.rs` protects displayed paths. Eight-feature extraction, model loading, native KNN and scanner integration are implemented in [Phase Five](22-phase-five-native-inference.md). See the [implementation record](15-phase-one.md) for the narrower current scope.
 
 ## Model bundle
 

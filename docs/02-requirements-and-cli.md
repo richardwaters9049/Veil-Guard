@@ -2,7 +2,7 @@
 
 ## Functional requirements
 
-**Design status.** FR1–FR10 describe the target programme. The [Phase One record](15-phase-one.md) identifies the implemented scan subset and regression evidence; model and hook requirements remain pending. Git defines staged/index-versus-commit comparison ([R17](13-sources.md#r17)); git2 documents APIs that can implement it ([R18](13-sources.md#r18)). Tests must establish whether our implementation meets these requirements.
+**Design status.** FR1–FR10 describe the target programme. The [Phase One record](15-phase-one.md) identifies the implemented scan subset and regression evidence; [Phase Five](22-phase-five-native-inference.md) implements experimental model integration; hook requirements remain pending. Git defines staged/index-versus-commit comparison ([R17](13-sources.md#r17)); git2 documents APIs that can implement it ([R18](13-sources.md#r18)). Tests must establish whether our implementation meets these requirements.
 
 - FR1: Default to an explicitly selected local repository, discovered from the current directory. No remote clone or network fetch.
 - FR2: Compare HEAD to the index; for an unborn branch compare the index to an empty tree. Read staged blob bytes, never substitute working-tree content.
@@ -25,15 +25,15 @@ veilguard scan --staged --repo /absolute/path/to/owned-repository
 veilguard scan --staged --format json --output findings.json
 ```
 
-The following commands remain proposals for Phases 5 and 6:
+Experimental model commands are implemented:
 
 ```sh
-veilguard explain --report findings.json --finding finding-001
+veilguard explain --report findings.json --finding finding-00001
 veilguard model inspect ./models/release-model.json
-veilguard hooks install
-veilguard hooks uninstall
 ```
-Text-only reports are default; JSON output is explicit and contains no candidate value. Explain reads an existing redacted report, never an argument containing a secret. The current [report-v2 contract](16-candidate-and-report-contract.md) includes schema/grammar identifiers, byte columns and unranked review reasons. Feature contributions and scores remain future model work; neither values nor raw vectors are present.
+Hook install/uninstall commands remain Phase Six proposals.
+
+Text-only reports are default; JSON output is explicit and contains no candidate value. Explain reads an existing redacted report, never an argument containing a secret. The current [report-v3 contract](22-phase-five-native-inference.md) includes explicit model status, optional scores/ranks and opt-in numerical neighbour details. No values or raw vectors are present. Use `scan --model /path/to/approved-model.json --explanations --format json --output findings.json` to retain explanation details.
 
 ## Exit code contract
 
@@ -54,7 +54,7 @@ Target budgets: 1 MiB per blob, 20 MiB aggregate inspected bytes, 10,000 candida
 
 ## Reporting and remediation
 
-Each current finding includes a synthetic occurrence ID, protected path, staged start/end line and byte columns, rule ID, severity/policy decision, model status and nullable review reason. An uncalibrated vote is future work, not a current report field. Do not output complete lines, token fragments, token hashes or a reproducible hash of the candidate value.
+Each current finding includes a synthetic occurrence ID, protected path, staged start/end line and byte columns, rule ID, severity/policy decision, model status and nullable review reason. An optional uncalibrated vote ranks retained generic reviews and never changes policy or exit status. Do not output complete lines, token fragments, token hashes or a reproducible hash of the candidate value.
 
 Advise the user to remove a staged credential and follow its provider's revocation/rotation process if it may have been exposed. OWASP describes secret lifecycle management and rotation/revocation ([R20](13-sources.md#r20)). Never claim removing it from a new commit revokes an existing credential or clears Git history.
 

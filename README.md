@@ -2,7 +2,7 @@
 
 ## Explainable, offline credential triage for staged Git changes
 
-**Status: Phase Four research evaluated — 5 November 2026.** The staged scanner and repository hardening are implemented, with independent Rust/Python eight-feature extractors and golden parity checks. The synthetic corpus and frozen connected-group splits are now implemented; the unified acceptance command and per-commit CI verify this scope. A frozen research model and sealed synthetic evaluation exist; the KNN benefit gate failed and the model remains experimental. Native inference is pending. Veil Guard is a working project name; naming clearance is pending.
+**Status: Phase Five experimental inference integrated — 5 November 2026.** The staged scanner and repository hardening are implemented, with independent Rust/Python eight-feature extractors and golden parity checks. The synthetic corpus and frozen connected-group splits are now implemented; the unified acceptance command and per-commit CI verify this scope. A frozen research model and sealed synthetic evaluation exist; the KNN benefit gate failed and the model remains experimental. Native inference, explicit model selection/fallback and redacted inspection/explanation commands are implemented. Veil Guard is a working project name; naming clearance is pending.
 
 Veil Guard will be a native command-line developer security tool. It will read the Git index, identify possible hard-coded credentials, and use an eight-dimensional k-nearest neighbours model to rank ambiguous candidates for review. It will explain decisions using redacted locations, numerical feature differences and curated example IDs. It will have no web server, browser UI, dashboard or cloud inference.
 
@@ -45,10 +45,12 @@ Start with the [annotated sources and professor profiles](docs/13-sources.md), i
 | [Sources and academic reading](docs/13-sources.md) | Annotated references, professors, theses, dissertations and reading order |
 | [Claims and evidence](docs/14-claims-and-evidence.md) | External evidence, choices, hypotheses, targets and pending results |
 | [Phase One implementation](docs/15-phase-one.md) | Executable commands, milestone evidence and remaining work |
-| [Candidate/report contract](docs/16-candidate-and-report-contract.md) | Implemented lexical grammar, byte spans, report v2 and filename policy |
+| [Candidate/report contract](docs/16-candidate-and-report-contract.md) | Implemented lexical grammar, byte spans, historical report v2 and filename policy |
 | [Repository formats and automation](docs/17-repository-and-automation.md) | Supported layouts, refusal reasons and local/CI acceptance |
 | [Phase Two feature parity](docs/18-phase-two-feature-parity.md) | Independent extractors, golden fixtures, distance contributions and reproduction |
 | [Phase Three corpus](docs/19-phase-three-corpus.md) | Synthetic recipes, frozen splits, assisted reviews and staged fixture repositories |
+| [Phase Four results](docs/21-phase-four-results.md) | Sealed synthetic evaluation and failed benefit gate |
+| [Phase Five inference](docs/22-phase-five-native-inference.md) | Native inference, scanner integration, fallback and explanations |
 | [Research model card](models/MODEL_CARD.md) | Intended use, evidence and limitations |
 | [Data card](data/DATA_CARD.md) | Provenance, consent and split accounting |
 
@@ -56,7 +58,7 @@ Start with the [annotated sources and professor profiles](docs/13-sources.md), i
 
 `schemas/feature-contract.json` is the machine-readable eight-feature contract.
 `examples/illustrative-vectors.json` contains fabricated vectors to explain the mathematics, not training data.
-`examples/finding.example.json` is an authored example of the current report-v2 contract; `schemas/report-v2.json` defines its JSON shape.
+`examples/finding-v3.example.json` and `schemas/report-v3.json` define the current redacted report shape. Report v2 remains preserved for the historical research scanner.
 `scripts/check_plan.py` validates planning links, source citations and illustrative mathematics using Python's standard library. `docs/references.json` holds the structured source register. These checks do not verify source entailment, external link uptime or model performance.
 `src/` contains the first Rust scanner; `tests/staged_scan.rs` exercises it. `research/` contains the independent Python reference, authored parity fixtures, the synthetic corpus generator/auditor and locked environment; frozen training and sealed evaluation artifacts are included.
 
@@ -70,11 +72,15 @@ python3 -m venv .venv
 python3 scripts/check_all.py
 cargo run --locked -- scan --staged --repo /absolute/path/to/owned-repository
 cargo run --locked -- scan --staged --repo /absolute/path/to/owned-repository --format json
+# Optional experimental ranking and saved numerical explanations:
+cargo run --locked -- scan --staged --repo /absolute/path/to/owned-repository --model research/results/synthetic-v1/development/model.json --explanations --format json --output findings.json
+cargo run --locked -- explain --report findings.json --finding finding-00001
+cargo run --locked -- model inspect research/results/synthetic-v1/development/model.json
 ```
 
 Replace the example repository path with a directory you own or have permission to inspect. The current scanner detects two narrow patterns and reports quoted/unquoted lexical candidates for review; it is not a comprehensive scanner or language parser. Exit 0 can include review findings and does not establish safety. See [current scope and limits](docs/15-phase-one.md).
 
-Phase Two's [parity record](docs/18-phase-two-feature-parity.md) describes the implemented scope, locked environment and reproduction commands. The [Phase Three record](docs/19-phase-three-corpus.md) describes 6,200 synthetic examples, frozen splits and assisted review limits. The [Phase Four results](docs/21-phase-four-results.md) record the negative research outcome. Next is optional experimental native inference under the [delivery plan](docs/09-delivery-plan.md).
+Phase Two's [parity record](docs/18-phase-two-feature-parity.md) describes the implemented scope, locked environment and reproduction commands. The [Phase Three record](docs/19-phase-three-corpus.md) describes 6,200 synthetic examples, frozen splits and assisted review limits. The [Phase Four results](docs/21-phase-four-results.md) record the negative research outcome. The [Phase Five integration](docs/22-phase-five-native-inference.md) is implemented; release hardening and packaging are next under the [delivery plan](docs/09-delivery-plan.md).
 
 ### Run the current planning check
 
@@ -83,4 +89,4 @@ From this project directory:
 python3 scripts/check_plan.py
 ```
 
-The scan command is runnable from source. Explain, model inspection and hook commands remain proposals for later phases. No Git hooks are installed by scanning.
+Scan, explain and model inspection are runnable from source. Hook commands remain planned for Phase Six. No Git hooks are installed by scanning.

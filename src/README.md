@@ -6,7 +6,8 @@ Git index semantics are documented in [R17](../docs/13-sources.md#r17); the git2
 
 | File | Responsibility |
 | --- | --- |
-| lib.rs | Scanner and feature APIs |
+| lib.rs | Scanner, feature and experimental model APIs |
+| model.rs | Strict bounded research bundle loading, exact KNN, abstention and distance contributions |
 | features.rs | Exactly eight validated coordinates, shared keyword spans, supplied-scaler arithmetic and distance contributions |
 | git_index.rs | Index snapshot, bounded object reading and in-memory changed-line calculation |
 | repository.rs | Preflight layout/configuration policy, bounded metadata, corrupt-baseline handling and control snapshots |
@@ -14,6 +15,8 @@ Git index semantics are documented in [R17](../docs/13-sources.md#r17); the git2
 | candidates.rs | Bounded lexical candidates, byte spans and unsupported-review reasons |
 | privacy.rs | Transient observed-value path scrubbing and incomplete-scan path withholding |
 | report.rs | Redacted data contract, coverage state, escaped path display and text output |
+| local_input.rs | Bounded regular-file inputs with nonblocking/no-follow open on Unix |
+| explanation.rs | Saved-report numeric validation and source-free redacted explanations |
 | main.rs | CLI parsing, redacted errors, output files and exit handling |
 
-The runtime starts no subprocess, uses no provider-validation client and loads no model. The separately tested [Phase Two extractor](../docs/18-phase-two-feature-parity.md) exists; scan does not compute vectors or use KNN yet. The reviewed libgit2 is vendored and networking features are disabled for the git2 dependency; this is not a complete audit of all dependency code or hostile repository behaviour.
+The scanner starts no subprocess and uses no provider-validation client. Explicit `--model` enables experimental feature extraction and KNN; missing/invalid inputs preserve rule-only scanning. See the [Phase Five record](../docs/22-phase-five-native-inference.md) for report v3, fallback and redacted commands. The reviewed libgit2 is vendored and networking features are disabled for git2; complete dependency/no-network audits remain release work.

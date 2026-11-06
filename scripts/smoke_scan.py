@@ -19,18 +19,18 @@ def git(directory, args, environment):
         raise RuntimeError("Fixture Git operation failed; details withheld.")
 
 
-def run_case(directory, expected, synthetic_value):
+def run_case(directory, expected, synthetic_value, extra=()):
     index = directory / ".git/index"
     before = index.read_bytes()
     result = subprocess.run(
-        [str(BINARY), "scan", "--staged", "--repo", str(directory), "--format", "json"],
+        [str(BINARY), "scan", "--staged", "--repo", str(directory), "--format", "json", *extra],
         capture_output=True, check=False,
     )
     assert result.returncode == expected, "Unexpected release scan status."
     assert synthetic_value.encode() not in result.stdout + result.stderr, "Fixture value was exposed."
     assert index.read_bytes() == before, "Release scan modified the index."
     report = json.loads(result.stdout)
-    assert report["report_schema"] == "veilguard.report.v2"
+    assert report["report_schema"] == "veilguard.report.v3"
     assert report["coverage_complete"] and not report["issues"]
     return report
 
@@ -56,7 +56,25 @@ def main():
         source.write_text(f'token = "{synthetic}"\n')
         report = run_case(directory, 0, synthetic)
         assert not report["findings"], "Working-tree-only content was scanned."
-    print("Optimized scan smoke checks passed: staged-only reading, redaction and no index/worktree edits.")
+        source.write_text('token = "authored-release-fixture-123"\n')
+        git(directory, ["add", "--", "fixture.txt"], environment)
+        model = ROOT / "research/results/synthetic-v1/development/model.json"
+        report = run_case(directory, 0, "authored-release-fixture-123",
+                          ["--model", str(model), "--explanations"])
+        assert report["model_status"] == "experimental"
+        finding = report["findings"][0]
+        assert finding["policy"] == "review" and finding["review_reason"] == "validation_policy_unmet"
+        assert finding["model"]["rank"] == 1 and finding["model"]["neighbours"]
+        saved = directory / "saved-report.json"
+        saved.write_text(json.dumps(report))
+        result = subprocess.run([str(BINARY), "explain", "--report", str(saved),
+                                 "--finding", finding["id"]], capture_output=True, check=False)
+        assert result.returncode == 0 and b"squared contribution" in result.stdout
+        assert b"authored-release-fixture-123" not in result.stdout + result.stderr
+        inspect = subprocess.run([str(BINARY), "model", "inspect", str(model)],
+                                 capture_output=True, check=False)
+        assert inspect.returncode == 0 and json.loads(inspect.stdout)["review_all"]
+    print("Optimized scan/inspection/explanation smoke checks passed: staged-only reading, redaction and no index/worktree edits.")
 
 
 if __name__ == "__main__":

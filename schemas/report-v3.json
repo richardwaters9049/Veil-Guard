@@ -1,0 +1,303 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/richardwaters9049/Veil-Guard/blob/main/schemas/report-v3.json",
+  "title": "Veil Guard optional experimental model report v3",
+  "description": "Redacted staged scan. Raw values, snippets, hashes and feature vectors are excluded. Numerical neighbour details require explicit opt-in. Rank applies only to retained scored reviews; policies never change.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "report_schema",
+    "scope",
+    "scanner_version",
+    "candidate_grammar",
+    "model_status",
+    "path_status",
+    "coverage_complete",
+    "scanned_files",
+    "inspected_bytes",
+    "candidates",
+    "feature_eligible_candidates",
+    "findings",
+    "issues"
+  ],
+  "properties": {
+    "report_schema": {
+      "const": "veilguard.report.v3"
+    },
+    "scope": {
+      "const": "staged_index"
+    },
+    "scanner_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "candidate_grammar": {
+      "const": "veilguard.candidates.v1"
+    },
+    "model_status": {
+      "enum": [
+        "not_requested",
+        "unavailable",
+        "invalid",
+        "experimental",
+        "degraded"
+      ]
+    },
+    "path_status": {
+      "enum": [
+        "escaped",
+        "redacted",
+        "withheld"
+      ]
+    },
+    "coverage_complete": {
+      "type": "boolean"
+    },
+    "scanned_files": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "inspected_bytes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "candidates": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "feature_eligible_candidates": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/finding"
+      }
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/issue"
+      }
+    }
+  },
+  "$defs": {
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "path",
+        "staged_line",
+        "staged_column",
+        "end_line",
+        "end_column",
+        "rule_id",
+        "severity",
+        "policy",
+        "model_status",
+        "review_reason",
+        "model"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^finding-[0-9]{5,}$"
+        },
+        "path": {
+          "type": "string"
+        },
+        "staged_line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "staged_column": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "end_line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "end_column": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "rule_id": {
+          "enum": [
+            "github-pat-shape",
+            "private-key-marker",
+            "sensitive-assignment",
+            "generic-candidate"
+          ]
+        },
+        "severity": {
+          "enum": [
+            "high",
+            "review"
+          ]
+        },
+        "policy": {
+          "enum": [
+            "block",
+            "review"
+          ]
+        },
+        "model_status": {
+          "enum": [
+            "not_requested",
+            "unavailable",
+            "invalid",
+            "not_applicable",
+            "unsupported",
+            "ranked_experimental",
+            "inference_failed"
+          ]
+        },
+        "review_reason": {
+          "enum": [
+            "model_not_available",
+            "non_ascii_or_control_literal",
+            "short_literal",
+            "long_literal",
+            "multiline_delimiter_unsupported",
+            "multiline_or_template_unsupported",
+            "unterminated_literal",
+            "unsupported_expression",
+            "escaped_literal",
+            null,
+            "validation_policy_unmet",
+            "exact_match_conflict",
+            "outside_training_support",
+            "nearest_distance_exceeded",
+            "low_vote_margin",
+            "experimental_review_only",
+            "inference_failed",
+            "inference_budget_exceeded"
+          ]
+        },
+        "model": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/modelEvidence"
+            }
+          ]
+        }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "code"
+      ],
+      "properties": {
+        "path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "code": {
+          "type": "string",
+          "pattern": "^[a-z_]+$"
+        }
+      }
+    },
+    "modelEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "score",
+        "rank",
+        "nearest",
+        "zero_count",
+        "conflict",
+        "outside",
+        "neighbours"
+      ],
+      "properties": {
+        "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "rank": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "nearest": {
+          "type": "number",
+          "minimum": 0
+        },
+        "zero_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "conflict": {
+          "type": "boolean"
+        },
+        "outside": {
+          "type": "boolean"
+        },
+        "neighbours": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 5,
+              "items": {
+                "$ref": "#/$defs/neighbour"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "neighbour": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reference",
+        "label",
+        "distance",
+        "contributions"
+      ],
+      "properties": {
+        "reference": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "label": {
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "distance": {
+          "type": "number",
+          "minimum": 0
+        },
+        "contributions": {
+          "type": "array",
+          "minItems": 8,
+          "maxItems": 8,
+          "items": {
+            "type": "number",
+            "minimum": 0
+          }
+        }
+      }
+    }
+  }
+}
