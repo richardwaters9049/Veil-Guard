@@ -15,7 +15,7 @@ The goal is a native offline credential-review CLI with an evaluated eight-dimen
 | 4: KNN research and evaluation | Evaluated; benefit gate failed, experimental only | phase-four/knn-evaluation | Feat/PhaseFour: Add reproducible KNN evaluation |
 | 5: native model inference | Integrated experimental inference; local acceptance gate | phase-five/native-inference | Feat/PhaseFive: Add native KNN inference |
 | 6: hardening and packaging | Hooks, local evidence and development packaging implemented; release gates open | phase-six/hardening-and-packaging | Feat/PhaseSix: Harden and package offline scanner |
-| 7: portfolio release | Not started; depends on Phase 6 | phase-seven/portfolio-release | Feat/PhaseSeven: Publish evaluated portfolio release |
+| 7: portfolio release | Case study and demo rehearsal in progress | phase-seven/portfolio-release | Feat/PhaseSeven: Publish evaluated portfolio release |
 
 Each phase has its own branch and commits. Phases One and Two are merged into main. Phase Three starts from merged commit 204152d52987c8a25e042ce53b363325c80e3c8a. Future branches start from the accepted preceding work; do not create empty or placeholder commits. Review each phase diff and evidence before integration into main. A phase may have several focused commits. Do not merge or tag a release merely because its branch exists.
 
