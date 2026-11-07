@@ -10,14 +10,14 @@ After an implemented and evaluated release, the case study may describe demonstr
 
 Add “experimental” to the model description until it passes the evaluation gates.
 
-## Planned safe terminal story, 90–120 seconds
+## Terminal demonstration
 
 1. Show a disposable authored fixture repository with a fake secret-shaped value, placeholder and checksum. All are nonfunctional.
 2. Stage the fixture, then alter only the working-tree copy. Explain why the index is the content that would be committed.
-3. Run the planned staged scan. Show a redacted rule warning, ranked generic review and completeness summary.
+3. Run the staged scan. Show a redacted rule warning, ranked generic review and completeness summary.
 4. Explain one finding: which safe exemplar IDs were closest and which standardised feature differences contributed.
 5. Show eight coordinates and the Euclidean distance formula using fabricated teaching vectors.
-6. Remove the fake fixture from staging. Repeat the scan.
+6. Stage the clean replacement and repeat the scan.
 7. Show a real measured benchmark table with sample sizes and limits; if AI did not help, say so.
 8. End with the defensive scope, reproducibility and next research question.
 
@@ -29,6 +29,15 @@ python3 scripts/portfolio_demo.py
 ```
 
 The rehearsal stages an authored pattern fixture, cleans only its working-tree copy, and confirms that the scanner still blocks on the staged version. It explains the top-ranked generic review using redacted output and then stages the cleaned copy. The last scan confirms that the blocking finding disappears while generic reviews remain. Use the [worked eight-feature example](05-knn-and-linear-algebra.md) and [benchmark table](24-phase-six-evidence.md) alongside this terminal sequence for the recording.
+
+The [105-second terminal recording](demo/veilguard.cast) is a paced replay of output from the rehearsal. It includes the rule finding, all eight distance contributions, the held-out result and the measured performance limit. The file uses the [asciicast v2 format](https://docs.asciinema.org/manual/asciicast/v2/).
+
+Replay or regenerate it from the repository root.
+
+```sh
+asciinema play docs/demo/veilguard.cast
+python3 scripts/portfolio_demo.py --record /tmp/veilguard-demo.cast
+```
 
 ## Evidence to include on the portfolio
 
