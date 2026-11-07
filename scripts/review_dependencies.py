@@ -70,7 +70,7 @@ def main():
         "python_audit_tool":"pip-audit==2.10.1" if args.python_audit else None,
         "native_notice_review":native,
         "rustsec_vulnerabilities":report["vulnerabilities"]["count"],"rustsec_warnings":report["warnings"],
-        "release_blockers":["Project source licence is unset; owner decision required.",
+        "release_blockers":["Review third-party notice and redistribution obligations before public release.",
             "Corpus/model redistribution remains unapproved; exclude both from packages.",
             "Declared Rust wrapper licences do not replace native C component notices.",
             "Collected notices and metadata are not a legal compatibility determination.",

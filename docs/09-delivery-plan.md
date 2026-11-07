@@ -163,7 +163,7 @@ The owner confirmed **Veil Guard** as the release name. Naming clearance remains
 
 The initial download is the standalone scanner. Its staged scanning, deterministic rules, generic reviews and hooks work without a model. The optional experimental model and corpus stay outside the download. The [sealed evaluation](21-phase-four-results.md) documents the failed benefit target, and the [data card](../data/DATA_CARD.md) tracks the separate research artefact review.
 
-The project source licence is awaiting the owner's decision. MIT is proposed for the project source if the owner wants to permit commercial use, modification and redistribution with the copyright and licence notices retained. The proposal does not grant a licence or change third-party terms. See the [MIT licence text](https://choosealicense.com/licenses/mit/) and [dependency review](24-phase-six-evidence.md).
+The owner approved MIT for the project source. See the [licence](../LICENSE), [scope](../LICENSE-SCOPE) and [dependency review](24-phase-six-evidence.md).
 
 ## Definition of programme completion
 

@@ -1,6 +1,6 @@
 # Development install, verification and removal
 
-This guide covers private development bundles only. No project source redistribution licence, signed public release or model distribution approval exists yet. Git index behaviour follows [R17](13-sources.md#r17); bundle checks and hook ownership are project contracts described in [Phase Six evidence](24-phase-six-evidence.md).
+This guide covers private development bundles only. The project source uses [MIT](../LICENSE) with a separate [scope notice](../LICENSE-SCOPE). Public binary release and model redistribution approval remain open. Git index behaviour follows [R17](13-sources.md#r17); bundle checks and hook ownership are project contracts described in [Phase Six evidence](24-phase-six-evidence.md).
 
 ## Build and create a bundle
 

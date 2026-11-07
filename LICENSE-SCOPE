@@ -1,0 +1,8 @@
+Veil Guard licensing scope
+
+LICENSE applies to the original Veil Guard source code and associated
+documentation. Its grant excludes the data/ and research/results/ directories,
+generated corpus data, and fitted model artefacts. Those materials require a
+separate redistribution decision.
+
+Third-party components remain subject to their respective licence terms.

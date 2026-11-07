@@ -14,8 +14,9 @@ from review_dependencies import cargo_inventory, target
 
 INSTALL = b'''Veil Guard development bundle (NOT a public release)
 
-Project source licensing, release approval and model redistribution remain pending.
-Do not redistribute this development bundle. No model or Python runtime is bundled.
+Project source terms are in LICENSE and LICENSE-SCOPE. Public release approval
+and model redistribution remain pending.
+This bundle is for development verification. It contains the native scanner.
 
 Verify the archive SHA-256 using a checksum obtained independently from its builder.
 SHA256SUMS detects corruption, but is not a signature or authenticity guarantee.
@@ -69,7 +70,9 @@ def payload():
     assert ("arm64" in file if triple.startswith("aarch64") else "x86-64" in file),"binary_architecture_mismatch"
     crates,notices=cargo_inventory()
     files={"bin/veilguard":s.BINARY.read_bytes(),"INSTALL.txt":INSTALL,
-           "Cargo.lock":(s.ROOT/"Cargo.lock").read_bytes()}
+           "Cargo.lock":(s.ROOT/"Cargo.lock").read_bytes(),
+           "LICENSE":(s.ROOT/"LICENSE").read_bytes(),
+           "LICENSE-SCOPE":(s.ROOT/"LICENSE-SCOPE").read_bytes()}
     for name,content in notices.items(): files["third-party/"+name]=content
     sysroot=Path(s.run(["rustc","--print","sysroot"]).stdout.decode().strip())
     rustdoc=sysroot/"share/doc/rust"
@@ -97,8 +100,8 @@ def payload():
         abi={"glibc_symbol_versions":sorted(set(re.findall(r"GLIBC_[0-9.]+",versions)))}
     manifest={"schema":"veilguard.development-bundle.v1","version":version,"target":triple,
         "distribution_status":"private_development_only_no_release_approval",
-        "model_bundled":False,"python_bundled":False,"source_license":"NOASSERTION",
-        "release_blockers":["Project source redistribution licence is unset.",
+        "model_bundled":False,"python_bundled":False,"source_license":"MIT",
+        "release_blockers":["Third-party notice and redistribution obligations require review.",
             "Native/OS security patch applicability requires review.",
             "Signatures, notarization, independent builds and remote platform results remain pending."],
         "source_identity":s.identity(),"rustc":s.run(["rustc","--version"]).stdout.decode().strip(),
@@ -138,7 +141,7 @@ def verify(archive):
                 or any(ord(c)<32 for c in name) or not member.isfile() or name in files
                 or len(name)>240 or member.size>32*1024*1024
                 or member.mode != (0o755 if name=="bin/veilguard" else 0o644)
-                or (name not in ("bin/veilguard","Cargo.lock","INSTALL.txt","THIRD-PARTY.txt","bundle-manifest.json") and not name.startswith("third-party/"))):
+                or (name not in ("bin/veilguard","Cargo.lock","INSTALL.txt","THIRD-PARTY.txt","LICENSE","LICENSE-SCOPE","bundle-manifest.json") and not name.startswith("third-party/"))):
                 raise ValueError("unsafe_archive_member")
             if str(PurePosixPath(name))!=name:raise ValueError("noncanonical_member")
             total+=member.size
@@ -147,13 +150,15 @@ def verify(archive):
             if len(data)!=member.size:raise ValueError("member_size_mismatch")
             files[name]=(data,member.mode)
     manifest=json.loads(files["bundle-manifest.json"][0])
-    if manifest["schema"]!="veilguard.development-bundle.v1" or manifest["source_license"]!="NOASSERTION" or manifest["model_bundled"] or manifest["python_bundled"]:
+    if manifest["schema"]!="veilguard.development-bundle.v1" or manifest["source_license"] not in ("NOASSERTION", "MIT") or manifest["model_bundled"] or manifest["python_bundled"]:
         raise ValueError("bundle_contract")
     if manifest["distribution_status"]!="private_development_only_no_release_approval" or manifest["target"] not in ("aarch64-apple-darwin","x86_64-unknown-linux-gnu"):
         raise ValueError("bundle_release_or_target_contract")
     expected=manifest["members"]
     if not {"bin/veilguard","Cargo.lock","INSTALL.txt","THIRD-PARTY.txt"}.issubset(expected):
         raise ValueError("required_payload_missing")
+    if manifest["source_license"] == "MIT" and not {"LICENSE", "LICENSE-SCOPE"}.issubset(expected):
+        raise ValueError("required_licence_missing")
     if set(files)!=(set(expected)|{"bundle-manifest.json"}):raise ValueError("member_set_mismatch")
     for name,record in expected.items():
         data,mode=files[name]
