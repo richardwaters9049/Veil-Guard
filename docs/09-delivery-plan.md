@@ -157,6 +157,14 @@ Estimated effort: 6–12 hours. Entry: accepted packages and evidence.
 
 Gate: a fresh supported machine can reproduce an offline scan and the published experiment. Synthetic-only evidence supports synthetic-only claims. Exit: tagged native release, honest case study, demonstration and maintenance backlog.
 
+### Initial release scope
+
+The owner confirmed **Veil Guard** as the release name. Naming clearance remains a release check.
+
+The initial download is the standalone scanner. Its staged scanning, deterministic rules, generic reviews and hooks work without a model. The optional experimental model and corpus stay outside the download. The [sealed evaluation](21-phase-four-results.md) documents the failed benefit target, and the [data card](../data/DATA_CARD.md) tracks the separate research artefact review.
+
+The project source licence is awaiting the owner's decision. MIT is proposed for the project source if the owner wants to permit commercial use, modification and redistribution with the copyright and licence notices retained. The proposal does not grant a licence or change third-party terms. See the [MIT licence text](https://choosealicense.com/licenses/mit/) and [dependency review](24-phase-six-evidence.md).
+
 ## Definition of programme completion
 
 All seven phase gates are recorded as passed or explicitly constrained; installation and offline staged scanning work on the claimed platforms; model results and limitations are reproducible; deterministic findings remain visible; no actual credentials enter demos/training; and the released claims match evidence.
