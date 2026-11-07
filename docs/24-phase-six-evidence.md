@@ -76,3 +76,16 @@ The macOS executable imports the zlib stream functions `inflate`, `inflateInit_`
 The vendored PCRE2 10.47 falls within the affected version ranges of several upstream advisories. The vendored build configuration does not enable JIT, which is a prerequisite for the growable JIT stack issue. The libgit2 wrapper uses interpreter matching and sets only the caseless option through its flags. The invalid-UTF advisory requires additional matching options. A pattern can also supply inline options, so wrapper flags alone cannot establish safety for repository-controlled patterns. The installed crates.io libgit2 binding is already at the latest published version checked on 7 November 2026 and still bundles 10.47. Keep a patched native build or a documented, advisory-by-advisory reachability decision as a release requirement. See the [PCRE2 security list](https://github.com/PCRE2Project/pcre2/security), [JIT advisory](https://github.com/PCRE2Project/pcre2/security/advisories/GHSA-r9hj-j2rw-4q3m) and [invalid-UTF advisory](https://github.com/PCRE2Project/pcre2/security/advisories/GHSA-9qww-pwc4-77qq).
 
 The package contains upstream notice files alongside Veil Guard's MIT notice and scope. Final third-party notice obligations, native patch coverage and signing remain open.
+
+### Comparison against the observed CI build
+
+The [successful packaging run](https://github.com/richardwaters9049/Veil-Guard/actions/runs/42414211872) for `77c5071` reports the same six direct zlib imports on both targets. Ubuntu 24.04 reports `zlib1g` at `1:1.3.dfsg-3.1ubuntu2.3`. The macOS job reports symbols only. The 1.2.12 string in the earlier native review comes from the separate local Apple system library.
+
+| Finding | Comparison with the observed build |
+| --- | --- |
+| CVE-2026-85091 | The Ubuntu runner's installed revision exactly matches the fixed Noble revision. This closes the package revision comparison for that runner and this CVE. The build evidence does not identify the package version on a user's machine. [Canonical USN-8954-1](https://ubuntu.com/security/notices/USN-8954-1) |
+| Gzip writing, seeking and descriptor handling | The six imports are stream compression and decompression functions. There are no direct `gz*` imports for the affected operations, including the CVE-2026-85091 write path. The import check covers direct calls from this executable. [zlib 1.4 security fixes](https://www.zlib.net/) |
+| Specialised stream APIs | The executable has no direct imports of `inflateGetDictionary`, `inflateSync`, `inflatePrime`, `deflatePrime`, `inflateBack` or `deflateResetKeep`. It does call `inflate` on repository data, so internal library paths still require separate review. [zlib 1.4 security fixes](https://www.zlib.net/) |
+| Apple system zlib | The local library reports 1.2.12. Neither that version string nor the macOS CI import list establishes whether Apple backported the relevant fixes. Patch coverage remains open for the macOS release targets. |
+
+The Ubuntu result is specific to CVE-2026-85091. The other zlib fixes and the separate vendored PCRE2 review remain release work.
