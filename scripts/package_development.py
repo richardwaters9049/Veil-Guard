@@ -6,6 +6,8 @@ import io
 import json
 from pathlib import Path, PurePosixPath
 import platform
+import shutil
+import subprocess
 import tarfile
 import sys
 import tomllib
@@ -98,6 +100,27 @@ def payload():
     else:
         versions=s.run(["readelf","--version-info",s.BINARY]).stdout.decode()
         abi={"glibc_symbol_versions":sorted(set(re.findall(r"GLIBC_[0-9.]+",versions)))}
+    # Record the executable's imports and the build host's package revision.
+    # These are evidence for advisory review, not a claim about target hosts.
+    darwin = platform.system() == "Darwin"
+    symbol_command = ["nm", "-u"] if darwin else ["nm", "-D", "--undefined-only"]
+    symbols = s.run([*symbol_command, s.BINARY]).stdout.decode()
+    zlib_imports = set()
+    for line in symbols.splitlines():
+        if not line.split():
+            continue
+        symbol = line.split()[-1].lstrip("_").split("@", 1)[0]
+        if re.fullmatch(r"(?:inflate|deflate|gz|zlib)[A-Za-z0-9_]*", symbol):
+            zlib_imports.add(symbol)
+    native_evidence = {"zlib_imports": sorted(zlib_imports)}
+    if not darwin and shutil.which("dpkg-query"):
+        query = subprocess.run(
+            ["dpkg-query", "-W", "-f=${Version}", "zlib1g"],
+            capture_output=True, text=True, timeout=10,
+        )
+        if query.returncode == 0:
+            native_evidence["build_host_zlib1g_version"] = query.stdout.strip()
+
     manifest={"schema":"veilguard.development-bundle.v1","version":version,"target":triple,
         "distribution_status":"private_development_only_no_release_approval",
         "model_bundled":False,"python_bundled":False,"source_license":"MIT",
@@ -105,7 +128,7 @@ def payload():
             "Native/OS security patch applicability requires review.",
             "Signatures, notarization, independent builds and remote platform results remain pending."],
         "source_identity":s.identity(),"rustc":s.run(["rustc","--version"]).stdout.decode().strip(),
-        "dynamic_libraries":linked,"abi_requirements":abi,"cargo_lock_sha256":s.sha(s.ROOT/"Cargo.lock"),
+        "dynamic_libraries":linked,"abi_requirements":abi,"native_evidence":native_evidence,"cargo_lock_sha256":s.sha(s.ROOT/"Cargo.lock"),
         "members":{name:{"sha256":hashlib.sha256(data).hexdigest(),"bytes":len(data),
                          "mode":0o755 if name=="bin/veilguard" else 0o644} for name,data in sorted(files.items())}}
     files["bundle-manifest.json"]=(json.dumps(manifest,sort_keys=True,indent=2)+"\n").encode()

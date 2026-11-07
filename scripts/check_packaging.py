@@ -51,6 +51,7 @@ def main():
         "assembly_reproducible_same_inputs":True,"fresh_prefix_scan_explain_hooks_passed":True,
         "binary_version":version,"binary_sha256":manifest["members"]["bin/veilguard"]["sha256"],"target":manifest["target"],"model_or_corpus_distributed":False,
         "limits":"Same-binary archive assembly reproducibility, not independent compiler build reproducibility. Fresh prefix on existing host, not a fresh OS. No release licence approval, signature, notarization or remote platform result implied."})
+    print("Native dependency evidence:", json.dumps(manifest["native_evidence"], sort_keys=True))
     print("Package checks passed: byte-identical assembly and fresh-prefix scan/explain/hooks.")
     return 0
 
